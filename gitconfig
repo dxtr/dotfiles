@@ -1,0 +1,10 @@
+[user]
+	name = Kim Lidström
+	email = kim.lidas+github@gmail.com
+	signingkey = 253ED058
+[github]
+	user = dxtr
+	token = a1d4c0483e3883ad1f747dd6cc71e249
+[core]
+	excludesfile = /home/dxtr/.gitignore
+	editor = vim
