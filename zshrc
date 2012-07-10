@@ -1,25 +1,44 @@
-if [ $(uname) = 'OpenBSD' ]
-then
-  export TERM=rxvt-256color
-  export MANPATH=/usr/share/man
-  DISABLE_LS_COLORS="true"
-  plugins=(cpanm extract git git-flow github nya perl pip python)
-else
-  plugins=(archlinux battery cpanm debian django extract git git-flow github gnu-utils gpg-agent nyan osx perl pip python ssh-agent)
-fi
-
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="dxtr-repos"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
+
+if [[ $(uname) = "Linux" ]]; then
+	if [[ -f /etc/arch-release ]]; then
+		plugins=(archlinux battery cpanm debian django extract git git-flow github gnu-utils nyan osx perl pip python)
+	elif [[ -f /etc/debian_version ]]; then
+		plugins=(battery cpanm debian django extract git git-flow github gnu-utils nyan perl pip python)
+	else
+		plugins=(battery cpanm django extract git git-flow github gnu-utils nyan perl pip python)
+	fi
+elif [[ $(uname) = "FreeBSD" ]]; then
+	plugins=(cpanm django extract git git-flow github gnu-utils nyan perl pip python)
+	export LANG="en_US.UTF-8"
+	export LC_ALL="en_US.UTF-8"
+elif [[ $(uname) = "OpenBSD" ]]; then
+	if [[ $TERM = "rxvt-unicode-256color" ]]; then
+		export TERM=rxvt-256color
+	fi
+	export MANPATH=/usr/share/man
+	export LC_CTYPE="en_US.UTF-8"
+	DISABLE_LS_COLORS="true"
+	plugins=(cpanm django extract git git-flow github nyan perl pip python)
+fi
+
 source $ZSH/oh-my-zsh.sh
-#PATH="/usr/local/sbin:/usr/sbin:/sbin:$PATH:/home/dxtr/bin"
+PATH="/usr/local/sbin:/usr/sbin:/sbin:$PATH:/home/dxtr/bin"
 #zstyle ':completion:*' menu select=1
 bindkey -e
 export EDITOR=vim
 alias tmux="tmux -2u"
-export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
-source ~/perl5/perlbrew/etc/bashrc
-#eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+source /home/dxtr/perl5/perlbrew/etc/bashrc
+export TZ="Europe/Stockholm"
 
+autoload -U predict-on
+zle -N predict-on
+zle -N predict-off
+bindkey "^X^Z" predict-on # C-x C-z
+bindkey "^Z" predict-off # C-z
+zstyle :predict verbose yes
+zstyle :predict cursor key
+zstyle ':completion:predict:*' completer _oldlist _complete _ignored _history _prefix

@@ -5,6 +5,7 @@ synclient VertTwoFingerScroll=0
 synclient TapButton1=0
 synclient TapButton2=0
 synclient TapButton3=0
+synclient PalmDetect=1
 #synclient Touchpadoff=1
 #unclutter -idle 2 -noevents -root &
 #syndaemon -d -i 1
