@@ -5,7 +5,7 @@ COMPLETION_WAITING_DOTS="true"
 
 if [[ $(uname) = "Linux" ]]; then
 	if [[ -f /etc/arch-release ]]; then
-		plugins=(archlinux battery cpanm debian django extract git git-flow github gnu-utils nyan osx perl pip python)
+		plugins=(archlinux battery cpanm django extract git git-flow github gnu-utils nyan osx perl pip python)
 	elif [[ -f /etc/debian_version ]]; then
 		plugins=(battery cpanm debian django extract git git-flow github gnu-utils nyan perl pip python)
 	else
