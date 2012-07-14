@@ -12,5 +12,4 @@ synclient PalmDetect=1
 urxvtd -q -f -o
 hsetroot -center /home/dxtr/pictures/Stand_Back_by_TheScott87.png
 xrdb ~/.Xdefaults &
-#exec ratpoison
-exec sscrotwm
+exec pekwm
