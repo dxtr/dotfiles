@@ -1,0 +1,2 @@
+$TERM="urxvtc"
+$DMENU="dmenu_run -b -i -p 'start > ' -nb #222222 -nf #BBBBBB -fn -misc-fixed-medium-r-semicondensed--12-110-75-75--60-iso8859-15"
