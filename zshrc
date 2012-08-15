@@ -5,12 +5,15 @@ COMPLETION_WAITING_DOTS="true"
 
 if [[ $(uname) = "Linux" ]]; then
 	if [[ -f /etc/arch-release ]]; then
-		plugins=(archlinux battery cpanm django extract git git-flow github gnu-utils nyan osx perl pip python)
+		plugins=(archlinux battery cpanm debian django extract git git-flow github gnu-utils nyan osx perl pip python)
 	elif [[ -f /etc/debian_version ]]; then
 		plugins=(battery cpanm debian django extract git git-flow github gnu-utils nyan perl pip python)
 	else
 		plugins=(battery cpanm django extract git git-flow github gnu-utils nyan perl pip python)
 	fi
+	export LANG="en_US.UTF-8"
+	export LC_ALL="en_US.UTF-8"
+	eval `dircolors ~/.dircolors`
 elif [[ $(uname) = "FreeBSD" ]]; then
 	plugins=(cpanm django extract git git-flow github gnu-utils nyan perl pip python)
 	export LANG="en_US.UTF-8"
@@ -23,16 +26,15 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	export LC_CTYPE="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
 	plugins=(cpanm django extract git git-flow github nyan perl pip python)
-elif [[ $(uname) == "Darwin" ]]; then
-	plugins=(osx brew cpanm django extract git git-flow github nyan perl pip python)
 fi
 
 source $ZSH/oh-my-zsh.sh
+PATH="/usr/local/sbin:/usr/sbin:/sbin:$PATH:/home/dxtr/bin"
 #zstyle ':completion:*' menu select=1
 bindkey -e
 export EDITOR=vim
 alias tmux="tmux -2u"
-source ~/perl5/perlbrew/etc/bashrc
+source /home/dxtr/perl5/perlbrew/etc/bashrc
 export TZ="Europe/Stockholm"
 
 autoload -U predict-on
