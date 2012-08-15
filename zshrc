@@ -18,6 +18,11 @@ elif [[ $(uname) = "FreeBSD" ]]; then
 	plugins=(cpanm django extract git git-flow github gnu-utils nyan perl pip python)
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
+	DISABLE_LS_COLORS="true"
+	if [[ -f "/usr/local/bin/gls" ]] && [[ -f "/usr/local/bin/gdircolors" ]] && [[ -f "/home/dxtr/.dircolors" ]]; then
+		eval `/usr/local/bin/gdircolors ~/.dircolors`
+		alias ls="/usr/local/bin/gls --color=auto"
+	fi
 elif [[ $(uname) = "OpenBSD" ]]; then
 	if [[ $TERM = "rxvt-unicode-256color" ]]; then
 		export TERM=rxvt-256color
