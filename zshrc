@@ -31,7 +31,7 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	export LC_CTYPE="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
 	plugins=(cpanm django extract git git-flow github nyan perl pip python)
-elif [[ $(uname) == "Darwin" ]]; then
+elif [[ $(uname) = "Darwin" ]]; then
 	plugins=(osx brew cpanm django extract git git-flow github nyan perl pip python)
 	export PATH="/usr/local/Cellar/ruby/1.9.3-p194/bin/:/usr/local/android-sdk/tools:$PATH"
 	export LANG="en_US.UTF-8"
