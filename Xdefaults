@@ -3,8 +3,9 @@ Xcursor.size: 16
 
 !{{{ XFT
 Xft.dpi:       96
-Xft.antialias: 1
-Xft.hinting:   1
+Xft.antialias: true
+Xft.hinting:   true
+Xft.autohint:  true
 Xft.hintstyle: hintfull
 Xft.rgba:      rgb
 !}}}
@@ -22,7 +23,7 @@ URxvt*urgentOnBell:       true
 
 ! Extensions
 URxvt*perl-lib:        /usr/lib/urxvt/perl/
-URxvt.perl-ext-common:	default,matcher,searchable-scrollback,url-select,keyboard-select,clipboard
+URxvt.perl-ext-common:	default,matcher,searchable-scrollback,url-select,keyboard-select,clipboard,confirm-paste,digital-clock
 URxvt.keysym.M-u:	perl:url-select:select_next
 URxvt.keysym.M-Escape:	perl:keyboard-select:activate
 URxvt.keysym.M-s:	perl:keyboard-select:search
@@ -33,18 +34,13 @@ URxvt.copyCommand:	/usr/bin/xsel -ib
 URxvt.pasteCommand:	/usr/bin/xsel -ob
 URxvt.urlLauncher:	/usr/bin/firefox
 URxvt.underlineurls:	true
-URxvt.urlbutton:  1
+!URxvt.urlbutton:  1
+URxvt.matcher.button: 1
 ! Catch ugly URLs
 URxvt*cutchars:        '"'()*<>[]{|}
 !
 ! Appearance
-!URxvt*font: xft:Terminus:pixelsize=12
-URxvt*font: xft:fixed:pixelsize=12
-!
-! Cursor
-!URxvt*cursorColor: #DCDCCC
-! URLs
-!URxvt*.colorUL:    #ffffff
+URxvt*font: xft:GohuFont:pixelsize=14
 !
 ! Pseudo Transparency
 !URxvt*shading:   5
@@ -137,7 +133,7 @@ URxvt*font: xft:fixed:pixelsize=12
 *cursorColor:           S_base1
 *pointerColorBackground:S_base01
 *pointerColorForeground:S_base1
-
+*colorUL:		S_base01
 !! black dark/light
 *color0:                S_base02
 *color8:                S_base03
@@ -190,6 +186,7 @@ URxvt*font: xft:fixed:pixelsize=12
 !xterm*faceSize: 9
 !xterm*font: -*-dejavu sans mono-medium-r-*-*-11-*-*-*-*-*-*-*
 !xterm*font:        -xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-2
+xterm*font: -erus-erusfont-medium-r-normal--11-80-100-100-c-60-iso10646-1
 !xterm*boldFont:    -xos4-terminus-bold-*-*-*-12-*-*-*-*-*-iso8859-2
 !xterm*cursorColor: #DCDCCC
 
