@@ -1,3 +1,5 @@
+
+
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="dxtr-repos"
 DISABLE_AUTO_TITLE="true"
@@ -5,7 +7,7 @@ COMPLETION_WAITING_DOTS="true"
 
 if [[ $(uname) = "Linux" ]]; then
 	if [[ -f /etc/arch-release ]]; then
-		plugins=(archlinux battery cpanm django extract git git-flow github gnu-utils nyan perl pip python)
+		plugins=(archlinux battery cpanm debian django extract git git-flow github gnu-utils nyan osx perl pip python)
 	elif [[ -f /etc/debian_version ]]; then
 		plugins=(battery cpanm debian django extract git git-flow github gnu-utils nyan perl pip python)
 	else
@@ -13,14 +15,19 @@ if [[ $(uname) = "Linux" ]]; then
 	fi
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
-	eval `dircolors ~/.dircolors`
+
+	if [[ -f "/home/dxtr/.dircolors" ]]; then
+		eval `dircolors ~/.dircolors`
+	fi
 elif [[ $(uname) = "FreeBSD" ]]; then
 	plugins=(cpanm django extract git git-flow github gnu-utils nyan perl pip python)
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
-	if [[ -f "/usr/local/bin/gls" ]] && [[ -f "/usr/local/bin/gdircolors" ]] && [[ -f "/home/dxtr/.dircolors" ]]; then
-		eval `/usr/local/bin/gdircolors ~/.dircolors`
+	if [[ -f "/usr/local/bin/gls" ]] && [[ -f "/usr/local/bin/gdircolors" ]]; then
+		if [[ -f "/home/dxtr/.dircolors" ]]; then
+			eval `/usr/local/bin/gdircolors ~/.dircolors`
+		fi
 		alias ls="/usr/local/bin/gls --color=auto"
 	fi
 elif [[ $(uname) = "OpenBSD" ]]; then
@@ -34,12 +41,22 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
-PATH="/usr/local/sbin:/usr/sbin:/sbin:$PATH:/home/dxtr/bin"
+#PATH="/usr/local/sbin:/usr/sbin:/sbin:$PATH:/home/dxtr/bin"
+
+if [[ -f "/home/dxtr/perl5/perlbrew/etc/bashrc" ]]; then
+	soure /home/dxtr/perl5/perlbrew/etc/bashrc
+else
+	export PERL_LOCAL_LIB_ROOT="/home/dxtr/perl5";
+	export PERL_MB_OPT="--install_base /home/dxtr/perl5";
+	export PERL_MM_OPT="INSTALL_BASE=/home/dxtr/perl5";
+	export PERL5LIB="/home/dxtr/perl5/lib/perl5/armv7l-linux-thread-multi:/home/dxtr/perl5/lib/perl5";
+	export PATH="/home/dxtr/perl5/bin:$PATH";
+fi
+
 #zstyle ':completion:*' menu select=1
 bindkey -e
 export EDITOR=vim
 alias tmux="tmux -2u"
-source /home/dxtr/perl5/perlbrew/etc/bashrc
 export TZ="Europe/Stockholm"
 
 autoload -U predict-on
