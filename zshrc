@@ -38,6 +38,13 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	export LC_CTYPE="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
 	plugins=(cpanm django extract git git-flow github nyan perl pip python)
+elif [[ $(uname) = "Darwin" ]]; then
+	plugins=(osx brew cpanm django extract git git-flow github nyan perl pip python)
+	export PATH="/usr/local/Cellar/ruby/1.9.3-p194/bin/:/usr/local/android-sdk/tools:$PATH"
+	export LANG="en_US.UTF-8"
+	export LC_CTYPE="en_US.UTF-8"
+	export LC_ALL="en_US.UTF-8"
+
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -57,6 +64,11 @@ fi
 bindkey -e
 export EDITOR=vim
 alias tmux="tmux -2u"
+<<<<<<< HEAD
+=======
+alias ctags="ctags -dt"
+source /home/dxtr/perl5/perlbrew/etc/bashrc
+>>>>>>> 6e9d05c124a9af554bc7821ea474eb6b21de0114
 export TZ="Europe/Stockholm"
 
 autoload -U predict-on
