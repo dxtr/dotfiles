@@ -7,7 +7,7 @@ COMPLETION_WAITING_DOTS="true"
 
 if [[ $(uname) = "Linux" ]]; then
 	if [[ -f /etc/arch-release ]]; then
-		plugins=(archlinux battery cpanm debian django extract git git-flow github gnu-utils nyan osx perl pip python)
+		plugins=(archlinux battery cpanm debian django extract git git-flow github gnu-utils nyan osx perl pip python ssh-agent)
 	elif [[ -f /etc/debian_version ]]; then
 		plugins=(battery cpanm debian django extract git git-flow github gnu-utils nyan perl pip python)
 	else
@@ -44,7 +44,7 @@ source $ZSH/oh-my-zsh.sh
 #PATH="/usr/local/sbin:/usr/sbin:/sbin:$PATH:/home/dxtr/bin"
 
 if [[ -f "/home/dxtr/perl5/perlbrew/etc/bashrc" ]]; then
-	soure /home/dxtr/perl5/perlbrew/etc/bashrc
+	source /home/dxtr/perl5/perlbrew/etc/bashrc
 else
 	export PERL_LOCAL_LIB_ROOT="/home/dxtr/perl5";
 	export PERL_MB_OPT="--install_base /home/dxtr/perl5";
