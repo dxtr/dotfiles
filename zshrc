@@ -5,13 +5,14 @@ ZSH_THEME="dxtr-repos"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 
+plugins=()
+
 if [[ $(uname) = "Linux" ]]; then
+	plugins+=(battery gnu-utils)
 	if [[ -f /etc/arch-release ]]; then
-		plugins=(archlinux battery cpanm debian django extract git git-flow github gnu-utils nyan osx perl pip python ssh-agent)
+		plugins+=(archlinux)
 	elif [[ -f /etc/debian_version ]]; then
-		plugins=(battery cpanm debian django extract git git-flow github gnu-utils nyan perl pip python)
-	else
-		plugins=(battery cpanm django extract git git-flow github gnu-utils nyan perl pip python)
+		plugins+=(debian)
 	fi
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
@@ -20,7 +21,7 @@ if [[ $(uname) = "Linux" ]]; then
 		eval `dircolors ~/.dircolors`
 	fi
 elif [[ $(uname) = "FreeBSD" ]]; then
-	plugins=(cpanm django extract git git-flow github gnu-utils nyan perl pip python)
+	plugins+=(gnu-utils)
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
@@ -31,15 +32,16 @@ elif [[ $(uname) = "FreeBSD" ]]; then
 		alias ls="/usr/local/bin/gls --color=auto"
 	fi
 elif [[ $(uname) = "OpenBSD" ]]; then
+	plugins+=()
 	if [[ $TERM = "rxvt-unicode-256color" ]]; then
 		export TERM=rxvt-256color
 	fi
 	export MANPATH=/usr/share/man
 	export LC_CTYPE="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
-	plugins=(cpanm django extract git git-flow github nyan perl pip python)
 fi
 
+plugins+=(cpanm django extract git git-flow github nyan perl pip python urltools ssh-agent)
 source $ZSH/oh-my-zsh.sh
 #PATH="/usr/local/sbin:/usr/sbin:/sbin:$PATH:/home/dxtr/bin"
 
