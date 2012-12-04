@@ -1,5 +1,3 @@
-
-
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="dxtr-repos"
 DISABLE_AUTO_TITLE="true"
@@ -11,6 +9,11 @@ if [[ $(uname) = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
 	if [[ -f /etc/arch-release ]]; then
 		plugins+=(archlinux)
+		if pacman -Q|grep source-highlight &> /dev/null
+		then
+			export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
+			export LESS=' -R '
+		fi
 	elif [[ -f /etc/debian_version ]]; then
 		plugins+=(debian)
 	fi
@@ -20,6 +23,10 @@ if [[ $(uname) = "Linux" ]]; then
 	if [[ -f "/home/dxtr/.dircolors" ]]; then
 		eval `dircolors ~/.dircolors`
 	fi
+
+	alias grep="/usr/bin/grep -n --color=auto"
+
+	[[ "`hostname`" -eq "greger" ]] && ulimit -c unlimited >/dev/null 2>&1
 elif [[ $(uname) = "FreeBSD" ]]; then
 	plugins+=(gnu-utils)
 	export LANG="en_US.UTF-8"
@@ -54,6 +61,8 @@ else
 	export PERL5LIB="/home/dxtr/perl5/lib/perl5/armv7l-linux-thread-multi:/home/dxtr/perl5/lib/perl5";
 	export PATH="/home/dxtr/perl5/bin:$PATH";
 fi
+
+export GEM_HOME="/home/dxtr/.gem"
 
 #zstyle ':completion:*' menu select=1
 bindkey -e
