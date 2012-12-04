@@ -1,5 +1,3 @@
-
-
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="dxtr-repos"
 DISABLE_AUTO_TITLE="true"
@@ -7,9 +5,12 @@ COMPLETION_WAITING_DOTS="true"
 
 if [[ $(uname) = "Linux" ]]; then
 	if [[ -f /etc/arch-release ]]; then
-		plugins=(archlinux battery cpanm debian django extract git git-flow github gnu-utils nyan osx perl pip python ssh-agent)
+		plugins=(archlinux battery cpanm django extract git git-flow github gnu-utils nyan osx perl pip python ssh-agent)
 	elif [[ -f /etc/debian_version ]]; then
-		plugins=(battery cpanm debian django extract git git-flow github gnu-utils nyan perl pip python)
+		plugins=(battery cpanm debian django extract git git-flow github gnu-utils nyan perl pip python ssh-agent)
+		if [[ -d /usr/local/netbeans-7.2.1/bin ]]; then
+			PATH="/usr/local/netbeans-7.2.1/bin:$PATH"
+		fi
 	else
 		plugins=(battery cpanm django extract git git-flow github gnu-utils nyan perl pip python)
 	fi
@@ -41,7 +42,6 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
-#PATH="/usr/local/sbin:/usr/sbin:/sbin:$PATH:/home/dxtr/bin"
 
 if [[ -f "/home/dxtr/perl5/perlbrew/etc/bashrc" ]]; then
 	source /home/dxtr/perl5/perlbrew/etc/bashrc
@@ -50,7 +50,10 @@ else
 	export PERL_MB_OPT="--install_base /home/dxtr/perl5";
 	export PERL_MM_OPT="INSTALL_BASE=/home/dxtr/perl5";
 	export PERL5LIB="/home/dxtr/perl5/lib/perl5/armv7l-linux-thread-multi:/home/dxtr/perl5/lib/perl5";
-	export PATH="/home/dxtr/perl5/bin:$PATH";
+fi
+
+if [[ -d "$HOME/bin" ]]; then
+	PATH="$HOME/bin:$PATH"
 fi
 
 #zstyle ':completion:*' menu select=1
@@ -67,3 +70,5 @@ bindkey "^Z" predict-off # C-z
 zstyle :predict verbose yes
 zstyle :predict cursor key
 zstyle ':completion:predict:*' completer _oldlist _complete _ignored _history _prefix
+
+typeset -U path cdpath manpath fpath
