@@ -20,7 +20,7 @@ if [[ $(uname) = "Linux" ]]; then
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
 
-	if [[ -f "/home/dxtr/.dircolors" ]]; then
+	if [[ -f "$HOME/.dircolors" ]]; then
 		eval `dircolors ~/.dircolors`
 	fi
 
@@ -33,7 +33,7 @@ elif [[ $(uname) = "FreeBSD" ]]; then
 	export LC_ALL="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
 	if [[ -f "/usr/local/bin/gls" ]] && [[ -f "/usr/local/bin/gdircolors" ]]; then
-		if [[ -f "/home/dxtr/.dircolors" ]]; then
+		if [[ -f "$HOME/.dircolors" ]]; then
 			eval `/usr/local/bin/gdircolors ~/.dircolors`
 		fi
 		alias ls="/usr/local/bin/gls --color=auto"
@@ -51,20 +51,20 @@ fi
 plugins+=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan perl pip python urltools ssh-agent cp history rsync)
 source $ZSH/oh-my-zsh.sh
 
-if [[ -f "/home/dxtr/perl5/perlbrew/etc/bashrc" ]]; then
-	source /home/dxtr/perl5/perlbrew/etc/bashrc
+if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
+	source $HOME/perl5/perlbrew/etc/bashrc
 else
-	export PERL_LOCAL_LIB_ROOT="/home/dxtr/perl5";
-	export PERL_MB_OPT="--install_base /home/dxtr/perl5";
-	export PERL_MM_OPT="INSTALL_BASE=/home/dxtr/perl5";
-	export PERL5LIB="/home/dxtr/perl5/lib/perl5/armv7l-linux-thread-multi:/home/dxtr/perl5/lib/perl5";
+	export PERL_LOCAL_LIB_ROOT="$HOME/perl5";
+	export PERL_MB_OPT="--install_base $HOME/perl5";
+	export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
+	export PERL5LIB="$HOME/perl5/lib/perl5/armv7l-linux-thread-multi:$HOME/perl5/lib/perl5";
 fi
 
-if [[ -d "/home/dxtr/go" ]]; then
+if [[ -d "$HOME/go" ]]; then
 	export GOPATH=~/go
 fi
 
-export GEM_HOME="/home/dxtr/.gem"
+export GEM_HOME="$HOME/.gem"
 
 #zstyle ':completion:*' menu select=1
 bindkey -e
