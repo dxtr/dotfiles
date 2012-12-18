@@ -8,16 +8,6 @@ plugins=()
 if [[ $(uname) = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
 	if [[ -f /etc/arch-release ]]; then
-<<<<<<< HEAD
-		plugins=(archlinux battery cpanm django extract git git-flow github gnu-utils nyan osx perl pip python ssh-agent)
-	elif [[ -f /etc/debian_version ]]; then
-		plugins=(battery cpanm debian django extract git git-flow github gnu-utils nyan perl pip python ssh-agent)
-		if [[ -d /usr/local/netbeans-7.2.1/bin ]]; then
-			PATH="/usr/local/netbeans-7.2.1/bin:$PATH"
-		fi
-	else
-		plugins=(battery cpanm django extract git git-flow github gnu-utils nyan perl pip python)
-=======
 		plugins+=(archlinux)
 		if pacman -Q|grep source-highlight &> /dev/null
 		then
@@ -26,7 +16,6 @@ if [[ $(uname) = "Linux" ]]; then
 		fi
 	elif [[ -f /etc/debian_version ]]; then
 		plugins+=(debian)
->>>>>>> b80c45535c235c9c117e2af4e02679c7e71f72c5
 	fi
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
