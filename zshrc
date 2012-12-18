@@ -26,11 +26,7 @@ if [[ $(uname) = "Linux" ]]; then
 
 	alias grep="$(which grep) -n --color=auto"
 
-<<<<<<< HEAD
 	ulimit -c unlimited
-=======
-	ulimit -c unlimited >/dev/null 2>&1
->>>>>>> ab3525bfd1b4f7aeaff01fa066b94e1cd0759a29
 elif [[ $(uname) = "FreeBSD" ]]; then
 	plugins+=(gnu-utils)
 	export LANG="en_US.UTF-8"
