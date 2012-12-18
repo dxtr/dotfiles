@@ -62,6 +62,10 @@ else
 	export PATH="/home/dxtr/perl5/bin:$PATH";
 fi
 
+if [[ -d "/home/dxtr/go" ]]; then
+	export GOPATH=~/go
+fi
+
 export GEM_HOME="/home/dxtr/.gem"
 
 #zstyle ':completion:*' menu select=1
