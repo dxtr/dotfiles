@@ -60,10 +60,6 @@ else
 	export PERL5LIB="/home/dxtr/perl5/lib/perl5/armv7l-linux-thread-multi:/home/dxtr/perl5/lib/perl5";
 fi
 
-if [[ -d "$HOME/bin" ]]; then
-	PATH="$HOME/bin:$PATH"
-fi
-
 if [[ -d "/home/dxtr/go" ]]; then
 	export GOPATH=~/go
 fi
