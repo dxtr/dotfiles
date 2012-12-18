@@ -8,7 +8,7 @@ plugins=()
 if [[ $(uname) = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
 	if [[ -f /etc/arch-release ]]; then
-		plugins+=(archlinux)
+		plugins+=(archlinux systemd)
 		if pacman -Q|grep source-highlight &> /dev/null
 		then
 			export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
@@ -24,7 +24,7 @@ if [[ $(uname) = "Linux" ]]; then
 		eval `dircolors ~/.dircolors`
 	fi
 
-	alias grep="/usr/bin/grep -n --color=auto"
+	alias grep="$(which grep) -n --color=auto"
 
 	[[ "`hostname`" -eq "greger" ]] && ulimit -c unlimited >/dev/null 2>&1
 elif [[ $(uname) = "FreeBSD" ]]; then
@@ -48,7 +48,7 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	DISABLE_LS_COLORS="true"
 fi
 
-plugins+=(cpanm django extract git git-flow github nyan perl pip python urltools ssh-agent)
+plugins+=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan perl pip python urltools ssh-agent cp history rsync)
 source $ZSH/oh-my-zsh.sh
 
 if [[ -f "/home/dxtr/perl5/perlbrew/etc/bashrc" ]]; then
