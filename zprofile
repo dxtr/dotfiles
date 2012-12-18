@@ -1,1 +1,1 @@
-PATH="$PATH:/home/dxtr/bin"
+PATH="$HOME/bin:$PATH"
