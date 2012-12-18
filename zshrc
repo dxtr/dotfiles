@@ -48,7 +48,7 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	DISABLE_LS_COLORS="true"
 fi
 
-plugins+=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan perl pip python urltools ssh-agent cp history rsync)
+plugins+=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools ssh-agent cp history rsync)
 source $ZSH/oh-my-zsh.sh
 
 if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
