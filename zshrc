@@ -4,9 +4,7 @@ DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
 
-plugins=()
-
-export LC_CTYPE="en_US.UTF-8"
+plugins=(ssh-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync)
 
 if [[ $(uname) = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
@@ -49,32 +47,18 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 		export TERM=rxvt-256color
 	fi
 	export MANPATH="/usr/share/man:/usr/X11R6/man:/usr/local/man"
-	export LC_CTYPE="en_US.UTF-8"
+	export LANG="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
 fi
 
-plugins+=(ssh-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync)
 source $ZSH/oh-my-zsh.sh
 
-if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
-	source $HOME/perl5/perlbrew/etc/bashrc
-else
-	export PERL_LOCAL_LIB_ROOT="$HOME/perl5";
-	export PERL_MB_OPT="--install_base $HOME/perl5";
-	export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
-	export PERL5LIB="$HOME/perl5/lib/perl5/armv7l-linux-thread-multi:$HOME/perl5/lib/perl5";
-fi
-
-if [[ -d "$HOME/go" ]]; then
-	export GOPATH=~/go
-fi
-
-export GEM_HOME="$HOME/.gem"
-export EDITOR=vim
-export TZ="Europe/Stockholm"
-
 autoload -U predict-on zmv zrecompile tetris edit-command-line
+
+zmodload zsh/cap zsh/clone zsh/regex zsh/zftp zsh/zpty zsh/datetime zsh/files
+zmodload zsh/mathfunc zsh/net/socket zsh/net/tcp zsh/system zsh/zselect
+zmodload -F zsh/stat b:zstat
 
 zle -N predict-on
 zle -N predict-off
@@ -105,22 +89,6 @@ zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SU
 #zstyle :predict verbose yes
 #zstyle :predict cursor key
 
-zmodload zsh/cap
-zmodload zsh/clone
-zmodload zsh/regex
-zmodload zsh/zftp
-zmodload zsh/zpty
-zmodload zsh/datetime
-zmodload zsh/files
-zmodload zsh/mathfunc
-zmodload zsh/net/socket
-zmodload zsh/net/tcp
-zmodload zsh/system
-zmodload zsh/zselect
-zmodload -F zsh/stat b:zstat
-
-typeset -U path cdpath manpath fpath
-
 # Aliases
 alias tmux="tmux -2u"
 alias -s tex="vim"
@@ -132,3 +100,23 @@ alias -s png="xv"
 alias -s gif="xv"
 alias -s jpg="xv"
 alias -s pdf="xpdf"
+
+if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
+	source $HOME/perl5/perlbrew/etc/bashrc
+else
+	export PERL_LOCAL_LIB_ROOT="$HOME/perl5";
+	export PERL_MB_OPT="--install_base $HOME/perl5";
+	export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
+	export PERL5LIB="$HOME/perl5/lib/perl5/armv7l-linux-thread-multi:$HOME/perl5/lib/perl5";
+fi
+
+if [[ -d "$HOME/go" ]]; then
+	export GOPATH=~/go
+fi
+
+export GEM_HOME="$HOME/.gem"
+export EDITOR=vim
+export TZ="Europe/Stockholm"
+
+typeset -U path cdpath manpath fpath
+
