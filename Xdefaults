@@ -52,7 +52,7 @@ URxvt.keysym.C-M-v:     perl:clipboard:paste_escaped
 URxvt.clipboard.autocopy: true
 URxvt.clipboard.copycmd:      /usr/bin/xsel -ib
 URxvt.clipboard.pastecmd:     /usr/bin/xsel -ob
-URxvt.urlLauncher:      /usr/bin/x-www-browser
+URxvt.url-launcher:      /usr/bin/x-www-browser
 URxvt.underlineurls:    true
 !URxvt.urlbutton:  1
 URxvt.matcher.button: 1
