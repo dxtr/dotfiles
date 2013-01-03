@@ -69,20 +69,62 @@ if [[ -d "$HOME/go" ]]; then
 fi
 
 export GEM_HOME="$HOME/.gem"
-
-#zstyle ':completion:*' menu select=1
-bindkey -e
 export EDITOR=vim
-alias tmux="tmux -2u"
 export TZ="Europe/Stockholm"
 
-autoload -U predict-on
+autoload -U predict-on zmv zrecompile tetris edit-command-line
+
 zle -N predict-on
 zle -N predict-off
+zle -N tetris
+zle -N edit-command-line
+
+bindkey -e
 bindkey "^X^Z" predict-on # C-x C-z
 bindkey "^Z" predict-off # C-z
-zstyle :predict verbose yes
-zstyle :predict cursor key
-zstyle ':completion:predict:*' completer _oldlist _complete _ignored _history _prefix
+bindkey '\ee' edit-command-line
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*:descriptions' format "- %d -"
+zstyle ':completion:*:corrections' format "- %d - (errors %e)"
+zstyle ':completion:*:functions' ignored-patterns '_*'
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:predict:*' completer _oldlist _ignored _history _prefix
+
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SUFFIX) / 3 )) )'
+
+#zstyle :predict verbose yes
+#zstyle :predict cursor key
+
+zmodload zsh/attr zsh/cap zsh/clone zsh/regex
+zmodload zsh/zftp
+zmodload zsh/zpty
+zmodload zsh/datetime
+zmodload zsh/files
+zmodload zsh/mathfunc
+zmodload zsh/net/socket
+zmodload zsh/net/tcp
+zmodload zsh/system
+zmodload zsh/zselect
+zmodload -F zsh/stat b:zstat
 
 typeset -U path cdpath manpath fpath
+
+# Aliases
+alias tmux="tmux -2u"
+alias -s tex="vim"
+alias -s txt="less"
+alias -s c="vim"
+alias -s cpp="vim"
+alias -s html="w3m"
+alias -s png="xv"
+alias -s gif="xv"
+alias -s jpg="xv"
+alias -s pdf="xpdf"
