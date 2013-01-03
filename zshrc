@@ -30,6 +30,8 @@ if [[ $(uname) = "Linux" ]]; then
 	alias grep="$(which grep) -n --color=auto"
 
 	ulimit -c unlimited
+
+	zmodload zsh/attr
 elif [[ $(uname) = "FreeBSD" ]]; then
 	plugins+=(gnu-utils)
 	export LANG="en_US.UTF-8"
@@ -103,7 +105,9 @@ zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SU
 #zstyle :predict verbose yes
 #zstyle :predict cursor key
 
-zmodload zsh/attr zsh/cap zsh/clone zsh/regex
+zmodload zsh/cap
+zmodload zsh/clone
+zmodload zsh/regex
 zmodload zsh/zftp
 zmodload zsh/zpty
 zmodload zsh/datetime
