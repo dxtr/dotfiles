@@ -6,6 +6,8 @@ DISABLE_AUTO_UPDATE="true"
 
 plugins=()
 
+export LC_CTYPE="en_US.UTF-8"
+
 if [[ $(uname) = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
 	if [[ -f /etc/arch-release ]]; then
@@ -44,12 +46,13 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	if [[ $TERM = "rxvt-unicode-256color" ]]; then
 		export TERM=rxvt-256color
 	fi
-	export MANPATH=/usr/share/man
+	export MANPATH="/usr/share/man:/usr/X11R6/man:/usr/local/man"
 	export LC_CTYPE="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
+	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
 fi
 
-plugins+=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools ssh-agent cp history rsync)
+plugins+=(ssh-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync)
 source $ZSH/oh-my-zsh.sh
 
 if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
