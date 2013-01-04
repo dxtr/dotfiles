@@ -16,6 +16,7 @@ if [ "$(uname)" == "Linux" ]; then
 elif [ "$(uname)" == "OpenBSD" ]; then
 	export LC_CTYPE="en_US.UTF-8"
 	autocutsel &
+	xstatbar -T -w1366 -y754 &
 fi
 
 setxkbmap $xkbmap
