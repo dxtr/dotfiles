@@ -41,7 +41,7 @@ URxvt*saveLines:         16384
 URxvt*urgentOnBell:       true
 URxvt*visualBell:        false
 URxvt*perl-lib:        /usr/lib/urxvt/perl/
-URxvt.perl-ext-common:  default,matcher,searchable-scrollback,url-select,keyboard-select,clipboard,tabbed,confirm-paste,option-popup,selection-autotransform
+URxvt.perl-ext-common:  default,matcher,searchable-scrollback,url-select,keyboard-select,clipboard,confirm-paste,option-popup,selection-autotransform
 URxvt.keysym.C-M-u:       perl:url-select:select_next
 URxvt.keysym.M-Escape:  perl:keyboard-select:activate
 URxvt.keysym.M-f:       perl:keyboard-select:search

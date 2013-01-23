@@ -1,4 +1,5 @@
-#include "/home/dxtr/.Xresources/nancy.Xresources"
+!#include "/home/dxtr/.Xresources/nancy.Xresources"
+#include "/home/dxtr/.Xresources/neuromouse.Xresources"
 
 Xcursor.theme: Neutral
 Xcursor.size: 16
@@ -37,13 +38,20 @@ URxvt*loginShell:         true
 URxvt*scrollBar:         false
 URxvt*secondaryScroll:    true
 URxvt*saveLines:         16384
-URxvt*cursorBlink:       false
-URxvt*cursorUnderline:   true
 URxvt*urgentOnBell:       true
-URxvt*visualBell:        true
-URxvt*perl-lib:        /usr/local/lib/urxvt/perl/
-URxvt.perl-ext-common:  default,matcher,searchable-scrollback,clipboard-osc,confirm-paste,option-popup,selection-autotransform
-URxvt.urlLauncher:      /usr/local/bin/firefox
+URxvt*visualBell:        false
+URxvt*perl-lib:        /usr/lib/urxvt/perl/
+URxvt.perl-ext-common:  default,matcher,searchable-scrollback,url-select,keyboard-select,clipboard-osc,confirm-paste,option-popup,selection-autotransform
+URxvt.keysym.C-M-u:       perl:url-select:select_next
+URxvt.keysym.M-Escape:  perl:keyboard-select:activate
+URxvt.keysym.M-f:       perl:keyboard-select:search
+URxvt.keysym.M-c:       perl:clipboard:copy
+URxvt.keysym.M-v:       perl:clipboard:paste
+URxvt.keysym.C-M-v:     perl:clipboard:paste_escaped
+URxvt.clipboard.autocopy: true
+URxvt.clipboard.copycmd:      /usr/bin/xsel -ib
+URxvt.clipboard.pastecmd:     /usr/bin/xsel -ob
+URxvt.url-launcher:      /usr/bin/x-www-browser
 URxvt.underlineurls:    true
 !URxvt.urlbutton:  1
 URxvt.matcher.button: 1
@@ -56,4 +64,18 @@ URxvt*externalBorder: 0
 URxvt*borderLess: false
 URxvt*fading: 75
 URxvt*fadeColor: #010101
+URxvt*letterSpace: 0
+URxvt.depth: 32
+URxvt*scrollTtyKeypress: true
+URxvt*scrollWithBuffer: true
+URxvt*scrollTtyOutput: false
+URxvt*transparent: true
+URxvt*tint: #020202
+URxvt*shading: 5
+URxvt*cursorColor: #999999
+URxvt*cursorBlink: true
+URxvt*cursorUnderline: false
+URxvt*keysym.Home: \033[1~
+URxvt*keysym.End: \033[4~
+
 !}}}
