@@ -51,9 +51,16 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 		export TERM=rxvt-256color
 	fi
 	export MANPATH="/usr/share/man:/usr/X11R6/man:/usr/local/man"
+	export OPENBSD_CVSROOT="anoncvs@anoncvs.eu.openbsd.org:/cvs"
 	export LANG="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
+	export PATH="$PATH:/usr/local/go/bin:/usr/games"
+	export GOPATH="/usr/local/go/"
+
+	if [[ -f "/usr/local/bin/egdb" ]]; then
+		alias gdb="/usr/local/bin/egdb"
+	fi
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -76,19 +83,15 @@ bindkey "^Z" predict-off # C-z
 
 zstyle ':completion:*' menu select
 zstyle ':completion:*' verbose yes
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*' completer _complete _match
 zstyle ':completion:*' squeeze-slashes true
-zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-zstyle ':completion:*:descriptions' format "- %d -"
-zstyle ':completion:*:corrections' format "- %d - (errors %e)"
+#zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+#zstyle ':completion:*:descriptions' format "- %d -"
+#zstyle ':completion:*:corrections' format "- %d - (errors %e)"
 zstyle ':completion:*:functions' ignored-patterns '_*'
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:predict:*' completer _oldlist _ignored _history _prefix
-
-zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SUFFIX) / 3 )) )'
 
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
@@ -98,8 +101,8 @@ unsetopt beep
 unsetopt hist_beep
 unsetopt list_beep
 
-#zstyle :predict verbose yes
-#zstyle :predict cursor key
+zstyle :predict verbose yes
+zstyle :predict cursor key
 
 # Aliases
 alias tmux="tmux -2u"
@@ -123,7 +126,8 @@ else
 fi
 
 if [[ -d "$HOME/go" ]]; then
-	export GOPATH=~/go
+	export GOPATH=~/go:$GOPATH
+	export PATH=$PATH:~/go/bin
 fi
 
 export GEM_HOME="$HOME/.gem"

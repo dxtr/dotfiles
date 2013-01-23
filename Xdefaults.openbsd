@@ -42,7 +42,7 @@ URxvt*cursorUnderline:   true
 URxvt*urgentOnBell:       true
 URxvt*visualBell:        true
 URxvt*perl-lib:        /usr/local/lib/urxvt/perl/
-URxvt.perl-ext-common:  default,matcher,searchable-scrollback,clipboard-osc,tabbed,confirm-paste,option-popup,selection-autotransform
+URxvt.perl-ext-common:  default,matcher,searchable-scrollback,clipboard-osc,confirm-paste,option-popup,selection-autotransform
 URxvt.urlLauncher:      /usr/local/bin/firefox
 URxvt.underlineurls:    true
 !URxvt.urlbutton:  1
