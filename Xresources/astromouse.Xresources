@@ -1,0 +1,23 @@
+!!! LEGEND:
+!!! 0:black 1:red 2:green 3:yellow
+!!! 4:blue 5:magenta 6:cyan 7:white
+
+!! astromouse (colorful | mellow)
+*background: #101010
+*foreground: #b5b5b5
+*color0: #1c1c1c
+*color8: #3d3a3a
+*color1: #d770af
+*color9: #d28abf
+*color2: #78a45c
+*color10: #9acc79
+*color3: #d0d26b
+*color11: #c8bc45
+*color4: #77b6c5
+*color12: #8fa7b9
+*color5: #a488d9
+*color13: #bd89de
+*color6: #7ac0af
+*color14: #6ec2a8
+*color7: #8d8d8d
+*color15: #dad3d3
