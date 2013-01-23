@@ -1,10 +1,13 @@
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="dxtr-repos"
+#ZSH_THEME="dxtr-repos"
+ZSH_THEME="neuromouse"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
 
 plugins=(ssh-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync)
+
+grep_path=$(which grep)
 
 if [[ $(uname) = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
@@ -25,7 +28,8 @@ if [[ $(uname) = "Linux" ]]; then
 		eval `dircolors ~/.dircolors`
 	fi
 
-	alias grep="$(which grep) -n --color=auto"
+	alias grep="$grep_path --color=auto"
+	alias grepn="$grep_path -n --color=auto"
 
 	ulimit -c unlimited
 
@@ -68,7 +72,7 @@ zle -N edit-command-line
 bindkey -e
 bindkey "^X^Z" predict-on # C-x C-z
 bindkey "^Z" predict-off # C-z
-bindkey '\ee' edit-command-line
+#bindkey '\ee' edit-command-line
 
 zstyle ':completion:*' menu select
 zstyle ':completion:*' verbose yes
@@ -85,6 +89,14 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:predict:*' completer _oldlist _ignored _history _prefix
 
 zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SUFFIX) / 3 )) )'
+
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt inc_append_history
+setopt interactive_comments
+unsetopt beep
+unsetopt hist_beep
+unsetopt list_beep
 
 #zstyle :predict verbose yes
 #zstyle :predict cursor key
