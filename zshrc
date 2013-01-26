@@ -1,6 +1,5 @@
 ZSH=$HOME/.oh-my-zsh
-#ZSH_THEME="dxtr-repos"
-ZSH_THEME="neuromouse"
+ZSH_THEME="dxtr-repos"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
