@@ -51,11 +51,12 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	fi
 	export MANPATH="/usr/share/man:/usr/X11R6/man:/usr/local/man"
 	export OPENBSD_CVSROOT="anoncvs@anoncvs.eu.openbsd.org:/cvs"
-	export LANG="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
 	export PATH="$PATH:/usr/local/go/bin:/usr/games"
 	export GOPATH="/usr/local/go/"
+	export LC_CTYPE="en_US.UTF-8"
+	export LESSCHARSET="utf-8"
 
 	if [[ -f "/usr/local/bin/egdb" ]]; then
 		alias gdb="/usr/local/bin/egdb"
@@ -124,10 +125,7 @@ alias -s pdf="xpdf"
 if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
 	source $HOME/perl5/perlbrew/etc/bashrc
 else
-	export PERL_LOCAL_LIB_ROOT="$HOME/perl5";
-	export PERL_MB_OPT="--install_base $HOME/perl5";
-	export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
-	export PERL5LIB="$HOME/perl5/lib/perl5/armv7l-linux-thread-multi:$HOME/perl5/lib/perl5";
+	eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
 fi
 
 if [[ -d "$HOME/go" ]]; then
@@ -138,6 +136,6 @@ fi
 export GEM_HOME="$HOME/.gem"
 export EDITOR=vim
 export TZ="Europe/Stockholm"
+export GPG_TTY=`tty`
 
 typeset -U path cdpath manpath fpath
-
