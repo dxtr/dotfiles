@@ -1,6 +1,6 @@
 ZSH=$HOME/.oh-my-zsh
-#ZSH_THEME="dxtr-repos"
-ZSH_THEME="neuromouse"
+ZSH_THEME="dxtr-repos"
+#ZSH_THEME="neuromouse"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
@@ -133,6 +133,6 @@ fi
 export GEM_HOME="$HOME/.gem"
 export EDITOR=vim
 export TZ="Europe/Stockholm"
+export GPG_TTY=`tty`
 
 typeset -U path cdpath manpath fpath
-
