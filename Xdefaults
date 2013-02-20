@@ -1,5 +1,6 @@
 !#include "/home/dxtr/.Xresources/nancy.Xresources"
-#include "/home/dxtr/.Xresources/neuromouse.Xresources"
+!#include "/home/dxtr/.Xresources/neuromouse.Xresources"
+#include "/home/dxtr/.Xresources/ir-black.Xresources"
 
 Xcursor.theme: Neutral
 Xcursor.size: 16
@@ -62,7 +63,7 @@ URxvt*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
 URxvt*internalBorder: 0
 URxvt*externalBorder: 0
 URxvt*borderLess: false
-URxvt*fading: 75
+URxvt*fading: 33
 URxvt*fadeColor: #010101
 URxvt*letterSpace: 0
 URxvt.depth: 32
@@ -71,7 +72,7 @@ URxvt*scrollWithBuffer: true
 URxvt*scrollTtyOutput: false
 URxvt*transparent: true
 URxvt*tint: #020202
-URxvt*shading: 5
+URxvt*shading: 10
 URxvt*cursorColor: #999999
 URxvt*cursorBlink: true
 URxvt*cursorUnderline: false
