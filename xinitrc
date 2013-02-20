@@ -1,4 +1,4 @@
-wm=spectrwm
+wm=wmii
 xkbmap=se
 
 xrdb ~/.Xdefaults

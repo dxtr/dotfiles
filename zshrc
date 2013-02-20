@@ -1,6 +1,5 @@
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="dxtr-repos"
-#ZSH_THEME="neuromouse"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
@@ -52,15 +51,22 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	fi
 	export MANPATH="/usr/share/man:/usr/X11R6/man:/usr/local/man"
 	export OPENBSD_CVSROOT="anoncvs@anoncvs.eu.openbsd.org:/cvs"
-	export LANG="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
 	export PATH="$PATH:/usr/local/go/bin:/usr/games"
 	export GOPATH="/usr/local/go/"
+	export LC_CTYPE="en_US.UTF-8"
+	export LESSCHARSET="utf-8"
 
 	if [[ -f "/usr/local/bin/egdb" ]]; then
 		alias gdb="/usr/local/bin/egdb"
 	fi
+elif [[ $(uname) = "Darwin" ]]; then
+	export PATH="/Users/dxtr/perl5/perlbrew/bin:/Users/dxtr/perl5/perlbrew/perls/perl-5.16.1/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin"
+	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
+	export LANG=en_US.UTF-8
+	compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
+	alias run='open -a'
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -119,10 +125,7 @@ alias -s pdf="xpdf"
 if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
 	source $HOME/perl5/perlbrew/etc/bashrc
 else
-	export PERL_LOCAL_LIB_ROOT="$HOME/perl5";
-	export PERL_MB_OPT="--install_base $HOME/perl5";
-	export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5";
-	export PERL5LIB="$HOME/perl5/lib/perl5/armv7l-linux-thread-multi:$HOME/perl5/lib/perl5";
+	eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
 fi
 
 if [[ -d "$HOME/go" ]]; then
@@ -133,6 +136,6 @@ fi
 export GEM_HOME="$HOME/.gem"
 export EDITOR=vim
 export TZ="Europe/Stockholm"
+export GPG_TTY=`tty`
 
 typeset -U path cdpath manpath fpath
-
