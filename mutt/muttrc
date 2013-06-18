@@ -19,9 +19,9 @@ mailboxes +fastmail/INBOX \
 	+fastmail/INBOX.Gmail \
 	"+fastmail/INBOX.Junk Mail" \
 	"+fastmail/INBOX.Mailing lists.DFRI" \
-	"+fastmail/INBOX.Mailing lists.TOR.Announce" \
-	"+fastmail/INBOX.Mailing lists.TOR.Dev" \
-	"+fastmail/INBOX.Mailing lists.TOR.Relays" \
+	"+fastmail/INBOX.Mailing lists.tor-announce" \
+	"+fastmail/INBOX.Mailing lists.tor-dev" \
+	"+fastmail/INBOX.Mailing lists.tor-relays" \
 	+fastmail/INBOX.Queue \
 	+fastmail/INBOX.Sent \
 	"+fastmail/INBOX.Sent Items" \
@@ -52,10 +52,14 @@ set mail_check=0
 set beep_new
 set pipe_decode
 set thorough_search
+set send_charset="utf-8"
+set sort=threads
+set sort_aux=last-date-received
 
 set sidebar_delim='|'
 set sidebar_visible=yes
 set sidebar_width=30
+set sidebar_shortpath = yes
 
 set status_chars=" *%A"
 set status_format="───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
