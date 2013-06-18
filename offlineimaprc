@@ -20,7 +20,7 @@ type = Maildir
 localfolders = ~/.mail/fastmail
 
 [Repository FastMail-remote]
-maxconnections = 3
+maxconnections = 2
 type = IMAP
 remotehost = mail.messagingengine.com
 remoteport = 993
