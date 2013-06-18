@@ -32,8 +32,8 @@ mailboxes +fastmail/INBOX \
 
 #set smtp_url="smtps://dxtr@fastmail.fm:$fastmail_password@mail.messagingengine.com:465"
 unset record
-set postponed="=Drafts"
-set trash="=Trash"
+#set postponed="=Drafts"
+#set trash="=Trash"
 set ssl_force_tls=yes
 unset imap_passive
 set imap_check_subscribed
