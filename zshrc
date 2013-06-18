@@ -4,8 +4,7 @@ DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
 
-plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync)
-
+plugins=(gpg-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync)
 grep_path=$(which grep)
 
 if [[ $(uname) = "Linux" ]]; then
@@ -126,10 +125,12 @@ alias -s gif="xv"
 alias -s jpg="xv"
 alias -s pdf="xpdf"
 
-if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
-	source $HOME/perl5/perlbrew/etc/bashrc
-else
-	eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+if [[ -d "$HOME/perl5" ]]; then
+	if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
+		source $HOME/perl5/perlbrew/etc/bashrc
+	else
+		eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+	fi
 fi
 
 if [[ -d "$HOME/go" ]]; then
