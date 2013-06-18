@@ -1,0 +1,32 @@
+#:set syntax=python
+[general]
+metadata = ~/.offlineimap
+ui = ttyui
+accounts = FastMail
+pythonfile = ~/.mutt/offlineimap.py
+fsync = False
+ignore-readonly = yes
+socktimeout = 60
+
+[Account FastMail]
+localrepository = FastMail-local
+remoterepository = FastMail-remote
+status_backend = sqlite
+postsynchook = notmuch new
+maildir-windows-compatible = no
+
+[Repository FastMail-local]
+type = Maildir
+localfolders = ~/.mail/fastmail
+
+[Repository FastMail-remote]
+maxconnections = 3
+type = IMAP
+remotehost = mail.messagingengine.com
+remoteport = 993
+remoteuser = dxtr@fastmail.fm
+remotepasseval = get_account_info(account='fastmail')['username']
+remoteusereval = get_account_info(account='fastmail')['password']
+ssl = yes
+cert_fingerprint = fa86c1ca2d4f805e8fe7b8e7076a3ad2ccc52bb4
+realdelete = no
