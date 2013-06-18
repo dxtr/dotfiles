@@ -25,3 +25,5 @@ a.out
 Thumbs.db
 
 *.pyc
+*.pgp
+*.gpg
