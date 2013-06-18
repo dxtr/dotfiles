@@ -18,12 +18,21 @@ a.out
 *.rar
 *.tar
 *.zip
+*.xz
 *.class
 *.log
 *.sqlite
-.DS_Store*
+*.sql
+.DS_Store?
+.DS_Store
+._*
 Thumbs.db
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
 
+*.swp
 *.pyc
 *.pgp
 *.gpg
