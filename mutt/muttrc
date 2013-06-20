@@ -1,8 +1,6 @@
 set tmpdir="~/.mutt/temp"
 #source "/usr/bin/gpg -dq ~/.mutt/pswds.asc | "
 set editor=`echo \$EDITOR`
-#set spoolfile="imaps://dxtr@fastmail.fm:$fastmail_password@mail.messagingengine.com:993/"
-#set folder="imaps://dxtr@fastmail.fm:$fastmail_password@mail.messagingengine.com:993/"
 set mbox_type=Maildir
 set folder="~/.mail"
 set spoolfile="+fastmail/INBOX"
@@ -14,26 +12,27 @@ mailboxes +fastmail/INBOX \
 	+fastmail/INBOX.Axema.SJ \
 	+fastmail/INBOX.Axema.Tickets \
 	+fastmail/INBOX.Axema.Viktigt \
-	+fastmail/INBOX.devio_us \
+	+fastmail/INBOX.devious \
+	+fastmail/INBOX.devious.Sent \
 	+fastmail/INBOX.Drafts \
 	+fastmail/INBOX.Gmail \
+	+fastmail/INBOX.Gmail.Sent \
 	"+fastmail/INBOX.Junk Mail" \
 	"+fastmail/INBOX.Mailing lists.DFRI" \
 	"+fastmail/INBOX.Mailing lists.tor-announce" \
 	"+fastmail/INBOX.Mailing lists.tor-dev" \
 	"+fastmail/INBOX.Mailing lists.tor-relays" \
-	+fastmail/INBOX.Queue \
-	+fastmail/INBOX.Sent \
 	"+fastmail/INBOX.Sent Items" \
-	+fastmail/INBOX.Trash \
 	+fastmail/INBOX.Viktigt \
 	+fastmail/INBOX.Viktigt.Fakturor \
-	+fastmail/INBOX.Viktigt.Kvitton
+	+fastmail/INBOX.Viktigt.Kvitton \
+	+fastmail/INBOX.Trash \
+	+fastmail/INBOX.Drafts
 
 #set smtp_url="smtps://dxtr@fastmail.fm:$fastmail_password@mail.messagingengine.com:465"
 unset record
-#set postponed="=Drafts"
-#set trash="=Trash"
+set postponed="+fastmail/INBOX.Drafts"
+set trash="+fastmail/INBOX.Trash"
 set ssl_force_tls=yes
 unset imap_passive
 set imap_check_subscribed
@@ -55,10 +54,14 @@ set thorough_search
 set send_charset="utf-8"
 set sort=threads
 set sort_aux=last-date-received
+set move=no
+set markers=no
+set pager_index_lines= 5
+
 
 set sidebar_delim='|'
 set sidebar_visible=yes
-set sidebar_width=30
+set sidebar_width=40
 set sidebar_shortpath = yes
 
 set status_chars=" *%A"

@@ -8,8 +8,8 @@ def get_account_info(account):
 	try:
 		data = subprocess.check_output(args).strip()
 		json_data = json.loads(data)
-		if account.lower() in json_data:
-			retval = json_data[account.lower()]
+		if account in json_data:
+			retval = json_data[account]
 	except ValueError:
 		pass
 	except subprocess.CalledProcessError:
