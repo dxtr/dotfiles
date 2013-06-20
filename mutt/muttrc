@@ -1,35 +1,33 @@
 set tmpdir="~/.mutt/temp"
-#source "/usr/bin/gpg -dq ~/.mutt/pswds.asc | "
 set editor=`echo \$EDITOR`
 set mbox_type=Maildir
 set folder="~/.mail"
 set spoolfile="+fastmail/INBOX"
 mailboxes +fastmail/INBOX \
-	+fastmail/INBOX.Archive \
-	+fastmail/INBOX.Axema \
-	+fastmail/INBOX.Axema.Personal \
-	+fastmail/INBOX.Axema.Sent \
-	+fastmail/INBOX.Axema.SJ \
-	+fastmail/INBOX.Axema.Tickets \
-	+fastmail/INBOX.Axema.Viktigt \
-	+fastmail/INBOX.devious \
-	+fastmail/INBOX.devious.Sent \
-	+fastmail/INBOX.Drafts \
-	+fastmail/INBOX.Gmail \
-	+fastmail/INBOX.Gmail.Sent \
-	"+fastmail/INBOX.Junk Mail" \
-	"+fastmail/INBOX.Mailing lists.DFRI" \
-	"+fastmail/INBOX.Mailing lists.tor-announce" \
-	"+fastmail/INBOX.Mailing lists.tor-dev" \
-	"+fastmail/INBOX.Mailing lists.tor-relays" \
-	"+fastmail/INBOX.Sent Items" \
-	+fastmail/INBOX.Viktigt \
-	+fastmail/INBOX.Viktigt.Fakturor \
-	+fastmail/INBOX.Viktigt.Kvitton \
-	+fastmail/INBOX.Trash \
-	+fastmail/INBOX.Drafts
+        +fastmail/INBOX.Archive \
+        +fastmail/INBOX.Axema \
+        +fastmail/INBOX.Axema.Personal \
+        +fastmail/INBOX.Axema.Sent \
+        +fastmail/INBOX.Axema.SJ \
+        +fastmail/INBOX.Axema.Tickets \
+        +fastmail/INBOX.Axema.Viktigt \
+        +fastmail/INBOX.devious \
+        +fastmail/INBOX.devious.Sent \
+        +fastmail/INBOX.Drafts \
+        +fastmail/INBOX.Gmail \
+        +fastmail/INBOX.Gmail.Sent \
+        "+fastmail/INBOX.Junk Mail" \
+        "+fastmail/INBOX.Mailing lists.DFRI" \
+        "+fastmail/INBOX.Mailing lists.tor-announce" \
+        "+fastmail/INBOX.Mailing lists.tor-dev" \
+        "+fastmail/INBOX.Mailing lists.tor-relays" \
+        "+fastmail/INBOX.Sent Items" \
+        +fastmail/INBOX.Viktigt \
+        +fastmail/INBOX.Viktigt.Fakturor \
+        +fastmail/INBOX.Viktigt.Kvitton \
+        +fastmail/INBOX.Trash \
+        +fastmail/INBOX.Drafts
 
-#set smtp_url="smtps://dxtr@fastmail.fm:$fastmail_password@mail.messagingengine.com:465"
 unset record
 set postponed="+fastmail/INBOX.Drafts"
 set trash="+fastmail/INBOX.Trash"
@@ -57,7 +55,6 @@ set sort_aux=last-date-received
 set move=no
 set markers=no
 set pager_index_lines= 5
-
 
 set sidebar_delim='|'
 set sidebar_visible=yes
