@@ -22,10 +22,10 @@ localfolders = ~/.mail/fastmail
 [Repository FastMail-remote]
 maxconnections = 2
 type = IMAP
-remotehost = mail.messagingengine.com
-remoteport = 993
-remotepasseval = get_account_info(account='fastmail')['username']
-remoteusereval = get_account_info(account='fastmail')['password']
+remotehosteval = get_account_info(account='fastmail')['imap']['host']
+remoteporteval = get_account_info(account='fastmail')['imap']['port']
+remotepasseval = get_account_info(account='fastmail')['imap']['password']
+remoteusereval = get_account_info(account='fastmail')['imap']['username']
 ssl = yes
 cert_fingerprint = fa86c1ca2d4f805e8fe7b8e7076a3ad2ccc52bb4
 realdelete = no
