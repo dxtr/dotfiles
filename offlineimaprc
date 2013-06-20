@@ -24,7 +24,6 @@ maxconnections = 2
 type = IMAP
 remotehost = mail.messagingengine.com
 remoteport = 993
-remoteuser = dxtr@fastmail.fm
 remotepasseval = get_account_info(account='fastmail')['username']
 remoteusereval = get_account_info(account='fastmail')['password']
 ssl = yes
