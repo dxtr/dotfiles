@@ -12,6 +12,10 @@ if [[ $(uname) = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
 	if [[ -f /etc/arch-release ]]; then
 		plugins+=(archlinux systemd)
+		export OWL_AUR_HOME=/tmp/$(whoami)-aur
+		export OWL_EDITOR=vim
+		export OWL_IGNORE_OUTDATED=true
+		export OWL_CLEAN_UP=true
 		if pacman -Q|grep source-highlight &> /dev/null
 		then
 			export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"

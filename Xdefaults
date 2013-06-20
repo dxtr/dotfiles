@@ -11,12 +11,13 @@ Xcursor.size: 16
 !}}}
 
 !{{{ XFT
-Xft.dpi:       96
-Xft.antialias: true
-Xft.hinting:   true
-Xft.autohint:  true
-Xft.hintstyle: hintfull
-Xft.rgba:      rgb
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.dpi: 96
+Xft.rgba: rgb
 !}}}
 
 !{{{ xterm
@@ -37,6 +38,7 @@ xterm*selectToClipboard: false
 !{{{ URXVT
 URxvt*loginShell:         true
 URxvt*scrollBar:         false
+URxvt*scrollstyle:       plain
 URxvt*secondaryScroll:    true
 URxvt*saveLines:         16384
 URxvt*urgentOnBell:       true
@@ -58,8 +60,14 @@ URxvt.underlineurls:    true
 URxvt.matcher.button: 1
 ! Catch ugly URLs
 URxvt*cutchars:        '"'()*<>[]{|}
-URxvt*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
-URxvt*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
+!URxvt*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+!URxvt*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
+
+urxvt*font: 			xft:DejaVu Sans Mono:pixelsize=13:antialias=true:hinting=true
+urxvt*boldFont: 		xft:DejaVu Sans Mono:pixelsize=13:antialias=true:bold:hinting=true
+urxvt*italicFont: 		xft:DejaVu Sans Mono:pixelsize=13:antialias=true:italic:autohint=true:hinting=true
+urxvt*bolditalicFont: 		xft:DejaVu Sans Mono:pixelsize=13:antialias=true:bold:italic:autohint=true:hinting=true
+
 URxvt*internalBorder: 0
 URxvt*externalBorder: 0
 URxvt*borderLess: false
