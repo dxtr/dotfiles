@@ -1,0 +1,98 @@
+set tmpdir="~/.mutt/temp"
+set editor=`echo \$EDITOR`
+set mbox_type=Maildir
+set folder="~/.mail"
+set spoolfile="+fastmail/INBOX"
+mailboxes +fastmail/INBOX \
+        +fastmail/INBOX.Archive \
+        +fastmail/INBOX.Axema \
+        +fastmail/INBOX.Axema.Personal \
+        +fastmail/INBOX.Axema.Sent \
+        +fastmail/INBOX.Axema.SJ \
+        +fastmail/INBOX.Axema.Tickets \
+        +fastmail/INBOX.Axema.Viktigt \
+        +fastmail/INBOX.devious \
+        +fastmail/INBOX.devious.Sent \
+        +fastmail/INBOX.Drafts \
+        +fastmail/INBOX.Gmail \
+        +fastmail/INBOX.Gmail.Sent \
+        "+fastmail/INBOX.Junk Mail" \
+        "+fastmail/INBOX.Mailing lists.DFRI" \
+        "+fastmail/INBOX.Mailing lists.tor-announce" \
+        "+fastmail/INBOX.Mailing lists.tor-dev" \
+        "+fastmail/INBOX.Mailing lists.tor-relays" \
+        "+fastmail/INBOX.Sent Items" \
+        +fastmail/INBOX.Viktigt \
+        +fastmail/INBOX.Viktigt.Fakturor \
+        +fastmail/INBOX.Viktigt.Kvitton \
+        +fastmail/INBOX.Trash \
+        +fastmail/INBOX.Drafts
+
+unset record
+set postponed="+fastmail/INBOX.Drafts"
+set trash="+fastmail/INBOX.Trash"
+set ssl_force_tls=yes
+unset imap_passive
+set imap_check_subscribed
+set mail_check=60
+set timeout=10
+set alias_file="~/.mutt/alias"
+set certificate_file="~/.mutt/certificates"
+set mailcap_path="~/.mutt/mailcap"
+set signature="~/.mutt/sig"
+set header_cache="~/.cache/mutt"
+set message_cachedir="~/.cache/mutt"
+set net_inc=5
+set wait_key=no
+set timeout=3
+set mail_check=0
+set beep_new
+set pipe_decode
+set thorough_search
+set send_charset="utf-8"
+set sort=threads
+set sort_aux=last-date-received
+set move=no
+set markers=no
+set pager_index_lines= 5
+
+set sidebar_delim='|'
+set sidebar_visible=yes
+set sidebar_width=40
+set sidebar_shortpath = yes
+
+set status_chars=" *%A"
+set status_format="───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+ignore *
+unignore from: to: cc: date: subject:
+unhdr_order *
+hdr_order from: to: cc: date: subject:
+
+macro index <F8> \
+      "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --prompt search<enter><change-folder-readonly>~/.cache/mutt/search<enter>" \
+      "search mail (using notmuch)"
+macro index <F9> \
+      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt thread<enter><change-folder-readonly>~/.cache/mutt/search<enter><enter-command>set wait_key<enter>" \
+      "search and reconstruct owning thread (using notmuch)"
+
+bind index <left> sidebar-prev
+bind index <right> sidebar-next
+bind index <space> sidebar-open
+
+color indicator brightred black
+color status green default
+color tree white default
+color tilde brightmagenta default
+color attachment white default
+color bold white default
+color error brightred default
+color markers brightred white
+color message brightred default
+color search white default
+color normal white default
+color hdrdefault cyan default
+color quoted blue default
+color signature black default
+color index blue default ~F # flagged
+color index brightred white ~N # new

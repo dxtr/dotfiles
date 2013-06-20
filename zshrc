@@ -4,8 +4,7 @@ DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
 
-plugins=(ssh-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync)
-
+plugins=(gpg-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
 
 if [[ $(uname) = "Linux" ]]; then
@@ -69,6 +68,10 @@ elif [[ $(uname) = "Darwin" ]]; then
 	export PATH="/Users/dxtr/perl5/perlbrew/bin:/Users/dxtr/perl5/perlbrew/perls/perl-5.16.1/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin"
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
 	export LANG=en_US.UTF-8
+	export JAVA_HOME="$(/usr/libexec/java_home)"
+	#export EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
+	#export EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
+	#export EC2_AMITOOL_HOME="/usr/local/Library/LinkedKegs/ec2-ami-tools/jars"
 	compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
 	alias run='open -a'
 fi
@@ -126,10 +129,12 @@ alias -s gif="xv"
 alias -s jpg="xv"
 alias -s pdf="xpdf"
 
-if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
-	source $HOME/perl5/perlbrew/etc/bashrc
-else
-	eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+if [[ -d "$HOME/perl5" ]]; then
+	if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
+		source $HOME/perl5/perlbrew/etc/bashrc
+	else
+		eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+	fi
 fi
 
 if [[ -d "$HOME/go" ]]; then
