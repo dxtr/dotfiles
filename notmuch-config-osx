@@ -1,0 +1,17 @@
+[database]
+path=/Users/dxtr/.mail/fastmail
+
+[user]
+name=Kim Lidström
+primary_email=dxtr@fastmail.fm
+other_email=kim@axema.se;kim@dxtr.cc;dxtr@devio.us;
+
+[new]
+tags=unread;inbox;
+ignore=
+
+[search]
+exclude_tags=deleted;spam;
+
+[maildir]
+synchronize_flags=true
