@@ -65,6 +65,7 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 		alias gdb="/usr/local/bin/egdb"
 	fi
 elif [[ $(uname) = "Darwin" ]]; then
+	plugins=(${plugins#gpg-agent})
 	export PATH="/Users/dxtr/perl5/perlbrew/bin:/Users/dxtr/perl5/perlbrew/perls/perl-5.16.1/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin"
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
 	export LANG=en_US.UTF-8
@@ -146,5 +147,12 @@ export GEM_HOME="$HOME/.gem"
 export EDITOR=vim
 export TZ="Europe/Stockholm"
 export GPG_TTY=`tty`
+
+if command -v nc &>/dev/null; then
+	alias ssh-tor='ssh -o "ProxyCommand nc -X 5 -x 192.168.12.254:9050 %h %p"'
+elif command -v torsocks &>/dev/null; then
+	export TORSOCKS_CONF_FILE="$HOME/.torsocks.conf"
+	alias ssh-tor='torsocks ssh'
+fi
 
 typeset -U path cdpath manpath fpath
