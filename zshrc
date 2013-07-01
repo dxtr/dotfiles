@@ -150,8 +150,8 @@ if [[ -d "$HOME/.gnupg" ]]; then
 		chmod 600 "$HOME/.gnupg/gpg-agent.env"
 		export GPG_AGENT_INFO
 	fi
+	export GPG_TTY=$(tty)
 fi
-export GPG_TTY=$(tty)
 
 export GEM_HOME="$HOME/.gem"
 export EDITOR=vim
