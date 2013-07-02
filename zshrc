@@ -4,7 +4,7 @@ DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
 
-plugins=(gpg-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
+plugins=(ssh-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
 
 if [[ $(uname) = "Linux" ]]; then
@@ -142,9 +142,26 @@ if [[ -d "$HOME/go" ]]; then
 	export PATH=$PATH:~/go/bin
 fi
 
+if [[ -d "$HOME/.gnupg" ]]; then
+	if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
+		. "$HOME/.gnupg/gpg-agent.env"
+	else
+		eval $(/usr/bin/env gpg-agent --quiet --daemon --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+		chmod 600 "$HOME/.gnupg/gpg-agent.env"
+		export GPG_AGENT_INFO
+	fi
+	export GPG_TTY=$(tty)
+fi
+
 export GEM_HOME="$HOME/.gem"
 export EDITOR=vim
 export TZ="Europe/Stockholm"
-export GPG_TTY=`tty`
+
+if command -v nc &>/dev/null; then
+	alias ssh-tor='ssh -o "ProxyCommand nc -X 5 -x 192.168.12.254:9050 %h %p"'
+elif command -v torsocks &>/dev/null; then
+	export TORSOCKS_CONF_FILE="$HOME/.torsocks.conf"
+	alias ssh-tor='torsocks ssh'
+fi
 
 typeset -U path cdpath manpath fpath
