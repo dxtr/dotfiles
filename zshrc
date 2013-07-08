@@ -58,12 +58,17 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
 	export PATH="$PATH:/usr/local/go/bin:/usr/games"
 	export GOPATH="/usr/local/go/"
+	export LANG="en_US.UTF-8"
 	export LC_CTYPE="en_US.UTF-8"
+	export LC_ALL=en_US.UTF-8
 	export LESSCHARSET="utf-8"
+	export MAIL=$HOME/mail
 
 	if [[ -f "/usr/local/bin/egdb" ]]; then
 		alias gdb="/usr/local/bin/egdb"
 	fi
+
+	/usr/bin/skeyaudit -i
 elif [[ $(uname) = "Darwin" ]]; then
 	export PATH="/Users/dxtr/perl5/perlbrew/bin:/Users/dxtr/perl5/perlbrew/perls/perl-5.16.1/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin"
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
@@ -162,6 +167,10 @@ if command -v nc &>/dev/null; then
 elif command -v torsocks &>/dev/null; then
 	export TORSOCKS_CONF_FILE="$HOME/.torsocks.conf"
 	alias ssh-tor='torsocks ssh'
+fi
+
+if command -v gpg2 &>/dev/null; then
+	alias gpg='gpg2'
 fi
 
 typeset -U path cdpath manpath fpath
