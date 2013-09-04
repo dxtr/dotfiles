@@ -3,11 +3,13 @@ ZSH_THEME="dxtr-repos"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
+CURRENT_OS=$(uname)
+CURRENT_ARCH=$(uname -m)
 
 plugins=(ssh-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
 
-if [[ $(uname) = "Linux" ]]; then
+if [[ $CURRENT_OS = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
 	if [[ -f /etc/arch-release ]]; then
 		plugins+=(archlinux systemd)
@@ -36,7 +38,7 @@ if [[ $(uname) = "Linux" ]]; then
 	ulimit -c unlimited
 
 	zmodload zsh/attr
-elif [[ $(uname) = "FreeBSD" ]]; then
+elif [[ $CURRENT_OS = "FreeBSD" ]]; then
 	plugins+=(gnu-utils)
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
@@ -47,7 +49,7 @@ elif [[ $(uname) = "FreeBSD" ]]; then
 		fi
 		alias ls="/usr/local/bin/gls --color=auto"
 	fi
-elif [[ $(uname) = "OpenBSD" ]]; then
+elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	plugins+=()
 	if [[ $TERM = "rxvt-unicode-256color" ]]; then
 		export TERM=rxvt-256color
@@ -64,8 +66,9 @@ elif [[ $(uname) = "OpenBSD" ]]; then
 	if [[ -f "/usr/local/bin/egdb" ]]; then
 		alias gdb="/usr/local/bin/egdb"
 	fi
-elif [[ $(uname) = "Darwin" ]]; then
-	export PATH="/Users/dxtr/perl5/perlbrew/bin:/Users/dxtr/perl5/perlbrew/perls/perl-5.16.1/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin"
+elif [[ $CURRENT_OS = "Darwin" ]]; then
+	plugins=(${plugins#ssh-agent})
+	export PATH="/Users/dxtr/perl5/perlbrew/bin:/Users/dxtr/perl5/perlbrew/perls/perl-5.16.1/bin:/usr/local/opt/ruby/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Applications/Xcode.app/Contents/Developer/usr/bin"
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
 	export LANG=en_US.UTF-8
 	export JAVA_HOME="$(/usr/libexec/java_home)"
@@ -74,6 +77,18 @@ elif [[ $(uname) = "Darwin" ]]; then
 	#export EC2_AMITOOL_HOME="/usr/local/Library/LinkedKegs/ec2-ami-tools/jars"
 	compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
 	alias run='open -a'
+	export HOMEBREW_NO_EMOJI=y
+	export HOMEBREW_CC="clang"
+
+	if [[ -f "$HOME/.homebrew.sh" ]]; then
+		. $HOME/.homebrew.sh
+	fi
+fi
+
+if [[ $CURRENT_ARCH = "x86_64" ]]; then
+	if command -v wine &>/dev/null; then
+		export WINEARCH=win32
+	fi
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -163,5 +178,10 @@ elif command -v torsocks &>/dev/null; then
 	export TORSOCKS_CONF_FILE="$HOME/.torsocks.conf"
 	alias ssh-tor='torsocks ssh'
 fi
+
+if command -v xterm &>/dev/null && command -v uxterm &>/dev/null; then
+	alias xterm='uxterm'
+fi
+
 
 typeset -U path cdpath manpath fpath

@@ -1,3 +1,4 @@
+set status_on_top=yes
 set tmpdir="~/.mutt/temp"
 set editor=`echo \$EDITOR`
 set mbox_type=Maildir
@@ -56,10 +57,13 @@ set move=no
 set markers=no
 set pager_index_lines= 5
 
-set sidebar_delim='|'
+set sidebar_delim='] '
 set sidebar_visible=yes
-set sidebar_width=40
-set sidebar_shortpath = yes
+set sidebar_width=30
+#set sidebar_shortpath = yes
+
+macro index K ":push <sidebar-prev><sidebar-open><enter>"
+macro index J ":push <sidebar-next><sidebar-open><enter>"
 
 set status_chars=" *%A"
 set status_format="───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
