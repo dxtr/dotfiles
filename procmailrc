@@ -1,0 +1,54 @@
+#PATH=/bin:/usr/bin:/usr/local/bin
+MAILDIR=$HOME/mail/
+DEFAULT=$HOME/mail/
+LOGFILE=/home/dxtr/.procmail/log
+SHELL=/bin/sh
+
+:0
+* ^TO.*@fastmail\.fm
+{
+	:0
+	.Fastmail/
+}
+
+:0
+* ^TOdxtr@telia\.com
+{
+	:0
+	.Telia/
+}
+
+:0
+* ^TO.*@axema\.se
+{
+	:0
+	* ^From.*trac@axema\.se.*
+	.Axema.Tickets/
+
+	:0
+	* ^X-Trac-.*
+	.Axema.Tickets/
+
+	:0
+	* ^From.*@sj\.se.*
+	.Axema.SJ/
+
+	:0
+	* ^Sender.*personal@axema\.se.*
+	.Axema.Personal/
+
+	:0
+	* ^Subject.*\[personal\].*
+	.Axema.Personal/
+
+	:0
+	.Axema/
+}
+
+:0
+* ^TOdxtr@devio\.us
+{
+	:0
+	.devious/
+}
+

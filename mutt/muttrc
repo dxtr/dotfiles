@@ -1,4 +1,6 @@
-set status_on_top=yes
+source ~/.mutt/personal
+
+set use_from=yes
 set tmpdir="~/.mutt/temp"
 set editor=`echo \$EDITOR`
 set mbox_type=Maildir
@@ -6,6 +8,8 @@ set folder="~/.mail"
 set spoolfile="+fastmail/INBOX"
 mailboxes +fastmail/INBOX \
         +fastmail/INBOX.Archive \
+	+fastmail/INBOX.Archive.Kvitton \
+	+fastmail/INBOX.Archive.Fakturor \
         +fastmail/INBOX.Axema \
         +fastmail/INBOX.Axema.Personal \
         +fastmail/INBOX.Axema.Sent \
@@ -23,9 +27,6 @@ mailboxes +fastmail/INBOX \
         "+fastmail/INBOX.Mailing lists.tor-dev" \
         "+fastmail/INBOX.Mailing lists.tor-relays" \
         "+fastmail/INBOX.Sent Items" \
-        +fastmail/INBOX.Viktigt \
-        +fastmail/INBOX.Viktigt.Fakturor \
-        +fastmail/INBOX.Viktigt.Kvitton \
         +fastmail/INBOX.Trash \
         +fastmail/INBOX.Drafts
 
@@ -65,6 +66,7 @@ set sidebar_width=30
 macro index K ":push <sidebar-prev><sidebar-open><enter>"
 macro index J ":push <sidebar-next><sidebar-open><enter>"
 
+set status_on_top=yes
 set status_chars=" *%A"
 set status_format="───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
 

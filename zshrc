@@ -60,14 +60,19 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
 	export PATH="$PATH:/usr/local/go/bin:/usr/games"
 	export GOPATH="/usr/local/go/"
+	export LANG="en_US.UTF-8"
 	export LC_CTYPE="en_US.UTF-8"
+	export LC_ALL=en_US.UTF-8
 	export LESSCHARSET="utf-8"
+	export MAIL=$HOME/mail
 
 	if [[ -f "/usr/local/bin/egdb" ]]; then
 		alias gdb="/usr/local/bin/egdb"
 	fi
+
+	/usr/bin/skeyaaudit -i
 elif [[ $CURRENT_OS = "Darwin" ]]; then
-	plugins=(${plugins#ssh-agent})
+	plugins=(${plugins#ssh-agent}) # Don't use ssh-agent on Darwin/OSX
 	export PATH="/Users/dxtr/perl5/perlbrew/bin:/Users/dxtr/perl5/perlbrew/perls/perl-5.16.1/bin:/usr/local/opt/ruby/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Applications/Xcode.app/Contents/Developer/usr/bin"
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
 	export LANG=en_US.UTF-8
@@ -183,5 +188,8 @@ if command -v xterm &>/dev/null && command -v uxterm &>/dev/null; then
 	alias xterm='uxterm'
 fi
 
+if command -v gpg2 &>/dev/null; then
+	alias gpg='gpg2'
+fi
 
 typeset -U path cdpath manpath fpath
