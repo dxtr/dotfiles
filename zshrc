@@ -82,6 +82,7 @@ elif [[ $CURRENT_OS = "Darwin" ]]; then
 	#export EC2_AMITOOL_HOME="/usr/local/Library/LinkedKegs/ec2-ami-tools/jars"
 	compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
 	alias run='open -a'
+	alias which='/usr/bin/which'
 	export HOMEBREW_NO_EMOJI=y
 	export HOMEBREW_CC="clang"
 
@@ -149,6 +150,11 @@ alias -s gif="xv"
 alias -s jpg="xv"
 alias -s pdf="xpdf"
 
+if [[ -d "$HOME/.gem" ]]; then
+	export PATH="$HOME/.gem/bin/:$PATH"
+	export GEM_HOME="$HOME/.gem"
+fi
+
 if [[ -d "$HOME/perl5" ]]; then
 	if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
 		source $HOME/perl5/perlbrew/etc/bashrc
@@ -173,9 +179,20 @@ if [[ -d "$HOME/.gnupg" ]]; then
 	export GPG_TTY=$(tty)
 fi
 
-export GEM_HOME="$HOME/.gem"
+if command -v virtualenv &>/dev/null; then
+	if command -v virtualenvwrapper.sh &>/dev/null; then
+		source $(command -v virtualenvwrapper.sh)
+		export WORKON_HOME=$HOME/projects
+	fi
+	syspip(){
+		PIP_REQUIRE_VIRTUALENV="" pip "$@"
+	}
+fi
+
 export EDITOR=vim
 export TZ="Europe/Stockholm"
+export PIP_REQUIRE_VIRTUALENV=true
+export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 
 if command -v nc &>/dev/null; then
 	alias ssh-tor='ssh -o "ProxyCommand nc -X 5 -x 192.168.12.254:9050 %h %p"'
