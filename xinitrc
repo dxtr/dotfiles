@@ -1,5 +1,5 @@
-wm=wmii
-xkbmap=se
+wm=spectrwm
+#xkbmap=se
 
 xrdb ~/.Xdefaults
 xsetroot -solid black
@@ -22,7 +22,7 @@ elif [ "$(uname)" == "OpenBSD" ]; then
 	unclutter -idle 3 -root &
 fi
 
-setxkbmap $xkbmap
+#setxkbmap $xkbmap
 xset s off
 xmodmap -e 'remove Lock = Caps_Lock' -e 'keysym Caps_Lock = Escape'
 urxvtd -q -f -o

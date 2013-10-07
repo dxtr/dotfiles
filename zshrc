@@ -6,7 +6,7 @@ DISABLE_AUTO_UPDATE="true"
 CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
 
-plugins=(ssh-agent cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
+plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
 
 if [[ $CURRENT_OS = "Linux" ]]; then
@@ -34,6 +34,7 @@ if [[ $CURRENT_OS = "Linux" ]]; then
 
 	alias grep="$grep_path --color=auto"
 	alias grepn="$grep_path -n --color=auto"
+	alias rstbl="xbacklight -set 75"
 
 	ulimit -c unlimited
 
@@ -172,7 +173,11 @@ if [[ -d "$HOME/.gnupg" ]]; then
 	if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
 		. "$HOME/.gnupg/gpg-agent.env"
 	else
-		eval $(/usr/bin/env gpg-agent --quiet --daemon --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+		if [[ $CURRENT_OS != "Darwin" ]]; then
+			eval $(/usr/bin/env gpg-agent --quiet --daemon --enable-ssh-support --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+		else
+			eval $(/usr/bin/env gpg-agent --quiet --daemon --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+		fi
 		chmod 600 "$HOME/.gnupg/gpg-agent.env"
 		export GPG_AGENT_INFO
 	fi
