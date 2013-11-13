@@ -59,13 +59,13 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	export OPENBSD_CVSROOT="anoncvs@anoncvs.eu.openbsd.org:/cvs"
 	DISABLE_LS_COLORS="true"
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
-	export PATH="$PATH:/usr/local/go/bin:/usr/games"
 	export GOPATH="/usr/local/go/"
 	export LANG="en_US.UTF-8"
 	export LC_CTYPE="en_US.UTF-8"
 	export LC_ALL=en_US.UTF-8
 	export LESSCHARSET="utf-8"
 	export MAIL=$HOME/mail
+	path+=(/usr/games)
 
 	if [[ -f "/usr/local/bin/egdb" ]]; then
 		alias gdb="/usr/local/bin/egdb"
@@ -74,7 +74,18 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	/usr/bin/skeyaaudit -i
 elif [[ $CURRENT_OS = "Darwin" ]]; then
 	plugins=(${plugins#ssh-agent}) # Don't use ssh-agent on Darwin/OSX
-	export PATH="$HOME/perl5/perlbrew/bin:$HOME/perl5/perlbrew/perls/perl-5.16.1/bin:/usr/local/opt/ruby/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Applications/Xcode.app/Contents/Developer/usr/bin"
+	path=(
+		/usr/local/opt/ruby/bin
+		/usr/local/bin
+		/usr/local/sbin
+		/usr/local/opt/ruby/bin
+		/usr/bin
+		/usr/sbin
+		/bin
+		/sbin
+		/opt/X11/bin
+		/Applications/Xcode.app/Contents/Developer/usr/bin
+	)
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
 	export LANG=en_US.UTF-8
 	export JAVA_HOME="$(/usr/libexec/java_home)"
@@ -86,11 +97,12 @@ elif [[ $CURRENT_OS = "Darwin" ]]; then
 	alias which='/usr/bin/which'
 	export HOMEBREW_NO_EMOJI=y
 	export HOMEBREW_CC="clang"
-
-	if [[ -f "$HOME/.homebrew.sh" ]]; then
-		. $HOME/.homebrew.sh
+	
+	if [[ -d "$HOME/perl5/perlbrew/bin" ]]; then
+		path+=($HOME/perl5/perlbrew/bin)
 	fi
 fi
+
 
 if [[ $CURRENT_ARCH = "x86_64" ]]; then
 	if command -v wine &>/dev/null; then
@@ -151,9 +163,17 @@ alias -s gif="xv"
 alias -s jpg="xv"
 alias -s pdf="xpdf"
 
-if [[ -d "$HOME/.gem" ]]; then
-	export PATH="$HOME/.gem/bin/:$PATH"
-	export GEM_HOME="$HOME/.gem"
+if [[ -d "$HOME/go" ]]; then
+	path+=($HOME/go/bin)
+	export GOPATH=$HOME/go
+
+	if [[ ! -d "$HOME/go/bin" ]]; then
+		mkdir $HOME/go/bin
+	fi
+
+	if [[ ! -d "$HOME/go/src" ]]; then
+		mkdir $HOME/go/src
+	fi
 fi
 
 if [[ -d "$HOME/perl5" ]]; then
@@ -164,9 +184,17 @@ if [[ -d "$HOME/perl5" ]]; then
 	fi
 fi
 
-if [[ -d "$HOME/go" ]]; then
-	export GOPATH=~/go:$GOPATH
-	export PATH=$PATH:~/go/bin
+if [[ -d "$HOME/.cabal" ]]; then
+	path+=("$HOME/.cabal/bin")
+fi
+
+if [[ -d "$HOME/.gem" ]]; then
+	path+=("$HOME/.gem/bin")
+	export GEM_HOME="$HOME/.gem"
+fi
+
+if [[ -d "$HOME/bin" ]]; then
+	path+=("$HOME/bin")
 fi
 
 if [[ -d "$HOME/.gnupg" ]]; then
@@ -179,8 +207,8 @@ if [[ -d "$HOME/.gnupg" ]]; then
 			eval $(/usr/bin/env gpg-agent --quiet --daemon --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
 		fi
 		chmod 600 "$HOME/.gnupg/gpg-agent.env"
-		export GPG_AGENT_INFO
 	fi
+	export GPG_AGENT_INFO
 	export GPG_TTY=$(tty)
 fi
 
@@ -189,10 +217,11 @@ if command -v virtualenv &>/dev/null; then
 		source $(command -v virtualenvwrapper.sh)
 		export WORKON_HOME=$HOME/projects
 	fi
-	syspip(){
-		PIP_REQUIRE_VIRTUALENV="" pip "$@"
-	}
 fi
+
+syspip(){
+	PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
 
 export EDITOR=vim
 export TZ="Europe/Stockholm"

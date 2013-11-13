@@ -99,7 +99,6 @@ slprj/
 *.psm
 *.bak
 *.cmp
-*.jpg
 *.html
 *.bsf
 
@@ -189,7 +188,6 @@ Icon
 *.cmp
 *.eqn
 *.html
-*.jpg
 *.bak
 *.qar
 *.sopc_builder
