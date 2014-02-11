@@ -5,7 +5,6 @@ COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
 CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
-
 plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
 
@@ -100,6 +99,10 @@ elif [[ $CURRENT_OS = "Darwin" ]]; then
 	
 	if [[ -d "$HOME/perl5/perlbrew/bin" ]]; then
 		path+=($HOME/perl5/perlbrew/bin)
+	fi
+
+	if [[ -d "/usr/local/CrossPack-AVR/bin" ]]; then
+		path+=(/usr/local/CrossPack-AVR/bin)
 	fi
 fi
 
