@@ -1,0 +1,5 @@
+[core]
+	excludesfile = /Users/dxtr/.gitignore
+	editor = vim
+[push]
+	default = simple
