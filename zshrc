@@ -5,6 +5,7 @@ COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
 CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
+
 plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
 
@@ -58,7 +59,7 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	export OPENBSD_CVSROOT="anoncvs@anoncvs.eu.openbsd.org:/cvs"
 	DISABLE_LS_COLORS="true"
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
-	export PATH="$PATH:/usr/local/go/bin:/usr/games"
+	path+=(/usr/games)
 	export GOPATH="/usr/local/go/"
 	export LANG="en_US.UTF-8"
 	export LC_CTYPE="en_US.UTF-8"
@@ -73,7 +74,17 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	/usr/bin/skeyaaudit -i
 elif [[ $CURRENT_OS = "Darwin" ]]; then
 	plugins=(${plugins#ssh-agent}) # Don't use ssh-agent on Darwin/OSX
-	export PATH="$HOME/perl5/perlbrew/bin:$HOME/perl5/perlbrew/perls/perl-5.16.1/bin:/usr/local/opt/ruby/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Applications/Xcode.app/Contents/Developer/usr/bin"
+	path=(/usr/local/opt/ruby/bin
+		/usr/local/bin
+		/usr/local/sbin
+		/usr/local/opt/ruby/bin
+		/usr/bin
+		/usr/sbin
+		/bin
+		/sbin
+		/opt/X11/bin
+		/Applications/Xcode.app/Contents/Developer/usr/bin
+	)
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
 	export LANG=en_US.UTF-8
 	export JAVA_HOME="$(/usr/libexec/java_home)"
@@ -86,8 +97,8 @@ elif [[ $CURRENT_OS = "Darwin" ]]; then
 	export HOMEBREW_NO_EMOJI=y
 	export HOMEBREW_CC="clang"
 
-	if [[ -f "$HOME/.homebrew.sh" ]]; then
-		. $HOME/.homebrew.sh
+	if [[ -d "$HOME/perl5/perlbrew/bin" ]]; then
+		path+=($HOME/perl5/perlbrew/bin)
 	fi
 
 	if [[ -d "/usr/local/CrossPack-AVR/bin" ]]; then
@@ -155,7 +166,7 @@ alias -s jpg="xv"
 alias -s pdf="xpdf"
 
 if [[ -d "$HOME/.gem" ]]; then
-	export PATH="$HOME/.gem/bin/:$PATH"
+	path+="$HOME/.gem/bin/:$PATH"
 	export GEM_HOME="$HOME/.gem"
 fi
 
@@ -169,7 +180,7 @@ fi
 
 if [[ -d "$HOME/go" ]]; then
 	export GOPATH=~/go:$GOPATH
-	export PATH=$PATH:~/go/bin
+	path+="$PATH:~/go/bin"
 fi
 
 if command -v keychain &>/dev/null && [[ $CURRENT_OS != "Darwin" ]]; then
