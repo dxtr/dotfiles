@@ -170,7 +170,8 @@ if [[ -d "$HOME/go" ]]; then
 fi
 
 if command -v keychain &>/dev/null && [[ $CURRENT_OS != "Darwin" ]]; then
-
+	echo "Keychaining..."
+	eval $(keychain --ignore-missing --quick --quiet --nocolor --nogui --eval id_rsa 46726B9A)
 elif [[ -d "$HOME/.gnupg" ]]; then
 	if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
 		. "$HOME/.gnupg/gpg-agent.env"
