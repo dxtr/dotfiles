@@ -77,7 +77,6 @@ elif [[ $CURRENT_OS = "Darwin" ]]; then
 	path=(/usr/local/opt/ruby/bin
 		/usr/local/bin
 		/usr/local/sbin
-		/usr/local/opt/ruby/bin
 		/usr/bin
 		/usr/sbin
 		/bin
