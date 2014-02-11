@@ -180,7 +180,11 @@ fi
 
 if [[ -d "$HOME/go" ]]; then
 	export GOPATH=~/go:$GOPATH
-	path+="$PATH:~/go/bin"
+	path+="$HOME/go/bin"
+fi
+
+if [[ -d "$HOME/.cabal/bin" ]]; then
+	path+="$HOME/.cabal/bin"
 fi
 
 if command -v keychain &>/dev/null && [[ $CURRENT_OS != "Darwin" ]]; then
