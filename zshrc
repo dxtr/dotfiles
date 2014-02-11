@@ -169,7 +169,9 @@ if [[ -d "$HOME/go" ]]; then
 	export PATH=$PATH:~/go/bin
 fi
 
-if [[ -d "$HOME/.gnupg" ]]; then
+if command -v keychain &>/dev/null && [[ $CURRENT_OS != "Darwin" ]]; then
+
+elif [[ -d "$HOME/.gnupg" ]]; then
 	if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
 		. "$HOME/.gnupg/gpg-agent.env"
 	else
