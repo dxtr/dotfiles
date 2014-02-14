@@ -184,8 +184,13 @@ if [[ -d "$HOME/perl5" ]]; then
 	fi
 fi
 
-if command -v keychain &>/dev/null && [[ $CURRENT_OS != "Darwin" ]]; then
-	eval $(keychain --ignore-missing --quick --quiet --nocolor --nogui --eval id_rsa 46726B9A)
+if command -v keychain &>/dev/null; then
+	if [[ $CURRENT_OS != "Darwin" ]]; then
+		eval $(keychain --ignore-missing --quick --quiet --nocolor --nogui --eval id_rsa 46726B9A)
+	else
+		eval $(keychain --agents gpg --ignore-missing --quick --quiet --nocolor --nogui --eval 46726B9A)
+		echo $GPG_AGENT_INFO
+	fi
 elif [[ -d "$HOME/.gnupg" ]]; then
 	if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
 		. "$HOME/.gnupg/gpg-agent.env"
@@ -198,8 +203,9 @@ elif [[ -d "$HOME/.gnupg" ]]; then
 		chmod 600 "$HOME/.gnupg/gpg-agent.env"
 		export GPG_AGENT_INFO
 	fi
-	export GPG_TTY=$(tty)
 fi
+
+export GPG_TTY=$(tty)
 
 if command -v virtualenv &>/dev/null; then
 	if command -v virtualenvwrapper.sh &>/dev/null; then
