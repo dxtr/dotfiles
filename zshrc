@@ -189,7 +189,6 @@ if command -v keychain &>/dev/null; then
 		eval $(keychain --ignore-missing --quick --quiet --nocolor --nogui --eval id_rsa 46726B9A)
 	else
 		eval $(keychain --agents gpg --ignore-missing --quick --quiet --nocolor --nogui --eval 46726B9A)
-		echo $GPG_AGENT_INFO
 	fi
 elif [[ -d "$HOME/.gnupg" ]]; then
 	if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
