@@ -5,6 +5,7 @@ COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
 CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
+EXTRA_PATHS=("$HOME/.local/bin" "$HOME/go/bin" "$HOME/.cabal/bin" "$HOME/.gem/bin")
 
 plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
@@ -24,6 +25,8 @@ if [[ $CURRENT_OS = "Linux" ]]; then
 		fi
 	elif [[ -f /etc/debian_version ]]; then
 		plugins+=(debian)
+	elif [[ -f /usr/bin/crux ]]; then
+
 	fi
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
@@ -164,8 +167,12 @@ alias -s gif="xv"
 alias -s jpg="xv"
 alias -s pdf="xpdf"
 
+for p in $EXTRA_PATHS; do
+	test -d $p && path+=$p
+done
+
 if [[ -d "$HOME/.gem" ]]; then
-	path+="$HOME/.gem/bin/:$PATH"
+	path+="$HOME/.gem/bin/"
 	export GEM_HOME="$HOME/.gem"
 fi
 
@@ -177,17 +184,7 @@ if [[ -d "$HOME/perl5" ]]; then
 	fi
 fi
 
-if [[ -d "$HOME/go" ]]; then
-	export GOPATH=~/go:$GOPATH
-	path+="$HOME/go/bin"
-fi
-
-if [[ -d "$HOME/.cabal/bin" ]]; then
-	path+="$HOME/.cabal/bin"
-fi
-
 if command -v keychain &>/dev/null && [[ $CURRENT_OS != "Darwin" ]]; then
-	echo "Keychaining..."
 	eval $(keychain --ignore-missing --quick --quiet --nocolor --nogui --eval id_rsa 46726B9A)
 elif [[ -d "$HOME/.gnupg" ]]; then
 	if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
@@ -218,13 +215,6 @@ export EDITOR=vim
 export TZ="Europe/Stockholm"
 export PIP_REQUIRE_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
-
-if command -v nc &>/dev/null; then
-	alias ssh-tor='ssh -o "ProxyCommand nc -X 5 -x 192.168.12.254:9050 %h %p"'
-elif command -v torsocks &>/dev/null; then
-	export TORSOCKS_CONF_FILE="$HOME/.torsocks.conf"
-	alias ssh-tor='torsocks ssh'
-fi
 
 if command -v xterm &>/dev/null && command -v uxterm &>/dev/null; then
 	alias xterm='uxterm'
