@@ -34,11 +34,7 @@ if [[ $CURRENT_OS = "Linux" ]]; then
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
 
-	test -f "$HOME/.dircolors" && 
-
-	if [[ -f "$HOME/.dircolors" ]]; then
-		eval `dircolors ~/.dircolors`
-	fi
+	test -f "$HOME/.dircolors" && eval `dircolors ~/.dircolors`
 
 	alias grep="$grep_path --color=auto"
 	alias grepn="$grep_path -n --color=auto"
