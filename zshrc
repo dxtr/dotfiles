@@ -6,6 +6,7 @@ DISABLE_AUTO_UPDATE="true"
 CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
 EXTRA_PATHS=("$HOME/.local/bin" "$HOME/go/bin" "$HOME/.cabal/bin" "$HOME/.gem/bin")
+EXTRA_MANPATHS=("$HOME/.local/share/man")
 
 plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
@@ -26,10 +27,14 @@ if [[ $CURRENT_OS = "Linux" ]]; then
 	elif [[ -f /etc/debian_version ]]; then
 		plugins+=(debian)
 	elif [[ -f /usr/bin/crux ]]; then
-
+		pkg_db="/var/lib/pkg/db"
+		hash -d ports=/usr/ports
+		grep -qsE ^fakeroot $pkg_db && alias pkgmk='fakeroot pkgmk'
 	fi
 	export LANG="en_US.UTF-8"
 	export LC_ALL="en_US.UTF-8"
+
+	test -f "$HOME/.dircolors" && 
 
 	if [[ -f "$HOME/.dircolors" ]]; then
 		eval `dircolors ~/.dircolors`
@@ -183,6 +188,10 @@ if [[ -d "$HOME/perl5" ]]; then
 		eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
 	fi
 fi
+
+for p in $EXTRA_MANPATHS; do
+	test -d $p && manpath+=$p
+done
 
 if command -v keychain &>/dev/null; then
 	if [[ $CURRENT_OS != "Darwin" ]]; then
