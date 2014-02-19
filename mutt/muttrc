@@ -1,38 +1,15 @@
-source ~/.mutt/personal
+set folder="~/mail"
+source ~/.mutt/mailboxes
 
 set use_from=yes
 set tmpdir="~/.mutt/temp"
 set editor=`echo \$EDITOR`
 set mbox_type=Maildir
-set folder="~/.mail"
-set spoolfile="+fastmail/INBOX"
-mailboxes +fastmail/INBOX \
-        +fastmail/INBOX.Archive \
-	+fastmail/INBOX.Archive.Kvitton \
-	+fastmail/INBOX.Archive.Fakturor \
-        +fastmail/INBOX.Axema \
-        +fastmail/INBOX.Axema.Personal \
-        +fastmail/INBOX.Axema.Sent \
-        +fastmail/INBOX.Axema.SJ \
-        +fastmail/INBOX.Axema.Tickets \
-        +fastmail/INBOX.Axema.Viktigt \
-        +fastmail/INBOX.devious \
-        +fastmail/INBOX.devious.Sent \
-        +fastmail/INBOX.Drafts \
-        +fastmail/INBOX.Gmail \
-        +fastmail/INBOX.Gmail.Sent \
-        "+fastmail/INBOX.Junk Mail" \
-        "+fastmail/INBOX.Mailing lists.DFRI" \
-        "+fastmail/INBOX.Mailing lists.tor-announce" \
-        "+fastmail/INBOX.Mailing lists.tor-dev" \
-        "+fastmail/INBOX.Mailing lists.tor-relays" \
-        "+fastmail/INBOX.Sent Items" \
-        +fastmail/INBOX.Trash \
-        +fastmail/INBOX.Drafts
+set spoolfile="+INBOX"
+set record="+Sent"
 
 unset record
-set postponed="+fastmail/INBOX.Drafts"
-set trash="+fastmail/INBOX.Trash"
+set postponed="+Drafts"
 set ssl_force_tls=yes
 unset imap_passive
 set imap_check_subscribed
@@ -53,7 +30,7 @@ set pipe_decode
 set thorough_search
 set send_charset="utf-8"
 set sort=threads
-set sort_aux=last-date-received
+set sort_aux=reverse-last-date-received
 set move=no
 set markers=no
 set pager_index_lines= 5
@@ -61,7 +38,8 @@ set pager_index_lines= 5
 set sidebar_delim='] '
 set sidebar_visible=yes
 set sidebar_width=30
-#set sidebar_shortpath = yes
+set sidebar_shortpath = yes
+set sidebar_folderindent = yes
 
 macro index K ":push <sidebar-prev><sidebar-open><enter>"
 macro index J ":push <sidebar-next><sidebar-open><enter>"
