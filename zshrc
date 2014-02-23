@@ -235,3 +235,8 @@ if command -v gpg2 &>/dev/null; then
 fi
 
 typeset -U path cdpath manpath fpath
+
+# Custom functions
+print_colors() {
+	perl -e 'print map sprintf("\x1b[38;5;%um%4u", $_, $_), 0 .. 255; print "\n"'
+}
