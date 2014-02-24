@@ -10,9 +10,7 @@ EXTRA_MANPATHS=("$HOME/.local/share/man")
 plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
 
-path=("/bin" "/sbin" "/usr/bin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"
-	"$HOME/.local/bin" "$HOME/.cabal/bin" "$HOME/go/bin" "$HOME/.gem/bin")
-
+# System specific stuff
 if [[ $CURRENT_OS = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
 	if [[ -f /etc/arch-release ]]; then
@@ -30,7 +28,7 @@ if [[ $CURRENT_OS = "Linux" ]]; then
 		plugins+=(debian)
 	elif [[ -f /usr/bin/crux ]]; then
 		pkg_db="/var/lib/pkg/db"
-		hash -d ports=/usr/ports
+		hash -d ports="/usr/ports"
 		grep -qsE ^fakeroot $pkg_db && alias pkgmk='fakeroot pkgmk'
 	fi
 
@@ -79,10 +77,6 @@ elif [[ $CURRENT_OS = "Darwin" ]]; then
 	alias which='/usr/bin/which'
 	export HOMEBREW_NO_EMOJI=y
 	export HOMEBREW_CC="clang"
-
-	if [[ -d "$HOME/perl5/perlbrew/bin" ]]; then
-		path+=($HOME/perl5/perlbrew/bin)
-	fi
 fi
 
 if [[ $CURRENT_ARCH = "x86_64" ]]; then
@@ -143,6 +137,12 @@ alias -s png="xv"
 alias -s gif="xv"
 alias -s jpg="xv"
 alias -s pdf="xpdf"
+if command -v xterm &>/dev/null && command -v uxterm &>/dev/null; then
+	alias -s xterm='uxterm'
+fi
+if command -v gpg2 &>/dev/null; then
+	alias -s gpg='gpg2'
+fi
 
 
 if [[ -d "$HOME/perl5" ]]; then
@@ -189,18 +189,7 @@ if command -v virtualenv &>/dev/null; then
 	}
 fi
 
-export EDITOR=vim
-export TZ="Europe/Stockholm"
-export PIP_REQUIRE_VIRTUALENV=true
-export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 
-if command -v xterm &>/dev/null && command -v uxterm &>/dev/null; then
-	alias xterm='uxterm'
-fi
-
-if command -v gpg2 &>/dev/null; then
-	alias gpg='gpg2'
-fi
 
 typeset -U path cdpath manpath fpath
 
