@@ -1,6 +1,6 @@
 CURRENT_OS=$(uname)
 
-path=("/bin" "/sbin" "/usr/bin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"
+path=("/usr/local/bin" "/usr/local/sbin" "/usr/bin" "/usr/sbin" "/bin" "/sbin"
 	"$HOME/.local/bin" "$HOME/.cabal/bin" "$HOME/go/bin" "$HOME/.gem/bin")
 
 
@@ -25,3 +25,5 @@ elif [[ $CURRENT_OS = "Darwin" ]]; then
 		"/Applications/Xcode.app/Contents/Developer/usr/bin"
 	)
 fi
+
+export PATH
