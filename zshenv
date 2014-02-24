@@ -24,3 +24,11 @@ if [[ $CURRENT_OS = "Darwin" ]]; then
 		"/opt/X11/bin"
 		"/Applications/Xcode.app/Contents/Developer/usr/bin")
 fi
+
+running_gpg_agent=$(pgrep gpg-agent)
+if [[ $? -eq 0 ]] && [[ -f ~/.keychain/$(hostname)-sh-gpg ]]; then
+	if [[ $running_gpg_agent = "$(cat ~/.keychain/$(hostname)-sh-gpg | cut -d: -f 2)" ]]; then
+		. ~/.keychain/$(hostname)-sh-gpg
+	fi
+fi
+
