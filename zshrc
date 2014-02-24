@@ -5,11 +5,13 @@ COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_UPDATE="true"
 CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
-EXTRA_PATHS=("$HOME/.local/bin" "$HOME/go/bin" "$HOME/.cabal/bin" "$HOME/.gem/bin")
 EXTRA_MANPATHS=("$HOME/.local/share/man")
 
 plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
 grep_path=$(which grep)
+
+path=("/bin" "/sbin" "/usr/bin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"
+	"$HOME/.local/bin" "$HOME/.cabal/bin" "$HOME/go/bin" "$HOME/.gem/bin")
 
 if [[ $CURRENT_OS = "Linux" ]]; then
 	plugins+=(battery gnu-utils)
@@ -31,8 +33,6 @@ if [[ $CURRENT_OS = "Linux" ]]; then
 		hash -d ports=/usr/ports
 		grep -qsE ^fakeroot $pkg_db && alias pkgmk='fakeroot pkgmk'
 	fi
-	export LANG="en_US.UTF-8"
-	export LC_ALL="en_US.UTF-8"
 
 	test -f "$HOME/.dircolors" && eval `dircolors ~/.dircolors`
 
@@ -45,8 +45,6 @@ if [[ $CURRENT_OS = "Linux" ]]; then
 	zmodload zsh/attr
 elif [[ $CURRENT_OS = "FreeBSD" ]]; then
 	plugins+=(gnu-utils)
-	export LANG="en_US.UTF-8"
-	export LC_ALL="en_US.UTF-8"
 	DISABLE_LS_COLORS="true"
 	if [[ -f "/usr/local/bin/gls" ]] && [[ -f "/usr/local/bin/gdircolors" ]]; then
 		if [[ -f "$HOME/.dircolors" ]]; then
@@ -64,12 +62,6 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	DISABLE_LS_COLORS="true"
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
 	path+=(/usr/games)
-	export GOPATH="/usr/local/go/"
-	export LANG="en_US.UTF-8"
-	export LC_CTYPE="en_US.UTF-8"
-	export LC_ALL=en_US.UTF-8
-	export LESSCHARSET="utf-8"
-	export MAIL=$HOME/mail
 
 	if [[ -f "/usr/local/bin/egdb" ]]; then
 		alias gdb="/usr/local/bin/egdb"
@@ -78,18 +70,6 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	/usr/bin/skeyaaudit -i
 elif [[ $CURRENT_OS = "Darwin" ]]; then
 	plugins=(${plugins#ssh-agent}) # Don't use ssh-agent on Darwin/OSX
-	path=(/usr/local/opt/ruby/bin
-		/usr/local/bin
-		/usr/local/sbin
-		/usr/bin
-		/usr/sbin
-		/bin
-		/sbin
-		/opt/X11/bin
-		/Applications/Xcode.app/Contents/Developer/usr/bin
-	)
-	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
-	export LANG=en_US.UTF-8
 	export JAVA_HOME="$(/usr/libexec/java_home)"
 	#export EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
 	#export EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
@@ -102,10 +82,6 @@ elif [[ $CURRENT_OS = "Darwin" ]]; then
 
 	if [[ -d "$HOME/perl5/perlbrew/bin" ]]; then
 		path+=($HOME/perl5/perlbrew/bin)
-	fi
-
-	if [[ -d "/usr/local/CrossPack-AVR/bin" ]]; then
-		path+=(/usr/local/CrossPack-AVR/bin)
 	fi
 fi
 
@@ -168,14 +144,6 @@ alias -s gif="xv"
 alias -s jpg="xv"
 alias -s pdf="xpdf"
 
-for p in $EXTRA_PATHS; do
-	test -d $p && path+=$p
-done
-
-if [[ -d "$HOME/.gem" ]]; then
-	path+="$HOME/.gem/bin/"
-	export GEM_HOME="$HOME/.gem"
-fi
 
 if [[ -d "$HOME/perl5" ]]; then
 	if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
