@@ -1,3 +1,4 @@
+unset MAILCHECK
 CURRENT_OS=$(uname)
 
 # Set all environment variables
