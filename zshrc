@@ -9,7 +9,7 @@ CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
 EXTRA_MANPATHS=("$HOME/.local/share/man")
 
-plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl python pip virtualenv virtualenvwrapper urltools cp history rsync color-man golang)
+plugins=(cpanm django extract git gitignore gitfast git-extras git-flow git-remote-branch github nyan svn perl python pip virtualenv virtualenvwrapper urltools cp history rsync color-man golang cabal colorize common-aliases emacs )
 grep_path=$(which grep)
 
 # System specific stuff
@@ -70,7 +70,7 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	/usr/bin/skeyaaudit -i
 elif [[ $CURRENT_OS = "Darwin" ]]; then
 	plugins=(${plugins#ssh-agent}) # Don't use ssh-agent on Darwin/OSX
-	plugins+=(brew)
+	plugins+=(brew brew-cask osx)
 	export JAVA_HOME="$(/usr/libexec/java_home)"
 	compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
 	alias run='open -a'
