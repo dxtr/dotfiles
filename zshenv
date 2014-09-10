@@ -16,7 +16,7 @@ export MAIL="$HOME/mail"
 export TZ="Europe/Stockholm"
 export PIP_REQUIRE_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
-export EDITOR=vim
+export EDITOR=emacs
 
 if [[ $CURRENT_OS = "Darwin" ]]; then
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
