@@ -19,6 +19,9 @@ export EDITOR=vim
 
 if [[ $CURRENT_OS = "Darwin" ]]; then
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
+	if [[ -d "/usr/pkg" ]]; then
+		PATH=$(echo $PATH | sed -e 's#/usr/local#/usr/pkg#g')
+	fi
 	path+=("/usr/local/CrossPack-AVR/bin"
 		"/usr/local/opt/ruby/bin"
 		"/opt/X11/bin"
@@ -32,3 +35,4 @@ if [[ $? -eq 0 ]] && [[ -f ~/.keychain/$(hostname)-sh-gpg ]]; then
 	fi
 fi
 
+export PATH

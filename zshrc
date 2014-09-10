@@ -1,3 +1,5 @@
+# -*- mode: sh -*-
+
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="dxtr-repos"
 DISABLE_AUTO_TITLE="true"
@@ -7,7 +9,7 @@ CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
 EXTRA_MANPATHS=("$HOME/.local/share/man")
 
-plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl pip python urltools cp history rsync color-man golang)
+plugins=(cpanm django extract git gitfast git-extras git-flow git-remote-branch github nyan svn perl python pip virtualenv virtualenvwrapper urltools cp history rsync color-man golang)
 grep_path=$(which grep)
 
 # System specific stuff
@@ -68,15 +70,14 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	/usr/bin/skeyaaudit -i
 elif [[ $CURRENT_OS = "Darwin" ]]; then
 	plugins=(${plugins#ssh-agent}) # Don't use ssh-agent on Darwin/OSX
+	plugins+=(brew)
 	export JAVA_HOME="$(/usr/libexec/java_home)"
-	#export EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
-	#export EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
-	#export EC2_AMITOOL_HOME="/usr/local/Library/LinkedKegs/ec2-ami-tools/jars"
 	compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
 	alias run='open -a'
 	alias which='/usr/bin/which'
 	export HOMEBREW_NO_EMOJI=y
 	export HOMEBREW_CC="clang"
+	export HOMEBREW_GITHUB_API_TOKEN="6598dee8d95367508b6794a3c24d2452b39d8266"
 fi
 
 if [[ $CURRENT_ARCH = "x86_64" ]]; then
@@ -137,6 +138,7 @@ alias -s png="xv"
 alias -s gif="xv"
 alias -s jpg="xv"
 alias -s pdf="xpdf"
+
 if command -v xterm &>/dev/null && command -v uxterm &>/dev/null; then
 	alias -s xterm='uxterm'
 fi
@@ -145,7 +147,7 @@ if command -v gpg2 &>/dev/null; then
 fi
 
 
-if [[ -d "$HOME/perl5" ]]; then
+if [[ -d "$HOME/perl5/perlbrew" ]]; then
 	if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
 		source $HOME/perl5/perlbrew/etc/bashrc
 	else
@@ -157,35 +159,40 @@ for p in $EXTRA_MANPATHS; do
 	test -d $p && manpath+=$p
 done
 
-if command -v keychain &>/dev/null; then
-	if [[ $CURRENT_OS != "Darwin" ]]; then
-		eval $(keychain --ignore-missing --quick --quiet --nocolor --nogui --eval id_rsa 46726B9A)
-	else
-		eval $(keychain --agents gpg --ignore-missing --quick --quiet --nocolor --nogui --eval 46726B9A)
-	fi
-elif [[ -d "$HOME/.gnupg" ]]; then
-	if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
-		. "$HOME/.gnupg/gpg-agent.env"
-	else
+if [[ $CURRENT_OS != "Darwin" || ! -d "/usr/local/MacGPG2" ]]; then
+	if command -v keychain &>/dev/null; then
 		if [[ $CURRENT_OS != "Darwin" ]]; then
-			eval $(/usr/bin/env gpg-agent --quiet --daemon --enable-ssh-support --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+			eval $(keychain --ignore-missing --quick --quiet --nocolor --nogui --eval id_rsa 46726B9A)
 		else
-			eval $(/usr/bin/env gpg-agent --quiet --daemon --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+			eval $(keychain --agents gpg --ignore-missing --quick --quiet --nocolor --nogui --eval 46726B9A)
 		fi
-		chmod 600 "$HOME/.gnupg/gpg-agent.env"
-		export GPG_AGENT_INFO
+	elif [[ -d "$HOME/.gnupg" ]]; then
+		if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
+			. "$HOME/.gnupg/gpg-agent.env"
+		else
+			if [[ $CURRENT_OS != "Darwin" ]]; then
+				eval $(/usr/bin/env gpg-agent --quiet --daemon --enable-ssh-support --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+			else
+				eval $(/usr/bin/env gpg-agent --quiet --daemon --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+			fi
+			chmod 600 "$HOME/.gnupg/gpg-agent.env"
+			export GPG_AGENT_INFO
+		fi
 	fi
 fi
 
 export GPG_TTY=$(tty)
 
 if command -v virtualenv &>/dev/null; then
-	if command -v virtualenvwrapper.sh &>/dev/null; then
-		source $(command -v virtualenvwrapper.sh)
-		export WORKON_HOME=$HOME/projects
-	fi
+   if command -v virtualenvwrapper.sh &>/dev/null; then
+   	  export WORKON_HOME=$HOME/.venv
+	  source $(command -v virtualenvwrapper.sh)
+   fi
 	syspip(){
 		PIP_REQUIRE_VIRTUALENV="" pip "$@"
+	}
+	syspip3() {
+		PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
 	}
 fi
 
