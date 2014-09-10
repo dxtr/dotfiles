@@ -1,5 +1,8 @@
 [core]
-	excludesfile = /Users/dxtr/.gitignore
-	editor = vim
+	excludesfile = ~/.gitignore
+	editor = emacs
 [push]
 	default = simple
+[user]
+	email = git@kim.dxtr.im
+	name = Kim Lidström
