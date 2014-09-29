@@ -1,5 +1,5 @@
-set line /dev/modem
-#set speed 115200
+set line /dev/ttyUSB0
+set speed 115200
 #set speed 57600
 #set speed 38400
 #set speed 19200
@@ -9,8 +9,9 @@ set stop-bits 1
 set carrier-watch off
 set prefixing all
 set modem none
-set prompt Kermit>
+set prompt Kermit> 
 set handshake none
 set flow-control none
+set escape 9
 EIGHTBIT
 
