@@ -7,13 +7,8 @@ Xcursor.theme: Neutral
 Xcursor.size: 16
 
 !{{{ misc
-!*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
-!*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
-*font:			xft:Terminus:pixelsize=13:antialias=true:hinting=true
-*boldFont:		xft:Terminus:pixelsize=13:antialias=true:bold:hinting=true
-*italicFont:		xft:Terminus:pixelsize=13:antialias=true:autohint=true:hinting=true
-*bolditalicFont:	xft:Terminus:pixelsize=13:antialias=true:bold:italic:autohint=true:hinting=true
-!*font:			xft:Source Code Pro:size=9:antialias=false:hinting=false
+*font: xft:GohuFont:pixelsize=11:antialias=false:hinting=false
+*boldFont: xft:GohuFont:pixelsize=11:antialias=false:hinting=false:bold:autohint=false
 
 !}}}
 
@@ -95,8 +90,12 @@ URxvt*keysym.End: \033[4~
 !}}}
 
 !{{{ Emacs
-Emacs.font: Terminus-9
+Emacs.font: GohuFont-9
 Emacs.borderWidth: 1
 Emacs.cursorBlink: off
 Emacs.menuBar: on
+!}}}
+
+!{{{ xfontsel
+!XFontSel.font: 
 !}}}

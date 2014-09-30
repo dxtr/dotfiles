@@ -1,0 +1,13 @@
+set complete=search,location,file,bookmark,history,suggestion
+set editor='emacs <file>'
+set followhints=1
+set guioptions-=rb
+set hintkeys=asdfglkjh
+set insertmode
+set runtimepath=~/.pentadactyl
+set showtabline=never
+colorscheme molokai
+map <A-S-s> :set nss!=<A-Tab>
+map <A-s> :set nst!=<A-Tab>
+map <A-c> :set nso!=<A-Tab>
+map <A-C-s> :set nsu!=<A-Tab>
