@@ -18,6 +18,6 @@ map <A-c> :set nso!=<A-Tab>
 map <A-C-s> :set nsu!=<A-Tab>
 map <C-c> :cookies <A-Tab>
 map -ex <A-t> :set showtabline!=always,never
-map <A-i> :set! permissions.default.image=2 | reload
-map <A-C-i) :set! permissions.default.image=3 | reload
-map <A-S-i> :set! permissions.default.image=1 | reload
+map <A-i> :set! permissions.default.image=2 | reload<CR>
+map <A-C-i) :set! permissions.default.image=3 | reload<CR>
+map <A-S-i> :set! permissions.default.image=1 | reload<CR>
