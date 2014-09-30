@@ -1,11 +1,16 @@
+set! permissisons.default.image=2
 set complete=search,location,file,bookmark,history,suggestion
+set defsearch=duckduckgo
 set editor='emacs <file>'
 set followhints=1
 set guioptions-=rb
 set hintkeys=asdfglkjh
+set hintmatching=wordstartswith
 set insertmode
 set runtimepath=~/.pentadactyl
 set showtabline=never
+set strictfocus='chrome:*':laissez-faire,*:despotic
+set visualbell
 colorscheme molokai
 map <A-S-s> :set nss!=<A-Tab>
 map <A-s> :set nst!=<A-Tab>
@@ -35,3 +40,8 @@ nmap <M-Q> <Nop>
 
 " Add some of our own mappings
 nmap <Leader>d :tabclose<CR>
+map <C-c> :cookies <A-Tab>
+map -ex <A-t> :set showtabline!=always,never<CR>
+map <A-i> :set! permissions.default.image=2 | reload<CR>
+map <A-C-i) :set! permissions.default.image=3 | reload<CR>
+map <A-S-i> :set! permissions.default.image=1 | reload<CR>
