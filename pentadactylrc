@@ -11,3 +11,27 @@ map <A-S-s> :set nss!=<A-Tab>
 map <A-s> :set nst!=<A-Tab>
 map <A-c> :set nso!=<A-Tab>
 map <A-C-s> :set nsu!=<A-Tab>
+
+set passkeys=
+" DuckDuckGo
+set passkeys+="https://duckduckgo\.com/":jkv
+
+" Disable some Pentadactyl default mappings
+nmap d <Nop>
+nmap a <Nop>
+nmap w <Nop>
+
+" Disable some regular-Firefox old habits
+nmap <M-F12> <Nop>
+nmap <M-t> <Nop>
+nmap <M-e> <Nop>
+nmap <M-b> <Nop>
+nmap <M-S-h> <Nop>
+nmap <M-k> <Nop>
+nmap <M-f> <Nop>
+nmap <M-g> <Nop>
+nmap <M-l> <Nop>
+nmap <M-Q> <Nop>
+
+" Add some of our own mappings
+nmap <Leader>d :tabclose<CR>
