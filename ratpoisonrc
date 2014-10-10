@@ -4,20 +4,33 @@ startup_message off
 set bargravity c
 set border 0
 set barborder 1
-set font Terminus:pixelsize=12
+set font GohuFont:pixelsize=12
 set bgcolor #000000
 set fgcolor #00FF00
 
-exec /usr/bin/rpws init 5 -k
+exec /usr/local/bin/rpws init 5 -k
+
+alias term exec urxvtc
+alias cnn exec surfraw cnn
+alias google exec surfraw google
+alias surfraw exec surfraw
+alias wayback exec surfraw wayback
+alias wikipedia exec surfraw wikipedia
 
 bind h rpwsp
 bind l rpwsn
 bind j focusprev
 bind k focus
-bind d exec xxxterm
-bind F1 exec /usr/bin/rpws 1
-bind F2 exec /usr/bin/rpws 2
-bind F3 exec /usr/bin/rpws 3
-bind F4 exec /usr/bin/rpws 4
-bind F5 exec /usr/bin/rpws 5
+bind d exec firefox
+bind c term
+bind F1 exec /usr/local/bin/rpws 1
+bind F2 exec /usr/local/bin/rpws 2
+bind F3 exec /usr/local/bin/rpws 3
+bind F4 exec /usr/local/bin/rpws 4
+bind F5 exec /usr/local/bin/rpws 5
+bind Print exec scrot
 
+exec xrdb ~/.Xdefaults
+exec xsetroot -solid black
+exec xset s blank
+exec urxvtd -q -f -o

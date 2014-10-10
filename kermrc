@@ -3,7 +3,7 @@ set speed 115200
 #set speed 57600
 #set speed 38400
 #set speed 19200
-set speed 9600
+#set speed 9600
 set parity none
 set stop-bits 1
 set carrier-watch off

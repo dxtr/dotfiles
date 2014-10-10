@@ -1,6 +1,6 @@
 [core]
 	excludesfile = ~/.gitignore
-	editor = emacs
+	editor = emacsclient -c --alternate-editor=""
 [push]
 	default = simple
 [user]

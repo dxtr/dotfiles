@@ -19,8 +19,8 @@ set alias_file="~/.mutt/alias"
 set certificate_file="~/.mutt/certificates"
 set mailcap_path="~/.mutt/mailcap"
 set signature="~/.mutt/sig"
-set header_cache="~/.cache/mutt"
-set message_cachedir="~/.cache/mutt"
+set header_cache="~/.mutt/hcache"
+set message_cachedir="~/.mutt/mcache"
 set net_inc=5
 set wait_key=no
 set timeout=3
@@ -38,8 +38,6 @@ set pager_index_lines= 5
 set sidebar_delim='] '
 set sidebar_visible=yes
 set sidebar_width=30
-set sidebar_shortpath = yes
-set sidebar_folderindent = yes
 
 macro index K ":push <sidebar-prev><sidebar-open><enter>"
 macro index J ":push <sidebar-next><sidebar-open><enter>"

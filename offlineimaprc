@@ -18,6 +18,7 @@ maildir-windows-compatible = no
 [Repository FastMail-local]
 type = Maildir
 localfolders = ~/.mail/fastmail
+nametrans = lambda folder: re.sub('^(?!INBOX)', 'INBOX.', folder)
 
 [Repository FastMail-remote]
 maxconnections = 2
@@ -27,5 +28,7 @@ remoteporteval = get_account_info(account='fastmail')['imap']['port']
 remotepasseval = get_account_info(account='fastmail')['imap']['password']
 remoteusereval = get_account_info(account='fastmail')['imap']['username']
 ssl = yes
-cert_fingerprint = fa86c1ca2d4f805e8fe7b8e7076a3ad2ccc52bb4
+cert_fingerprint = 54137524fe721f0cbb8a6a0e1e280ade50482e29
 realdelete = no
+createfolders = False
+nametrans = lambda folder: re.sub('^INBOX\.', '', folder)

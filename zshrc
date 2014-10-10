@@ -9,12 +9,12 @@ CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
 EXTRA_MANPATHS=("$HOME/.local/share/man")
 
-plugins=(cpanm django extract git gitignore gitfast git-extras git-flow git-remote-branch github nyan svn perl python pip virtualenv virtualenvwrapper urltools cp history rsync color-man golang cabal colorize common-aliases emacs )
+plugins=(cpanm django extract git gitignore gitfast git-extras git-flow git-remote-branch github nyan svn perl python pip urltools cp history rsync golang cabal emacs)
 grep_path=$(which grep)
 
 # System specific stuff
 if [[ $CURRENT_OS = "Linux" ]]; then
-	plugins+=(battery gnu-utils)
+	plugins+=(battery gnu-utils colorize common-aliases virtualenv virtualenvwrapper)
 	if [[ -f /etc/arch-release ]]; then
 		plugins+=(archlinux systemd)
 		export OWL_AUR_HOME=/tmp/$(whoami)-aur
@@ -53,6 +53,7 @@ elif [[ $CURRENT_OS = "FreeBSD" ]]; then
 		alias ls="/usr/local/bin/gls --color=auto"
 	fi
 elif [[ $CURRENT_OS = "OpenBSD" ]]; then
+	plugins=(${plugins#colorize})
 	plugins+=()
 	if [[ $TERM = "rxvt-unicode-256color" ]]; then
 		export TERM=rxvt-256color
@@ -67,7 +68,11 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 		alias gdb="/usr/local/bin/egdb"
 	fi
 
-	/usr/bin/skeyaaudit -i
+	if [[ -d "/etc/skey" ]] && [[ -f "/etc/skey/$(whoami)" ]]; then
+		/usr/bin/skeyaudit -i
+	fi
+	
+	source ~/.zsh/openbsd-functions.sh
 elif [[ $CURRENT_OS = "Darwin" ]]; then
 	plugins=(${plugins#ssh-agent}) # Don't use ssh-agent on Darwin/OSX
 	plugins+=(brew brew-cask osx)
@@ -129,6 +134,7 @@ zstyle :predict cursor key
 
 # Aliases
 alias tmux="tmux -2u"
+alias emacs="emacsclient -c"
 alias -s tex="vim"
 alias -s txt="less"
 alias -s c="vim"

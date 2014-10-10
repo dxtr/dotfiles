@@ -95,7 +95,8 @@ URxvt*keysym.End: \033[4~
 Emacs.font: GohuFont-9
 Emacs.borderWidth: 1
 Emacs.cursorBlink: off
-Emacs.menuBar: on
+Emacs.menuBar: off
+Emacs.verticalScrollBars: off
 !}}}
 
 !{{{ xfontsel

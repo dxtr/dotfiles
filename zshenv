@@ -1,5 +1,9 @@
+# -*- mode: sh -*-
+
 unset MAILCHECK
 CURRENT_OS=$(uname)
+
+umask 027
 
 # Set all environment variables
 path=("/usr/local/bin" "/usr/local/sbin" "/usr/bin" "/usr/sbin" "/bin" "/sbin"
@@ -9,14 +13,20 @@ export GOPATH="$HOME/go"
 export GEM_HOME="$HOME/.gem"
 export GEM_PATH="$HOME/.gem"
 export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 export LESSCHARSET="utf-8"
 export MAIL="$HOME/mail"
 export TZ="Europe/Stockholm"
 export PIP_REQUIRE_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
-export EDITOR=emacs
+export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient -c"
+
+if [[ $CURRENT_OS = "OpenBSD" ]]; then
+   path+=("/usr/games" "/usr/X11R6/bin")
+else
+	export LC_ALL="en_US.UTF-8"
+fi
 
 if [[ $CURRENT_OS = "Darwin" ]]; then
 	export LD_FLAGS="-L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib"
@@ -27,6 +37,12 @@ if [[ $CURRENT_OS = "Darwin" ]]; then
 		"/usr/local/opt/ruby/bin"
 		"/opt/X11/bin"
 		"/Applications/Xcode.app/Contents/Developer/usr/bin")
+fi
+
+if [[ -d "/usr/local/lib/surfraw" ]]; then
+   path+=("/usr/local/lib/surfraw")
+elif [[ -d "/usr/lib/surfraw" ]]; then
+   path+=("/usr/lib/surfraw")
 fi
 
 running_gpg_agent=$(pgrep gpg-agent)

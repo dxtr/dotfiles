@@ -10,7 +10,6 @@ set insertmode
 set runtimepath=~/.pentadactyl
 set showtabline=never
 set strictfocus='chrome:*':laissez-faire,*:despotic
-set visualbell
 colorscheme molokai
 map <A-S-s> :set nss!=<A-Tab>
 map <A-s> :set nst!=<A-Tab>
