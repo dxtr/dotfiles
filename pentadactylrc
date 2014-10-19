@@ -1,7 +1,7 @@
 set! permissisons.default.image=2
 set complete=search,location,file,bookmark,history,suggestion
 set defsearch=duckduckgo
-set editor='emacs <file>'
+set editor='emacsclient -c --alternate-editor="" <file>'
 set followhints=1
 set guioptions-=rb
 set hintkeys=asdfglkjh
@@ -18,7 +18,8 @@ map <A-C-s> :set nsu!=<A-Tab>
 
 set passkeys=
 " DuckDuckGo
-set passkeys+="https://duckduckgo\.com/":jkv
+set passkeys+=duckduckgo.com:jkv
+set passkeys+=fastmail.fm:uhjklmgr
 
 " Disable some Pentadactyl default mappings
 nmap d <Nop>

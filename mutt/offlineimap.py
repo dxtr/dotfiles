@@ -6,7 +6,7 @@ json_data = None
 
 def get_account_info(account):
     global json_data
-    args = ["gpg", "--use-agent", "--quiet", "--batch", "-d",
+    args = ["gpg2", "--use-agent", "--quiet", "--batch", "-d",
             "%s/.mutt/passwd.gpg" % (os.path.expanduser("~"))]
     retval = {"username": "", "password": ""}
 

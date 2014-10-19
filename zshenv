@@ -20,7 +20,7 @@ export TZ="Europe/Stockholm"
 export PIP_REQUIRE_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 export ALTERNATE_EDITOR=""
-export EDITOR="emacsclient -c"
+export EDITOR="vim"
 
 if [[ $CURRENT_OS = "OpenBSD" ]]; then
    path+=("/usr/games" "/usr/X11R6/bin")

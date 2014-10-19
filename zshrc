@@ -9,7 +9,7 @@ CURRENT_OS=$(uname)
 CURRENT_ARCH=$(uname -m)
 EXTRA_MANPATHS=("$HOME/.local/share/man")
 
-plugins=(cpanm django extract git gitignore gitfast git-extras git-flow git-remote-branch github nyan svn perl python pip urltools cp history rsync golang cabal emacs)
+plugins=(cpanm django extract git gitignore gitfast git-extras git-flow git-remote-branch github nyan svn perl python pip urltools cp history rsync golang cabal)
 grep_path=$(which grep)
 
 # System specific stuff
@@ -54,7 +54,7 @@ elif [[ $CURRENT_OS = "FreeBSD" ]]; then
 	fi
 elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	plugins=(${plugins#colorize})
-	plugins+=()
+	plugins+=(virtualenv)
 	if [[ $TERM = "rxvt-unicode-256color" ]]; then
 		export TERM=rxvt-256color
 	fi
@@ -210,3 +210,5 @@ typeset -U path cdpath manpath fpath
 print_colors() {
 	perl -e 'print map sprintf("\x1b[38;5;%um%4u", $_, $_), 0 .. 255; print "\n"'
 }
+
+unset MANPATH

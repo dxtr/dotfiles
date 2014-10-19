@@ -17,6 +17,7 @@ alias surfraw exec surfraw
 alias wayback exec surfraw wayback
 alias wikipedia exec surfraw wikipedia
 
+bind Return exec dmenu_run -i -p '>' -fn -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso8859-1
 bind h rpwsp
 bind l rpwsn
 bind j focusprev
@@ -30,7 +31,3 @@ bind F4 exec /usr/local/bin/rpws 4
 bind F5 exec /usr/local/bin/rpws 5
 bind Print exec scrot
 
-exec xrdb ~/.Xdefaults
-exec xsetroot -solid black
-exec xset s blank
-exec urxvtd -q -f -o
