@@ -14,7 +14,7 @@ grep_path=$(which grep)
 
 # System specific stuff
 if [[ $CURRENT_OS = "Linux" ]]; then
-	plugins+=(battery gnu-utils colorize common-aliases virtualenv virtualenvwrapper)
+	plugins+=(battery gnu-utils colorize common-aliases)
 	if [[ -f /etc/arch-release ]]; then
 		plugins+=(archlinux systemd)
 		export OWL_AUR_HOME=/tmp/$(whoami)-aur
