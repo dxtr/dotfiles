@@ -45,6 +45,10 @@ elif [[ -d "/usr/lib/surfraw" ]]; then
    path+=("/usr/lib/surfraw")
 fi
 
+if [[ -d "$HOME/node_modules/.bin" ]]; then
+    path+=("$HOME/node_modules/.bin")
+fi
+
 running_gpg_agent=$(pgrep gpg-agent)
 if [[ $? -eq 0 ]] && [[ -f ~/.keychain/$(hostname)-sh-gpg ]]; then
 	if [[ $running_gpg_agent = "$(cat ~/.keychain/$(hostname)-sh-gpg | cut -d: -f 2)" ]]; then
