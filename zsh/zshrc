@@ -8,19 +8,19 @@ CURRENT_ARCH=$(uname -m)
 EXTRA_MANPATHS=("$HOME/.local/share/man")
 
 is_linux () {
-	[[ $OSTYPE == 'linux-gnu' ]]
+    [[ $OSTYPE == 'linux-gnu' ]]
 }
 
 is_osx () {
-	[[ $OSTYPE == 'darwin'* ]]
+    [[ $OSTYPE == 'darwin'* ]]
 }
 
 is_freebsd () {
-	[[ $OSTYPE == 'freebsd'* ]]
+    [[ $OSTYPE == 'freebsd'* ]]
 }
 
 is_openbsd () {
-	[[ $OSTYPE == 'openbsd'* ]]
+    [[ $OSTYPE == 'openbsd'* ]]
 }
 
 source ${ZDOTDIR}/antigen.zsh
@@ -64,21 +64,24 @@ EOBUNDLES
 
 # OS-specific bundles
 if is_linux; then
-	antigen bundles {battery,gnu-utils,colorize,common-aliases}
-	if [[ -f /etc/arch-release ]]; then
-		antigen bundle archlinux
-		antigen bundle systemd
-	elif [[ -f /etc/debian_version ]]; then
-		antigen bundle debian
-		antigen bundle systemd
-	elif [[ -f /usr/bin/crux ]]; then
-	fi
+    antigen bundle battery
+    antigen bundle gnu-utils
+    antigen bundle colorize
+    antigen bundle common-aliases
+    if [[ -f /etc/arch-release ]]; then
+        antigen bundle archlinux
+        antigen bundle systemd
+    elif [[ -f /etc/debian_version ]]; then
+        antigen bundle debian
+        antigen bundle systemd
+    elif [[ -f /usr/bin/crux ]]; then
+    fi
 elif is_freebsd; then
 elif is_openbsd; then
 elif is_osx; then
-	antigen bundle osx
-	antigen bundle brew
-	antigen bundle brew-cask
+    antigen bundle osx
+    antigen bundle brew
+    antigen bundle brew-cask
 fi
 
 antigen apply
@@ -87,72 +90,72 @@ grep_path=$(which grep)
 
 # System specific stuff
 if is_linux; then
-	if [[ -f /etc/arch-release ]]; then
-		export OWL_AUR_HOME=/tmp/$(whoami)-aur
-		export OWL_EDITOR=vim
-		export OWL_IGNORE_OUTDATED=true
-		export OWL_CLEAN_UP=true
-		if pacman -Q|grep source-highlight &> /dev/null
-		then
-			export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
-			export LESS=' -R '
-		fi
-	elif [[ -f /usr/bin/crux ]]; then
-		pkg_db="/var/lib/pkg/db"
-		hash -d ports="/usr/ports"
-		grep -qsE ^fakeroot $pkg_db && alias pkgmk='fakeroot pkgmk'
-	fi
+    if [[ -f /etc/arch-release ]]; then
+        export OWL_AUR_HOME=/tmp/$(whoami)-aur
+        export OWL_EDITOR=vim
+        export OWL_IGNORE_OUTDATED=true
+        export OWL_CLEAN_UP=true
+        if pacman -Q|grep source-highlight &> /dev/null
+        then
+            export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
+            export LESS=' -R '
+        fi
+    elif [[ -f /usr/bin/crux ]]; then
+        pkg_db="/var/lib/pkg/db"
+        hash -d ports="/usr/ports"
+        grep -qsE ^fakeroot $pkg_db && alias pkgmk='fakeroot pkgmk'
+    fi
 
-	test -f "$HOME/.dircolors" && eval `dircolors ~/.dircolors`
+    test -f "$HOME/.dircolors" && eval `dircolors ~/.dircolors`
 
-	alias grep="$grep_path --color=auto"
-	alias grepn="$grep_path -n --color=auto"
-	alias rstbl="xbacklight -set 75"
+    alias grep="$grep_path --color=auto"
+    alias grepn="$grep_path -n --color=auto"
+    alias rstbl="xbacklight -set 75"
 
-	ulimit -c unlimited
+    ulimit -c unlimited
 
-	zmodload zsh/attr
+    zmodload zsh/attr
 elif is_freebsd; then
-	DISABLE_LS_COLORS="true"
-	if [[ -f "/usr/local/bin/gls" ]] && [[ -f "/usr/local/bin/gdircolors" ]]; then
-		if [[ -f "$HOME/.dircolors" ]]; then
-			eval `/usr/local/bin/gdircolors ~/.dircolors`
-		fi
-		alias ls="/usr/local/bin/gls --color=auto"
-	fi
+    DISABLE_LS_COLORS="true"
+    if [[ -f "/usr/local/bin/gls" ]] && [[ -f "/usr/local/bin/gdircolors" ]]; then
+        if [[ -f "$HOME/.dircolors" ]]; then
+            eval `/usr/local/bin/gdircolors ~/.dircolors`
+        fi
+        alias ls="/usr/local/bin/gls --color=auto"
+    fi
 elif is_openbsd; then
-	if [[ $TERM = "rxvt-unicode-256color" ]]; then
-		export TERM=rxvt-256color
-	fi
-	export MANPATH="/usr/share/man:/usr/X11R6/man:/usr/local/man"
-	export OPENBSD_CVSROOT="anoncvs@anoncvs.eu.openbsd.org:/cvs"
-	DISABLE_LS_COLORS="true"
-	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
-	path+=(/usr/games)
+    if [[ $TERM = "rxvt-unicode-256color" ]]; then
+        export TERM=rxvt-256color
+    fi
+    export MANPATH="/usr/share/man:/usr/X11R6/man:/usr/local/man"
+    export OPENBSD_CVSROOT="anoncvs@anoncvs.eu.openbsd.org:/cvs"
+    DISABLE_LS_COLORS="true"
+    export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
+    path+=(/usr/games)
 
-	if [[ -f "/usr/local/bin/egdb" ]]; then
-		alias gdb="/usr/local/bin/egdb"
-	fi
+    if [[ -f "/usr/local/bin/egdb" ]]; then
+        alias gdb="/usr/local/bin/egdb"
+    fi
 
-	if [[ -d "/etc/skey" ]] && [[ -f "/etc/skey/$(whoami)" ]]; then
-		/usr/bin/skeyaudit -i
-	fi
-	
-	source ~/.zsh/openbsd-functions.sh
+    if [[ -d "/etc/skey" ]] && [[ -f "/etc/skey/$(whoami)" ]]; then
+        /usr/bin/skeyaudit -i
+    fi
+
+    source ~/.zsh/openbsd-functions.sh
 elif is_osx; then
-	export JAVA_HOME="$(/usr/libexec/java_home)"
-	compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
-	alias run='open -a'
-	alias which='/usr/bin/which'
-	export HOMEBREW_NO_EMOJI=y
-	export HOMEBREW_CC="clang"
-	export HOMEBREW_GITHUB_API_TOKEN="5e295916e3fbd4eb6335b534d088b482cc0a84da"
+    export JAVA_HOME="$(/usr/libexec/java_home)"
+    compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
+    alias run='open -a'
+    alias which='/usr/bin/which'
+    export HOMEBREW_NO_EMOJI=y
+    export HOMEBREW_CC="clang"
+    export HOMEBREW_GITHUB_API_TOKEN="5e295916e3fbd4eb6335b534d088b482cc0a84da"
 fi
 
 if [[ $CPUTYPE == "x86_64" ]]; then
-	if command -v wine &>/dev/null; then
-		export WINEARCH=win32
-	fi
+    if command -v wine &>/dev/null; then
+        export WINEARCH=win32
+    fi
 fi
 
 export EDITOR="vim"
@@ -212,69 +215,67 @@ alias -s jpg="xv"
 alias -s pdf="xpdf"
 
 if command -v xterm &>/dev/null && command -v uxterm &>/dev/null; then
-	alias -s xterm='uxterm'
+    alias -s xterm='uxterm'
 fi
 if command -v gpg2 &>/dev/null; then
-	alias -s gpg='gpg2'
+    alias -s gpg='gpg2'
 fi
 
-
 if [[ -d "$HOME/perl5/perlbrew" ]]; then
-	if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
-		source $HOME/perl5/perlbrew/etc/bashrc
-	else
-		eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
-	fi
+    if [[ -f "$HOME/perl5/perlbrew/etc/bashrc" ]]; then
+        source $HOME/perl5/perlbrew/etc/bashrc
+    else
+        eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+    fi
 fi
 
 for p in $EXTRA_MANPATHS; do
-	test -d $p && manpath+=$p
+    test -d $p && manpath+=$p
 done
 
-if [[ $CURRENT_OS != "Darwin" || ! -d "/usr/local/MacGPG2" ]]; then
-	if command -v keychain &>/dev/null; then
-		if [[ $CURRENT_OS != "Darwin" ]]; then
-			eval $(keychain --ignore-missing --quick --quiet --nocolor --nogui --eval id_rsa 46726B9A)
-		else
-			eval $(keychain --agents gpg --ignore-missing --quick --quiet --nocolor --nogui --eval 46726B9A)
-		fi
-	elif [[ -d "$HOME/.gnupg" ]]; then
-		if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
-			. "$HOME/.gnupg/gpg-agent.env"
-		else
-			if [[ $CURRENT_OS != "Darwin" ]]; then
-				eval $(/usr/bin/env gpg-agent --quiet --daemon --enable-ssh-support --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
-			else
-				eval $(/usr/bin/env gpg-agent --quiet --daemon --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
-			fi
-			chmod 600 "$HOME/.gnupg/gpg-agent.env"
-			export GPG_AGENT_INFO
-		fi
-	fi
+if is_osx && [[ -d "/usr/local/MacGPG2" ]]; then
+else
+    if command -v keychain &>/dev/null; then
+        if is_osx; then
+            eval $(keychain --agents gpg --ignore-missing --quick --quiet --nocolor --nogui --eval 46726B9A)
+        else
+            eval $(keychain --ignore-missing --quick --quiet --nocolor --nogui --eval id_rsa 46726B9A)
+        fi
+    elif [[ -d "$HOME/.gnupg" ]]; then
+        if [[ -f "$HOME/.gnupg/gpg-agent.env" ]]; then
+            . "$HOME/.gnupg/gpg-agent.env"
+        else
+            if is_osx; then
+                eval $(/usr/bin/env gpg-agent --quiet --daemon --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+            else
+                eval $(/usr/bin/env gpg-agent --quiet --daemon --enable-ssh-support --write-env-file "$HOME/.gnupg/gpg-agent.env" 2> /dev/null)
+            fi
+            chmod 600 "$HOME/.gnupg/gpg-agent.env"
+            export GPG_AGENT_INFO
+        fi
+    fi
 fi
 
 export GPG_TTY=$(tty)
 
 if command -v virtualenv &>/dev/null; then
-   if command -v virtualenvwrapper.sh &>/dev/null; then
-   	  export WORKON_HOME=$HOME/.venv
-	  source $(command -v virtualenvwrapper.sh)
-   fi
-	syspip(){
-		PIP_REQUIRE_VIRTUALENV="" pip "$@"
-	}
-	syspip3() {
-		PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
-	}
+    if command -v virtualenvwrapper.sh &>/dev/null; then
+        export WORKON_HOME=$HOME/.venv
+        source $(command -v virtualenvwrapper.sh)
+    fi
+    syspip(){
+    PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
+syspip3() {
+    PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
+}
 fi
-
-
 
 typeset -U path cdpath manpath fpath
 
 # Custom functions
 print_colors() {
-	perl -e 'print map sprintf("\x1b[38;5;%um%4u", $_, $_), 0 .. 255; print "\n"'
+    perl -e 'print map sprintf("\x1b[38;5;%um%4u", $_, $_), 0 .. 255; print "\n"'
 }
 
 unset MANPATH
