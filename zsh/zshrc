@@ -155,6 +155,10 @@ if [[ $CPUTYPE == "x86_64" ]]; then
 	fi
 fi
 
+export EDITOR="vim"
+export VISUAL="vim"
+export PAGER="less"
+
 autoload -U predict-on zmv zrecompile tetris edit-command-line
 
 zmodload zsh/cap zsh/clone zsh/regex zsh/zftp zsh/zpty zsh/datetime zsh/files
