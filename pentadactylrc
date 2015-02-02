@@ -19,7 +19,8 @@ map <A-C-s> :set nsu!=<A-Tab>
 set passkeys=
 " DuckDuckGo
 set passkeys+=duckduckgo.com:jkv
-set passkeys+=fastmail.fm:uhjklmgr
+set passkeys+=fastmail.fm:uhjklmgrx.
+set passkeys+=fastmail.com:uhjklmgrx.
 
 " Disable some Pentadactyl default mappings
 nmap d <Nop>
@@ -45,3 +46,6 @@ map -ex <A-t> :set showtabline!=always,never<CR>
 map <A-i> :set! permissions.default.image=2 | reload<CR>
 map <A-C-i) :set! permissions.default.image=3 | reload<CR>
 map <A-S-i> :set! permissions.default.image=1 | reload<CR>
+
+" OS X hack
+command osxhack :set showtabline=always | set showtabline=never
