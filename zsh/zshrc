@@ -258,18 +258,18 @@ fi
 
 export GPG_TTY=$(tty)
 
-if command -v virtualenv &>/dev/null; then
-    if command -v virtualenvwrapper.sh &>/dev/null; then
-        export WORKON_HOME=$HOME/.venv
-        source $(command -v virtualenvwrapper.sh)
-    fi
-    syspip(){
-    PIP_REQUIRE_VIRTUALENV="" pip "$@"
-}
-syspip3() {
-    PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
-}
-fi
+#if command -v virtualenv &>/dev/null; then
+#    if command -v virtualenvwrapper.sh &>/dev/null; then
+#        export WORKON_HOME=$HOME/.venv
+#        source $(command -v virtualenvwrapper.sh)
+#    fi
+#    syspip(){
+#    PIP_REQUIRE_VIRTUALENV="" pip "$@"
+#}
+#syspip3() {
+#    PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
+#}
+#fi
 
 typeset -U path cdpath manpath fpath
 
