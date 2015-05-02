@@ -1,8 +1,9 @@
-#include "/home/dxtr/.Xresources/nancy.Xresources"
-!#include "/home/dxtr/.Xresources/neuromouse.Xresources"
+!#include "/home/dxtr/.Xresources/nancy.Xresources"
+#include "/home/dxtr/.Xresources/neuromouse.Xresources"
 !#include "/home/dxtr/.Xresources/ir-black.Xresources"
 !#include "/home/dxtr/.Xresources/TomorrowNightEighties.Xresources"
 !#include "/home/dxtr/.Xresources/base16/base16-default.dark.xresources"
+!#include "/home/dxtr/.Xresources/base16/base16-isotope.dark.xresources"
 !#include "/home/dxtr/.Xresources/solarized"
 
 Xcursor.theme: Neutral

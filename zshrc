@@ -62,7 +62,11 @@ elif [[ $CURRENT_OS = "OpenBSD" ]]; then
 	export OPENBSD_CVSROOT="anoncvs@anoncvs.eu.openbsd.org:/cvs"
 	DISABLE_LS_COLORS="true"
 	export PKG_PATH="ftp://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/amd64/"
-	path+=(/usr/games)
+	path+=(/usr/games /usr/local/lib/surfraw)
+
+	# Some surfraw aliases
+	alias ddg='duckduckgo'
+	alias tpb='piratebay'
 
 	if [[ -f "/usr/local/bin/egdb" ]]; then
 		alias gdb="/usr/local/bin/egdb"
@@ -202,13 +206,16 @@ if command -v virtualenv &>/dev/null; then
 	}
 fi
 
-
-
 typeset -U path cdpath manpath fpath
 
 # Custom functions
-print_colors() {
+function print_colors() {
 	perl -e 'print map sprintf("\x1b[38;5;%um%4u", $_, $_), 0 .. 255; print "\n"'
 }
+
+function yt() {
+	mplayer -playlist <(quvi dump -p rfc2483 "$@")
+}
+
 
 unset MANPATH

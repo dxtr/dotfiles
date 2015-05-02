@@ -1,63 +1,83 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
-Mod=Mod1
+function hc() {
+	herbstclient "$@"
+}
 
-herbstclient emit_hook reload
+Mod=Mod4
+
+hc emit_hook reload
+hc unrule -F
 xsetroot -solid "#010101"
+hc pad 0 13 0 0 0
+pgrep -q xstatbar || xstatbar -t '%a %d %b %Y %H:%M' -f gohufont-uni-11 &
 
-herbstclient keyunbind --all
+# Key bindings
+hc keyunbind --all
+hc keybind $Mod-Shift-q quit
+hc keybind $Mod-Shift-r reload
+hc keybind $Mod-Shift-c close
+hc keybind $Mod-Return spawn urxvtc
+hc keybind $Mod-p spawn dmenu_run -b -i -fn gohufont-11
 
-herbstclient keybind $Mod-Shift-q quit
-herbstclient keybind $Mod-Shift-r reload
-herbstclient keybind $Mod-Shift-c close
-herbstclient keybind $Mod-Return spawn urxvtc
-herbstclient keybind $Mod-p spawn dmenu_run -fn -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-15 -nb rgb:01/01/01 -nf rgb:240/240/240 -sb rgb:240/240/240 -sf rgb:01/01/01
+# Rules
+hc unrule -F
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
+hc rule class=MPlayer tag=float index=0 focus=on fullscreen=on
 
 # Tags
-TAG_NAMES=(multimedia web im dev1 dev2 dev3 dev4 dev5 dev6 dev7)
-herbstclient rename default "${TAG_NAMES[0]}" || true
-for i in ${!TAG_NAMES[@]}; do
-	herbstclient add "${TAG_NAMES[$i]}"
-	herbstclient keybind "$Mod-$i" use "${TAG_NAMES[$i]}"
-	herbstclient keybind "$Mod-Shift-$i" move "${TAG_NAMES[$i]}"
+TAG_NAMES=(web im misc dev1 dev2 dev3 dev4 dev5)
+hc rename default "$TAG_NAMES[1]"
+hc keybind "$Mod-1" use "$TAG_NAMES[1]"
+hc keybind "$Mod-Shift-1" use "$TAG_NAMES[1]"
+for (( i=2; i <= $#TAG_NAMES; i++ )); do
+	echo $i
+	echo $TAG_NAMES[$i]
+	hc add $TAG_NAMES[$i]
+	hc keybind "$Mod-$i" use "$TAG_NAMES[$i]"
+	hc keybind "$Mod-Shift-$i" use "$TAG_NAMES[$i]"
 done
 
 # Layout
-herbstclient keybind $Mod-r remove
-herbstclient keybind $Mod-space cycle_layout 1
-herbstclient keybind $Mod-u split vertical 0.5
-herbstclient keybind $Mod-o split horizontal 0.5
-#herbstclient keybind $Mod-s floating toggle
-herbstclient keybind $Mod-f fullscreen toogle
-#herbstclient keybind $Mod-p pseudotile toggle
+hc keybind $Mod-r remove
+hc keybind $Mod-space cycle_layout 1
+hc keybind $Mod-u split vertical 0.5
+hc keybind $Mod-o split horizontal 0.5
+hc keybind $Mod-s floating toggle
+hc keybind $Mod-f fullscreen toogle
+#hc keybind $Mod-p pseudotile toggle
 
 # Resizing
 RSZSTEP=0.05
-herbstclient keybind $Mod-Control-h resize left +$RSZSTEP
-herbstclient keybind $Mod-Control-l resize right +$RSZSTEP
-herbstclient keybind $Mod-Control-j resize down +$RSZSTEP
-herbstclient keybind $Mod-Control-k resize up +$RSZSTEP
+hc keybind $Mod-Control-h resize left +$RSZSTEP
+hc keybind $Mod-Control-l resize right +$RSZSTEP
+hc keybind $Mod-Control-j resize down +$RSZSTEP
+hc keybind $Mod-Control-k resize up +$RSZSTEP
 
 # Focus
-herbstclient keybind $Mod-Tab cycle_all +1
-herbstclient keybind $Mod-Shift-Tab cycle_all -1
-herbstclient keybind $Mod-c cycle
-herbstclient keybind $Mod-h focus left
-herbstclient keybind $Mod-l focus right
-herbstclient keybind $Mod-j focus down
-herbstclient keybind $Mod-k focus up
-herbstclient keybind $Mod-Shift-h shift left
-herbstclient keybind $Mod-Shift-l shift right
-herbstclient keybind $Mod-Shift-j shift down
-herbstclient keybind $Mod-Shift-k shift up
+hc keybind $Mod-Tab cycle_all +1
+hc keybind $Mod-Shift-Tab cycle_all -1
+hc keybind $Mod-c cycle
+hc keybind $Mod-h focus left
+hc keybind $Mod-l focus right
+hc keybind $Mod-j focus down
+hc keybind $Mod-k focus up
+hc keybind $Mod-Shift-h shift left
+hc keybind $Mod-Shift-l shift right
+hc keybind $Mod-Shift-j shift down
+hc keybind $Mod-Shift-k shift up
 
 # Colors
-herbstclient set frame_border_active_color "#fff"
-herbstclient set frame_border_normal_color "#010101"
-herbstclient set frame_bg_active_color "#010101"
-herbstclient set frame_bg_normal_color "#010101"
-herbstclient set frame_bg_transparent 1
-herbstclient set frame_border_width 1
-herbstclient set window_border_width 0
-herbstclient set window_border_normal_color "#010101"
-herbstclient set window_border_active_color "#ff0000"
+hc set frame_border_active_color "#fff"
+hc set frame_border_normal_color "#010101"
+hc set frame_bg_active_color "#010101"
+hc set frame_bg_normal_color "#010101"
+hc set frame_bg_transparent 1
+hc set frame_border_width 1
+hc set window_border_width 0
+hc set window_border_normal_color "#010101"
+hc set window_border_active_color "#ff0000"
+
+urxvtc &
