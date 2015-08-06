@@ -1,2 +1,4 @@
 mutt/hcache
 .zcompdump*
+mpv/ipc
+mpv/cookies
