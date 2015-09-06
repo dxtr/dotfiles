@@ -1,0 +1,147 @@
+; -*- Lisp -*-
+
+(in-package :stumpwm)
+(ql:quickload :swank)
+(ql:quickload :cl-utilities)
+(defcommand swank () ()
+	    (swank:create-server :port 4005
+				 :style swank:*communication-style*
+				 :dont-close t)
+	    (echo-string (current-screen)
+			 "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm)."))
+(swank)
+
+(set-fg-color "#DCDCCC")
+(set-bg-color "#2B2B2B")
+(set-border-color "#000000")
+(set-msg-border-width 1)
+					;(set-font "-gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1")
+(set-font "6x12")
+(set-prefix-key (kbd "C-t"))
+(set-win-bg-color "#2B2B2B")
+(set-focus-color "#000000")
+(set-unfocus-color "#2B2B2B")
+(set-float-focus-color "#000000")
+(set-float-unfocus-color "#2B2B2B")
+(setf *startup-message* nil
+      *timeout-wait* 15
+      *message-window-gravity* :bottom-right
+      *input-window-gravity* :center
+      *mouse-focus-policy* :ignore ; :click, :ignore, :sloppy
+      *group-format* "%n:%t"
+      *maxsize-border-width* 1
+      *transient-border-width* 1
+      *normal-border-width* 1
+      *window-border-style* :thin ; :thick, :thin, :tight, :none
+      *min-frame-width* 10
+      *min-frame-height* 10
+      *new-frame-action* :last-window ; :empty, :last-window
+      *run-or-raise-all-groups* t)
+
+(define-stumpwm-command "lock-screen" ()
+  (run-shell-command "slock"))
+
+(defun key-seq-msg (key key-seq cmd)
+  "Show a message with current incomplete key sequence."
+  (declare (ignore key))
+  (or (eq *top-map* *resize-map*)
+	  (stringp cmd)
+	  (let ((*message-window-gravity* :bottom-left))
+		(message "~A" (print-key-seq (reverse key-seq))))))
+(add-hook *key-press-hook* 'key-seq-msg)
+
+(defun redefine-key (key command)
+  (let ((kbmap *root-map*))
+	(progn
+	  (undefine-key kbmap (kbd key))
+	  (define-key kbmap (kbd key) command))))
+
+;(toggle-mode-line (current-screen) (current-head))
+
+;; Commands
+(defcommand lock-screen () ()
+  "Lock screen"
+  (run-shell-command "slock"))
+
+(defcommand firefox () ()
+            "Run-or-Raise Firefox"
+            (run-or-raise "firefox" '(:class "Firefox")))
+
+(defcommand showlog (logfile) ((:string "Logfile: "))
+	    "Show log"
+	    
+	    (defun join (str lst &optional (jstr ""))
+	      (cond
+		((null lst) jstr)
+		(t (let ((news (concatenate 'string
+					    jstr
+					    (first lst)
+					    (if (null (rest lst))
+						""
+						str))))
+		     (join str (rest lst) news)))))
+	    
+	    (defun read-whole-file ()
+	      (with-open-file (in logfile)
+		(let ((buffer (make-string (file-length in))))
+		  (read-sequence buffer in)
+		  buffer)))
+	    
+	    (let* ((raw-buffer (string-trim '(#\Newline #\Space) (read-whole-file)))
+		   (split-buffer (cl-utilities:split-sequence #\linefeed raw-buffer))
+		   (split-buffer-length (list-length split-buffer))
+		   (buffer (join '(#\linefeed)
+				 (subseq
+				  split-buffer
+				  0
+				  (if (>= split-buffer-length 100)
+				      99
+				      split-buffer-length)))))
+	      (message buffer)))
+
+(defparameter *log-menu* '(("system"
+                            ("authlog" "/var/log/authlog")
+			    ("daemon" "/var/log/daemon")
+			    ("messages" "/var/log/messages")
+			    ("Xorg" "/var/log/Xorg.0.log"))))
+
+(defcommand logmenu () ()
+            "Display menu with log files"
+            (labels 
+		((pick (options)
+		   (let ((selection (select-from-menu (current-screen) options "")))
+		     (cond
+		       ((null selection)
+			(throw 'error "Abort"))
+		       ((stringp (second selection))
+			(second selection))
+		       (t
+			(pick (cdr selection)))))))
+              (let ((choice (pick *log-menu*)))
+                (run-commands (format nil "showlog ~A" choice)))))
+
+;; Key bindinsg
+;(redefine-key (kbd "C-l") "exec slock")
+(redefine-key "c" "exec urxvtc")
+(redefine-key "=" "balance-frames")
+(redefine-key "h" "move-focus left")
+(redefine-key "j" "move-focus down")
+(redefine-key "k" "move-focus up")
+(redefine-key "l" "move-focus right")
+(redefine-key "C-h" "move-window left")
+(redefine-key "C-j" "move-window down")
+(redefine-key "C-k" "move-window up")
+(redefine-key "C-l" "move-window right")
+;(redefine-key "e" "exec emacsclient -c -a \"\"")
+(redefine-key "f" "exec firefox")
+(redefine-key "ESC" "abort")
+(redefine-key "RET" "exec dmenu_run -b -i -p '>' -fn 6x12")
+
+;; Groups
+(grename "Main")
+(gnewbg "Web")
+(gnewbg "Dev")
+(gnewbg "Misc")
+(gnewbg-float "Float")
+;; Launch stuff
+;(run-shell-command "foo")
