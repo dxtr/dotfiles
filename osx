@@ -220,6 +220,8 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
 sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool YES
 
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool NO
+
 ###############################################################################
 # Finder                                                                      #
 ###############################################################################
@@ -299,6 +301,9 @@ defaults write com.apple.dock mru-spaces -bool false
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock showhidden -bool true
 defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
+defaults write com.apple.dock springboard-show-duration -int 0
+defaults write com.apple.dock springboard-hide-duration -int 0
+
 find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
 
 ###############################################################################
