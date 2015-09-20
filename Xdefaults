@@ -1,21 +1,24 @@
-!#include "/home/dxtr/.Xresources/nancy.Xresources"
-!#include "/home/dxtr/.Xresources/neuromouse.Xresources"
-!#include "/home/dxtr/.Xresources/ir-black.Xresources"
-!#include "/home/dxtr/.Xresources/TomorrowNightEighties.Xresources"
-!#include "/home/dxtr/.Xresources/base16/base16-default.dark.xresources"
-!#include "/home/dxtr/.Xresources/base16/base16-isotope.dark.xresources"
-!#include "/home/dxtr/.Xresources/base16/base16-3024.dark.xresources"
-!#include "/home/dxtr/.Xresources/solarized"
-#include "/home/dxtr/.Xresources/zenburn.xresources"
+#include "/home/dxtr/.Xresources/base16-monokai.dark.xresources"
 
 Xcursor.theme: Neutral
 Xcursor.size: 16
 
 !{{{ misc
-*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
-*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
-*faceName: xft:GohuFont:pixelsize=11:antialias=false:hinting=false
+#define FONT_XFT xft:Terminus:pixelsize=12:antialias=false:hinting=false
+#define FONT_NORMAL -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+#define FONT_BOLD -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
 
+!*font: -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1
+!*boldFont: -misc-fixed-bold-r-semicondensed--13-120-75-75-c-60-iso10646-1
+!*faceName: xft:Fixed:pixelsize=11:antialias=false:hinting=false
+!*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+!*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
+!*faceName: xft:GohuFont:pixelsize=11:antialias=false:hinting=false
+!*font: -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!*boldFont: -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+*font: FONT_XFT
+*boldFont: FONT_XFT
+*faceName: FONT_XFT
 !}}}
 
 !{{{ XFT
@@ -29,9 +32,6 @@ Xft.rgba: rgb
 !}}}
 
 !{{{ xterm
-XTerm*font: 6x13
-XTerm*faceName: xft:6x13
-XTerm*boldFont: 6x13bold
 XTerm*toolBar: false
 XTerm*altIsNotMeta: true
 XTerm*cursorBlink: false
@@ -43,8 +43,9 @@ XTerm*locale: true
 XTerm*scrollBar: false
 XTerm*selectToClipboard: false
 XTerm*termName: xterm-256color
-UXTerm*font: 6x13
-UXTerm*boldFont: 6x13bold
+XTerm*eightBitInput: false
+XTerm*metaSendsEscape: true
+
 UXTerm*toolBar: false
 UXTerm*altIsNotMeta: true
 UXTerm*cursorBlink: false
@@ -56,6 +57,8 @@ UXTerm*locale: true
 UXTerm*scrollBar: false
 UXTerm*selectToClipboard: false
 UXTerm*termName: xterm-256color
+UXTerm*metaSendsEscape: true
+UXTerm*eightBitInput: false
 !}}} 
 
 !{{{ URXVT
@@ -87,11 +90,6 @@ URxvt.matcher.button: 1
 ! Catch ugly URLs
 URxvt*cutchars:        '"'()*<>[]{|}
 
-!urxvt*font: 			xft:DejaVu Sans Mono:pixelsize=13:antialias=true:hinting=true
-!urxvt*boldFont: 		xft:DejaVu Sans Mono:pixelsize=13:antialias=true:bold:hinting=true
-!urxvt*italicFont: 		xft:DejaVu Sans Mono:pixelsize=13:antialias=true:italic:autohint=true:hinting=true
-!urxvt*bolditalicFont: 		xft:DejaVu Sans Mono:pixelsize=13:antialias=true:bold:italic:autohint=true:hinting=true
-
 URxvt*internalBorder: 0
 URxvt*externalBorder: 0
 URxvt*borderLess: false
@@ -102,19 +100,18 @@ URxvt.depth: 32
 URxvt*scrollTtyKeypress: true
 URxvt*scrollWithBuffer: true
 URxvt*scrollTtyOutput: false
-URxvt*transparent: true
-URxvt*tint: #020202
-URxvt*shading: 10
+URxvt*transparent: false
+URxvt*tintColor: #010101
+URxvt*shading: 0
 URxvt*cursorColor: #999999
-URxvt*cursorBlink: true
+URxvt*cursorBlink: false
 URxvt*cursorUnderline: false
 URxvt*keysym.Home: \033[1~
 URxvt*keysym.End: \033[4~
-
 !}}}
 
 !{{{ Emacs
-Emacs.font: GohuFont-9
+Emacs.font: Terminus-9
 Emacs.borderWidth: 1
 Emacs.cursorBlink: off
 Emacs.menuBar: off

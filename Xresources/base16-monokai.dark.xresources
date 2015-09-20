@@ -1,0 +1,69 @@
+! Base16 Monokai
+! Scheme: Wimer Hazenberg (http://www.monokai.nl)
+
+! black
+!#define base00 #272822
+#define base00 #1b1e1c
+#define base08 #f92672
+
+! red
+!#define base01 #383830
+!#define base09 #fd971f
+#define base01 #5F0000
+#define base09 #EE6AA7
+
+! green
+!#define base02 #49483e
+!#define base0A #f4bf75
+#define base02 #6b8e23
+#define base0A #b3ee3a
+
+! yellow
+!#define base03 #75715e
+!#define base0B #a6e22e
+#define base03 #FFF68F
+#define base0B #968B26
+
+! blue
+!#define base04 #a59f85
+!#define base0C #a1efe4
+#define base04 #21889b
+#define base0C #8de6f7
+
+! magenta
+!#define base05 #f8f8f2
+!#define base0D #66d9ef
+#define base05 #a41f99
+#define base0D #fe87f4
+
+! cyan
+!#define base06 #f5f4f1
+!#define base0E #ae81ff
+#define base06 #349B8D
+#define base0E #AFEEEE
+
+! white
+#define base07 #f9f8f5
+#define base0F #cc6633
+
+*.foreground:   base07
+*.background:   base00
+*.cursorColor:  base07
+
+*.color0:       base00
+*.color1:       base08
+*.color2:       base0B
+*.color3:       base0A
+*.color4:       base0D
+*.color5:       base0E
+*.color6:       base0C
+*.color7:       base05
+
+*.color8:       base03
+*.color9:       base09
+*.color10:      base01
+*.color11:      base02
+*.color12:      base04
+*.color13:      base06
+*.color14:      base0F
+*.color15:      base07
