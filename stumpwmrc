@@ -1,0 +1,206 @@
+; -*- Lisp -*-
+
+(in-package :stumpwm)
+;(ql:quickload :swank)
+(ql:quickload :cl-utilities)
+(ql:quickload :cl-ppcre)
+(ql:quickload :ironclad)
+(ql:quickload :drakma)
+;; (defcommand swank () ()
+;; 	    (swank:create-server :port 4005
+;; 				 :style swank:*communication-style*
+;; 				 :dont-close t)
+;; 	    (echo-string (current-screen)
+;; 			 "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm)."))
+;; (swank)
+
+;; Some helpful functions
+
+(defcommand check-new-snapshot () ()
+	    "Checks ftp.eu.openbsd.org for new snapshots"
+	    (defun get-latest-checksum ()
+	      (multiple-value-bind (a)
+		  (drakma:http-request
+		   "http://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/amd64/SHA256")
+		(let* ((str (babel:octets-to-string a))
+		       (strlist (cl-utilities:split-sequence
+				 #\newline str))
+		       (cl-ppcre:*allow-quoting* t)
+		       (scanner (cl-ppcre:create-scanner
+				 "SHA256 (.*?) = (.*)$")))
+		  (loop for line in strlist do
+		       (unless (null line)
+			 (multiple-value-bind (_ match)
+			     (cl-ppcre:scan-to-strings scanner line)
+			   (declare (ignore _))
+			   (when (string= "(bsd.rd)" (elt match 0))
+			     (return (elt match 1)))))))))
+  
+	    (defun get-local-checksum ()
+	      (ironclad:byte-array-to-hex-string
+	       (ironclad:digest-file :sha256 "/bsd.rd")))
+	    
+	    (defun new-snapshot? ()
+	      (not (string= (get-local-checksum)
+		       (get-latest-checksum))))
+
+	    (if (new-snapshot?)
+		"New snapshot available!"
+		"No new snapshot available!"))
+
+(defconstant +MY-FOREGROUND+ "#f9f8f5")
+(defconstant +MY-BACKGROUND+ "#1b1e1c")
+(defconstant +MY-BORDER-COLOR+ "#000000")
+(defconstant +MY-WIN-BACKGROUND+ "#1b1e1c")
+(defconstant +MY-FOCUS-COLOR+ "#333333")
+(defconstant +MY-UNFOCUS-COLOR+ "#1b1e1c")
+(defconstant +MY-FLOAT-FOCUS-COLOR+ +MY-FOCUS-COLOR+)
+(defconstant +MY-FLOAT-UNFOCUS-COLOR+ +MY-UNFOCUS-COLOR+)
+(defconstant +MY-FONT+ "6x12")
+
+(set-fg-color +MY-FOREGROUND+)
+(set-bg-color +MY-BACKGROUND+)
+(set-border-color +MY-BORDER-COLOR+)
+(set-msg-border-width 1)
+					;(set-font "-gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1")
+(set-font +MY-FONT+)
+(set-prefix-key (kbd "C-t"))
+(set-win-bg-color +MY-WIN-BACKGROUND+)
+(set-focus-color +MY-FOCUS-COLOR+)
+(set-unfocus-color +MY-UNFOCUS-COLOR+)
+(set-float-focus-color +MY-FLOAT-FOCUS-COLOR+)
+(set-float-unfocus-color +MY-FLOAT-UNFOCUS-COLOR+)
+(setf *startup-message* nil
+      *timeout-wait* 15
+      *message-window-gravity* :bottom-right
+      *input-window-gravity* :center
+      *mouse-focus-policy* :ignore ; :click, :ignore, :sloppy
+      *group-format* "%n:%t"
+      *maxsize-border-width* 1
+      *transient-border-width* 1
+      *normal-border-width* 1
+      *window-border-style* :thin ; :thick, :thin, :tight, :none
+      *min-frame-width* 10
+      *min-frame-height* 10
+      *new-frame-action* :last-window ; :empty, :last-window
+      *run-or-raise-all-groups* t)
+
+(defun key-seq-msg (key key-seq cmd)
+  "Show a message with current incomplete key sequence."
+  (declare (ignore key))
+  (or (eq *top-map* *resize-map*)
+	  (stringp cmd)
+	  (let ((*message-window-gravity* :bottom-left))
+		(message "~A" (print-key-seq (reverse key-seq))))))
+(add-hook *key-press-hook* 'key-seq-msg)
+
+(defun redefine-key (key command)
+  (let ((kbmap *root-map*))
+	(progn
+	  (undefine-key kbmap (kbd key))
+	  (define-key kbmap (kbd key) command))))
+
+;(toggle-mode-line (current-screen) (current-head))
+
+;; Commands
+(defcommand lock-screen () ()
+	    "Lock screen"
+	    (run-shell-command "slock"))
+
+(defcommand run-xterm () ()
+	    "Run XTerm"
+	    (run-shell-command "uxterm"))
+
+(defcommand firefox () ()
+            "Run-or-Raise Firefox"
+            (run-or-raise "firefox" '(:class "Firefox")))
+
+(defcommand showlog (logfile) ((:string "Logfile: "))
+	    "Show log"	    
+	    (defun join (str lst &optional (jstr ""))
+	      (cond
+		((null lst) jstr)
+		(t (let ((news (concatenate 'string
+					    jstr
+					    (first lst)
+					    (if (null (rest lst))
+						""
+						str))))
+		     (join str (rest lst) news)))))
+	    
+	    (defun read-whole-file ()
+	      (with-open-file (in logfile)
+		(let ((buffer (make-string (file-length in))))
+		  (read-sequence buffer in)
+		  buffer)))
+	    
+	    (let* ((raw-buffer (string-trim
+				'(#\Newline #\Space)
+				(read-whole-file)))
+		   (split-buffer (cl-utilities:split-sequence
+				  #\linefeed
+				  raw-buffer))
+		   (split-buffer-length (list-length split-buffer))
+		   (buffer (join '(#\linefeed)
+				 (subseq
+				  split-buffer
+				  0
+				  (if (>= split-buffer-length 100)
+				      99
+				      split-buffer-length)))))
+	      (message buffer)))
+
+(defparameter *log-menu* '(("system"
+                            ("authlog" "/var/log/authlog")
+			    ("daemon" "/var/log/daemon")
+			    ("messages" "/var/log/messages")
+			    ("Xorg" "/var/log/Xorg.0.log"))))
+
+(defcommand logmenu () ()
+            "Display menu with log files"
+            (labels 
+		((pick (options)
+		   (let ((selection (select-from-menu (current-screen) options "")))
+		     (cond
+		       ((null selection)
+			(throw 'error "Abort"))
+		       ((stringp (second selection))
+			(second selection))
+		       (t
+			(pick (rest selection)))))))
+              (let ((choice (pick *log-menu*)))
+                (run-commands (format nil "showlog ~A" choice)))))
+
+;; Key bindinsg
+;(redefine-key (kbd "C-l") "exec slock")
+					;(redefine-key "c" "exec uxterm")
+(redefine-key "c" "exec urxvtc")
+(redefine-key "=" "balance-frames")
+(redefine-key "h" "move-focus left")
+(redefine-key "j" "move-focus down")
+(redefine-key "k" "move-focus up")
+(redefine-key "l" "move-focus right")
+(redefine-key "C-h" "move-window left")
+(redefine-key "C-j" "move-window down")
+(redefine-key "C-k" "move-window up")
+(redefine-key "C-l" "move-window right")
+;(redefine-key "e" "exec emacsclient -c -a \"\"")
+(redefine-key "f" "firefox")
+(redefine-key "ESC" "abort")
+(redefine-key "RET" (format nil "exec dmenu_run -b -i -p '>' -fn ~S -nb ~S -nf ~S -sb ~S"
+			    +MY-FONT+
+			    +MY-BACKGROUND+
+			    +MY-FOREGROUND+
+			    +MY-FOCUS-COLOR+))
+
+;; Groups
+(grename "main")
+(gnewbg "web")
+(gnewbg "dev")
+(gnewbg "chat")
+(gnewbg "misc")
+(gnewbg-float "float0")
+(gnewbg-float "float1")
+;; Launch stuff
+;(run-shell-command "foo")
+(run-shell-command "rotate-wallpaper")

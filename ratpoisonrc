@@ -7,8 +7,11 @@ set barborder 1
 set font GohuFont:pixelsize=12
 set bgcolor #000000
 set fgcolor #00FF00
+set padding 0 14 0 0
+set barinpadding 1
 
 exec /usr/local/bin/rpws init 5 -k
+exec /usr/X11R6/bin/xsetroot -solid "#010101"
 
 alias term exec urxvtc
 alias cnn exec surfraw cnn
@@ -17,7 +20,7 @@ alias surfraw exec surfraw
 alias wayback exec surfraw wayback
 alias wikipedia exec surfraw wikipedia
 
-bind Return exec dmenu_run -i -p '>' -fn -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso8859-1
+bind Return exec dmenu_run -b -i -p '>' -fn -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso8859-1
 bind h rpwsp
 bind l rpwsn
 bind j focusprev

@@ -1,18 +1,24 @@
-#include "/home/dxtr/.Xresources/nancy.Xresources"
-!#include "/home/dxtr/.Xresources/neuromouse.Xresources"
-!#include "/home/dxtr/.Xresources/ir-black.Xresources"
-!#include "/home/dxtr/.Xresources/TomorrowNightEighties.Xresources"
-!#include "/home/dxtr/.Xresources/base16/base16-default.dark.xresources"
-!#include "/home/dxtr/.Xresources/solarized"
+#include "/home/dxtr/.Xresources/base16-monokai.dark.xresources"
 
 Xcursor.theme: Neutral
 Xcursor.size: 16
 
 !{{{ misc
-*font: xft:GohuFont:pixelsize=11:antialias=false:hinting=false
-*boldFont: xft:GohuFont:pixelsize=11:antialias=false:hinting=false:bold:autohint=false
-*faceName: xft:GohuFont:pixelsize=11:antialias=false:hinting=false
+#define FONT_XFT xft:Terminus:pixelsize=12:antialias=false:hinting=false
+#define FONT_NORMAL -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+#define FONT_BOLD -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
 
+!*font: -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1
+!*boldFont: -misc-fixed-bold-r-semicondensed--13-120-75-75-c-60-iso10646-1
+!*faceName: xft:Fixed:pixelsize=11:antialias=false:hinting=false
+!*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+!*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
+!*faceName: xft:GohuFont:pixelsize=11:antialias=false:hinting=false
+!*font: -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!*boldFont: -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+*font: FONT_XFT
+*boldFont: FONT_XFT
+*faceName: FONT_XFT
 !}}}
 
 !{{{ XFT
@@ -26,18 +32,33 @@ Xft.rgba: rgb
 !}}}
 
 !{{{ xterm
-xterm*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
-xterm*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
-xterm*toolBar: false
-xterm*altIsNotMeta: true
-xterm*cursorBlink: false
-xterm*cursorColor: white
-xterm*cutNewline: false
-xterm*cutToBeginningOfLine: true
-xterm*deleteIsDEL: false
-xterm*locale: true
-xterm*scrollBar: false
-xterm*selectToClipboard: false
+XTerm*toolBar: false
+XTerm*altIsNotMeta: true
+XTerm*cursorBlink: false
+XTerm*cursorColor: white
+XTerm*cutNewline: false
+XTerm*cutToBeginningOfLine: true
+XTerm*deleteIsDEL: false
+XTerm*locale: true
+XTerm*scrollBar: false
+XTerm*selectToClipboard: false
+XTerm*termName: xterm-256color
+XTerm*eightBitInput: false
+XTerm*metaSendsEscape: true
+
+UXTerm*toolBar: false
+UXTerm*altIsNotMeta: true
+UXTerm*cursorBlink: false
+UXTerm*cursorColor: white
+UXTerm*cutNewline: false
+UXTerm*cutToBeginningOfLine: true
+UXTerm*deleteIsDEL: false
+UXTerm*locale: true
+UXTerm*scrollBar: false
+UXTerm*selectToClipboard: false
+UXTerm*termName: xterm-256color
+UXTerm*metaSendsEscape: true
+UXTerm*eightBitInput: false
 !}}} 
 
 !{{{ URXVT
@@ -69,11 +90,6 @@ URxvt.matcher.button: 1
 ! Catch ugly URLs
 URxvt*cutchars:        '"'()*<>[]{|}
 
-!urxvt*font: 			xft:DejaVu Sans Mono:pixelsize=13:antialias=true:hinting=true
-!urxvt*boldFont: 		xft:DejaVu Sans Mono:pixelsize=13:antialias=true:bold:hinting=true
-!urxvt*italicFont: 		xft:DejaVu Sans Mono:pixelsize=13:antialias=true:italic:autohint=true:hinting=true
-!urxvt*bolditalicFont: 		xft:DejaVu Sans Mono:pixelsize=13:antialias=true:bold:italic:autohint=true:hinting=true
-
 URxvt*internalBorder: 0
 URxvt*externalBorder: 0
 URxvt*borderLess: false
@@ -85,18 +101,16 @@ URxvt*scrollTtyKeypress: true
 URxvt*scrollWithBuffer: true
 URxvt*scrollTtyOutput: false
 URxvt*transparent: true
-URxvt*tint: #020202
-URxvt*shading: 10
+URxvt*shading: 15
 URxvt*cursorColor: #999999
-URxvt*cursorBlink: true
+URxvt*cursorBlink: false
 URxvt*cursorUnderline: false
 URxvt*keysym.Home: \033[1~
 URxvt*keysym.End: \033[4~
-
 !}}}
 
 !{{{ Emacs
-Emacs.font: GohuFont-9
+Emacs.font: Terminus-9
 Emacs.borderWidth: 1
 Emacs.cursorBlink: off
 Emacs.menuBar: off
@@ -104,21 +118,23 @@ Emacs.verticalScrollBars: off
 !}}}
 
 !{{{ xfontsel
-XFontSel.font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+XFontSel.font: 6x13
+XFontSel.printOnQuit: true
 !}}}
 
 !{{{ XClock
-Clock.font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+XClock.font: 8x16
+XClock.update: 1
+XClock.analog: false
 !}}}
 
 !{{{ xpdf
-xpdf*font: -misc-dejavu sans-medium-r-normal--0-0-0-0-p-0-iso10646-1
-xpdf*fontList: -misc-dejavu sans-medium-r-normal--0-0-0-0-p-0-iso10646-1
-xpdf*boldFont: -misc-dejavu sans-medium-r-normal--0-0-0-0-p-0-iso10646-1
-xpdf*faceName: -misc-dejavu sans-medium-r-normal--0-0-0-0-p-0-iso10646-1
+xpdf*font: 6x13
+xpdf*fontList: 6x13
+xpdf*boldFont: 6x13bold
 xpdf.title: xpdf
 !}}}
 
 !{{xmessage
-xmessage*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso8859-1
+xmessage*font: 6x13
 !}}}

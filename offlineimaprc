@@ -8,17 +8,11 @@ fsync = False
 ignore-readonly = yes
 socktimeout = 60
 
-[Account FastMail]
+[Account fastmail]
 localrepository = FastMail-local
 remoterepository = FastMail-remote
 status_backend = sqlite
 #postsynchook = notmuch new
-maildir-windows-compatible = no
-
-[Account Axema]
-localrepository = Axema-local
-remoterepository = Axema-remote
-status_backend = sqlite
 maildir-windows-compatible = no
 
 [Repository FastMail-local]
@@ -39,20 +33,3 @@ realdelete = no
 #createfolders = False
 nametrans = lambda folder: re.sub('^INBOX\.', '', folder)
 
-[Repository Axema-local]
-type = Maildir
-localfolders = ~/.mail/axema
-#nametrans = lambda folder: re.sub('^(?!INBOX)', 'INBOX.', folder)
-
-[Repository Axema-remote]
-maxconnections = 2
-type = IMAP
-remotehosteval = get_account_info(account='axema')['imap']['host']
-remoteporteval = get_account_info(account='axema')['imap']['port']
-remotepasseval = get_account_info(account='axema')['imap']['password']
-remoteusereval = get_account_info(account='axema')['imap']['username']
-ssl = yes
-cert_fingerprint = 25ad56b9e973a8d92567a122717dc51c95db7dc6
-realdelete = no
-createfolders = False
-#nametrans = lambda folder: re.sub('^INBOX\.', '', folder)
