@@ -1,0 +1,29 @@
+SyncState *
+
+MaildirStore io-local
+Path ~/mail/
+Inbox ~/mail/Inbox
+
+IMAPAccount io
+Host io.dxtr.im
+Port 993
+User dxtr
+AuthMechs *
+SSLType IMAPS # STARTTLS, IMAPS
+SSLVersions TLSv1.2 # TLSv1, TLSv1.1, TLSv1.2
+#PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mail/fastmail.gpg"
+
+IMAPStore io-remote
+Account io
+
+Channel io
+Master :io-remote:
+Slave :io-local:
+Patterns *
+Expunge Both
+Remove Both
+Create Both
+Sync All
+
+#PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mail/fastmail.gpg"
+

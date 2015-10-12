@@ -104,8 +104,12 @@
 
 ;; Commands
 (defcommand lock-screen () ()
-  "Lock screen"
-  (run-shell-command "slock"))
+	    "Lock screen"
+	    (run-shell-command "slock"))
+
+(defcommand run-xterm () ()
+	    "Run XTerm"
+	    (run-shell-command "uxterm"))
 
 (defcommand firefox () ()
             "Run-or-Raise Firefox"
@@ -169,7 +173,8 @@
 
 ;; Key bindinsg
 ;(redefine-key (kbd "C-l") "exec slock")
-(redefine-key "c" "exec uxterm")
+					;(redefine-key "c" "exec uxterm")
+(redefine-key "c" "exec urxvtc")
 (redefine-key "=" "balance-frames")
 (redefine-key "h" "move-focus left")
 (redefine-key "j" "move-focus down")
@@ -198,3 +203,4 @@
 (gnewbg-float "float1")
 ;; Launch stuff
 ;(run-shell-command "foo")
+(run-shell-command "rotate-wallpaper")

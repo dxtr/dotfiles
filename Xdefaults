@@ -100,9 +100,8 @@ URxvt.depth: 32
 URxvt*scrollTtyKeypress: true
 URxvt*scrollWithBuffer: true
 URxvt*scrollTtyOutput: false
-URxvt*transparent: false
-URxvt*tintColor: #010101
-URxvt*shading: 0
+URxvt*transparent: true
+URxvt*shading: 15
 URxvt*cursorColor: #999999
 URxvt*cursorBlink: false
 URxvt*cursorUnderline: false
