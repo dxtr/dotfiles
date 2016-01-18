@@ -1,29 +1,53 @@
 SyncState *
 
-MaildirStore io-local
-Path ~/mail/
-Inbox ~/mail/Inbox
-
-IMAPAccount io
-Host io.dxtr.im
-Port 993
-User dxtr
-AuthMechs *
+IMAPAccount fastmail
+Host mail.messagingengine.com
+Port 992
+User dxtr@fastmail.fm
 SSLType IMAPS # STARTTLS, IMAPS
-SSLVersions TLSv1.2 # TLSv1, TLSv1.1, TLSv1.2
+SSLVersions TLSv1.2
+AuthMechs *
+
+IMAPStore fastmail-remote
+Account fastmail
+
+MaildirStore fastmail-local
+Path ~/mail/
+Inbox ~/mail/INBOX
+
+Channel fastmail_in
+Master :fastmail-remote:
+Slave :fastmail-local:
+Patterns *
+Sync All
+Create Slave
+SyncState *
+
+#Channel fastmail_rest
+#Master :fastmail-remote:
+#Slave :fastmail-local:
+
+Group fastmail
+Channels fastmail_in 
+
+#User dxtr
+#AuthMechs *
+#SSLType IMAPS # STARTTLS, IMAPS
+#SSLVersions TLSv1.2 # TLSv1, TLSv1.1, TLSv1.2
+#CertificateFile ~/.private/certs/io.pem
 #PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mail/fastmail.gpg"
 
-IMAPStore io-remote
-Account io
+#IMAPStore io-remote
+#Account io
 
-Channel io
-Master :io-remote:
-Slave :io-local:
-Patterns *
-Expunge Both
-Remove Both
-Create Both
-Sync All
+#Channel io
+#Master :io-remote:
+#Slave :io-local:
+#Patterns *
+#Expunge Both
+#Remove Both
+#Create Both
+#Sync All
 
 #PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mail/fastmail.gpg"
 
