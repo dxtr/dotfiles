@@ -1,4 +1,27 @@
-#include "/home/dxtr/.Xresources/base16-monokai.dark.xresources"
+!#include "/home/dxtr/.Xresources/base16-monokai.dark.xresources"
+!*color0: rgbi:0.00000000000000000/0.00000000000000000/0.00000000000000000
+*color0: #000000
+*color1: #ff5555
+*color2: #50fa7b
+*color3: #f1fa8c
+*color4: #bd93f9
+*color5: #ff79c6
+*color6: #8be9fd
+*color7: #c7c7c7
+*color8: #686868
+*color9: #ff6f6b
+*color10: #62f591
+*color11: #f3f7a2
+*color12: #f6f6f6
+*color13: #ff94d0
+*color14: #9dedfc
+*color15: #ffffff
+*background: #282a36
+*colorBD: #ffffff
+!*cursorColor: rgbi:0.73333334922790527/0.73333334922790527/0.73333334922790527
+!*cursorColor2: rgbi:1.00000000000000000/1.00000000000000000/1.00000000000000000
+*foreground: #f8f8f2
+
 
 Xcursor.theme: Neutral
 Xcursor.size: 16
@@ -19,6 +42,7 @@ Xcursor.size: 16
 *font: FONT_XFT
 *boldFont: FONT_XFT
 *faceName: FONT_XFT
+rofi.font: terminus 12px
 !}}}
 
 !{{{ XFT
@@ -77,36 +101,42 @@ URxvt.keysym.M-f:       perl:keyboard-select:search
 URxvt.keysym.M-c:       perl:clipboard:copy
 URxvt.keysym.M-v:       perl:clipboard:paste
 URxvt.keysym.C-M-v:     perl:clipboard:paste_escaped
+URxvt.keysym.Control-Up:   \033[1;5A
+URxvt.keysym.Control-Down:    \033[1;5B
+URxvt.keysym.Control-Left:    \033[1;5D
+URxvt.keysym.Control-Right:    \033[1;5C
 URxvt.clipboard.autocopy: true
 URxvt.clipboard.copycmd:      /usr/local/bin/xsel -ib
 URxvt.clipboard.pastecmd:     /usr/local/bin/xsel -ob
-URxvt.url-launcher:      /usr/local/bin/firefox
+URxvt.url-launcher:      /usr/local/bin/vimb
 URxvt.underlineurls:    true
 URxvt.url-select.autocopy: true
 URxvt.url-select.button: 2
-URxvt.url-select.launcher: /usr/local/bin/firefox --new-tab
+URxvt.url-select.launcher: /usr/local/bin/vimb
 !URxvt.urlbutton:  1
 URxvt.matcher.button: 1
 ! Catch ugly URLs
 URxvt*cutchars:        '"'()*<>[]{|}
 
+URxvt*background: rgba:2800/2a00/3600/f000
 URxvt*internalBorder: 0
 URxvt*externalBorder: 0
 URxvt*borderLess: false
 URxvt*fading: 33
-URxvt*fadeColor: #010101
+URxvt*fadeColor: #282a36
 URxvt*letterSpace: 0
 URxvt.depth: 32
 URxvt*scrollTtyKeypress: true
 URxvt*scrollWithBuffer: true
 URxvt*scrollTtyOutput: false
-URxvt*transparent: true
-URxvt*shading: 15
-URxvt*cursorColor: #999999
+URxvt*transparent: false
+!URxvt*shading: 15
+!URxvt*tintColor: #282a36
+!URxvt*cursorColor: #999999
 URxvt*cursorBlink: false
 URxvt*cursorUnderline: false
-URxvt*keysym.Home: \033[1~
-URxvt*keysym.End: \033[4~
+!URxvt*keysym.Home: \033[1~
+!URxvt*keysym.End: \033[4~
 !}}}
 
 !{{{ Emacs

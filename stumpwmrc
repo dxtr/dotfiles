@@ -48,12 +48,12 @@
 		"New snapshot available!"
 		"No new snapshot available!"))
 
-(defconstant +MY-FOREGROUND+ "#f9f8f5")
-(defconstant +MY-BACKGROUND+ "#1b1e1c")
-(defconstant +MY-BORDER-COLOR+ "#000000")
-(defconstant +MY-WIN-BACKGROUND+ "#1b1e1c")
-(defconstant +MY-FOCUS-COLOR+ "#333333")
-(defconstant +MY-UNFOCUS-COLOR+ "#1b1e1c")
+(defconstant +MY-FOREGROUND+ "#f8f8f2")
+(defconstant +MY-BACKGROUND+ "#282a36")
+(defconstant +MY-BORDER-COLOR+ "#373844")
+(defconstant +MY-WIN-BACKGROUND+ "#464752")
+(defconstant +MY-FOCUS-COLOR+ +MY-FOREGROUND+)
+(defconstant +MY-UNFOCUS-COLOR+ +MY-BACKGROUND+)
 (defconstant +MY-FLOAT-FOCUS-COLOR+ +MY-FOCUS-COLOR+)
 (defconstant +MY-FLOAT-UNFOCUS-COLOR+ +MY-UNFOCUS-COLOR+)
 (defconstant +MY-FONT+ "6x12")
@@ -76,10 +76,10 @@
       *input-window-gravity* :center
       *mouse-focus-policy* :ignore ; :click, :ignore, :sloppy
       *group-format* "%n:%t"
-      *maxsize-border-width* 1
+      *maxsize-border-width* 0
       *transient-border-width* 1
       *normal-border-width* 1
-      *window-border-style* :thin ; :thick, :thin, :tight, :none
+      *window-border-style* :tight ; :thick, :thin, :tight, :none
       *min-frame-width* 10
       *min-frame-height* 10
       *new-frame-action* :last-window ; :empty, :last-window
@@ -187,11 +187,7 @@
 ;(redefine-key "e" "exec emacsclient -c -a \"\"")
 (redefine-key "f" "firefox")
 (redefine-key "ESC" "abort")
-(redefine-key "RET" (format nil "exec dmenu_run -b -i -p '>' -fn ~S -nb ~S -nf ~S -sb ~S"
-			    +MY-FONT+
-			    +MY-BACKGROUND+
-			    +MY-FOREGROUND+
-			    +MY-FOCUS-COLOR+))
+(redefine-key "RET" "exec rofi -show run")
 
 ;; Groups
 (grename "main")

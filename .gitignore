@@ -3,3 +3,10 @@ mutt/hcache
 *~
 mpv/ipc
 mpv/cookies
+*.o
+xmonad/*.errors
+xmonad/xmonad-x86_64-openbsd
+xmonad/history
+xmonad/*.hi
+*.gpg
+*.pyc

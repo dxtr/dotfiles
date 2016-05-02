@@ -1,4 +1,5 @@
-SyncState *
+FSync no
+BufferLimit 32M
 
 IMAPAccount fastmail
 Host mail.messagingengine.com
@@ -7,7 +8,9 @@ User dxtr@fastmail.fm
 SSLType IMAPS # STARTTLS, IMAPS
 SSLVersions TLSv1.2
 AuthMechs *
-PassCmd "lpass show --password kim@dxtr.im/Email/FastMail"
+PassCmd "/home/dxtr/.secret/fastmail.sh"
+#PassCmd "lpass show --password kim@dxtr.im/Email/FastMail"
+SystemCertificates yes
 
 IMAPStore fastmail-remote
 Account fastmail
@@ -19,10 +22,13 @@ Inbox ~/mail/INBOX
 Channel fastmail_in
 Master :fastmail-remote:
 Slave :fastmail-local:
-Patterns * !INBOX
+Patterns *
 Sync All
-Create Slave
+Create Both
+Remove Both
+Expunge Both
 SyncState *
+CopyArrivalDate yes
 
 Group fastmail
 Channels fastmail_in 
