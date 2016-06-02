@@ -1,0 +1,21 @@
+Config { font = "fixed"
+       , additionalFonts = []
+       , bgColor = "#282a36"
+       , fgColor = "#f8f8f2"
+       , position = TopW C 100
+       , lowerOnStart = True
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , overrideRedirect = False
+       , commands =
+           [ Run Weather "ESSP" ["-t","<station>: <tempC>C", "-L","10", "-H","25", "--normal","#f8f8f2", "--high","#ff5555", "--low","#50fa7b"] 36000,
+             Run Battery ["-t", "AC: <status> Batt: <left> <minleft>", "-L", "20", "--normal", "#f8f8f2", "--low", "#ff5555"] 600,
+             Run Com "uname" ["-s","-r"] "" 36000,
+             Run Date "%FT%R" "date" 300,
+             Run StdinReader
+           ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ %ESSP% | %battery% | <fc=#b6b6b2>%date%</fc>"
+       }
