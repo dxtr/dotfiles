@@ -1,4 +1,11 @@
 # Stolen from openbsd /etc/ksh.kshrc
+function no_path {
+  eval _v="\$${2:-PATH}"
+  case :$_v: in
+  *:$1:*) return 1;;            # no we have it
+  esac
+  return 0
+}
 function add_path {
   [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="\$${2:-PATH}:$1"
 }
