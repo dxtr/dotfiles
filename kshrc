@@ -1,20 +1,38 @@
+# -*- mode: sh -*-
 # Stolen from openbsd /etc/ksh.kshrc
 function no_path {
-  eval _v="\$${2:-PATH}"
-  case :$_v: in
-  *:$1:*) return 1;;            # no we have it
-  esac
-  return 0
+    eval _v="\$${2:-PATH}"
+    case :$_v: in
+	*:$1:*) return 1;;            # no we have it
+    esac
+    return 0
 }
 function add_path {
-  [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="\$${2:-PATH}:$1"
+    [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="\$${2:-PATH}:$1"
 }
 function pre_path {
-  [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="$1:\$${2:-PATH}"
+    [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="$1:\$${2:-PATH}"
 }
 function del_path {
-  no_path $* || eval ${2:-PATH}=`eval echo :'$'${2:-PATH}: |
+    no_path $* || eval ${2:-PATH}=`eval echo :'$'${2:-PATH}: |
     sed -e "s;:$1:;:;g" -e "s;^:;;" -e "s;:\$;;"`
+}
+function add_ssh_key {
+    keyfile="$1"
+    pubkey="$keyfile.pub"
+    
+    if [ -f $keyfile -a -s $keyfile ]; then
+	if [ -f $pubkey -a -s $pubkey ]; then
+#	    key=$(cat $pubkey | tr -s '[:space:]' | cut -d' ' -f2)
+	    ssh-add -L | grep -qs $(cat $pubkey | tr -s '[:space:]' | cut -d ' ' -f 2)
+	    [ $? -eq 1 ] && ssh-add $keyfile
+	else
+	    ssh-add $keyfile
+	fi
+    fi
+}
+function ssh_agent_pid {
+    $(pgrep -xu $(id -u) ssh-agent)
 }
 
 PS1='\u@\h:\w \$ '
@@ -40,21 +58,31 @@ set -o noclobber
 #set -o nounset
 set -o markdirs
 
-test -d ~/.opam/opam-init && . ~/.opam/opam-init/init.sh
+[ -d ~/.opam/opam-init ] && . ~/.opam/opam-init/init.sh
 
 if [ ! -d $TMPDIR ]; then
     mkdir $TMPDIR
+    chmod 700 $TMPDIR
 fi
 
-if [[ -z $SSH_AUTH_SOCK ]]; then
-    agent_pid=$(pgrep -xu $(id -u) ssh-agent)
+if [ -n $SSH_AUTH_SOCK ]; then
+    if [ ! -S $SSH_AUTH_SOCK ]; then
+        [ -n ssh_agent_pid ] && pkill ssh-agent
+        pkill ssh-agent
+        unset SSH_AUTH_SOCK
+        [ -f $TMPDIR/ssh-agent.sh ] && rm $TMPDIR/ssh-agent.sh
+    fi
+fi
+
+if [ -z $SSH_AUTH_SOCK ]; then
+    agent_pid=ssh_agent_pid
+
     if [ -z $agent_pid ]; then
 	ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
     fi
 
     . $TMPDIR/ssh-agent.sh
 
-    test -f ~/.ssh/id_ed25519.pub && ssh-add ~/.ssh/id_ed25519
-    test -f ~/.ssh/id_rsa.pub && ssh-add ~/.ssh/id_rsa
+    add_ssh_key $HOME/.ssh/id_ed25519
+    add_ssh_key $HOME/.ssh/id_rsa
 fi
-
