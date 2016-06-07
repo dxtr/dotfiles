@@ -1,0 +1,19 @@
+set! accessibility.typeaheadfind.enablesound=false
+
+set animations=false
+set editor="emacs"
+set errorbells=false
+set focuscontent=false
+set followhints=0
+set hintchars=hjklasdf
+set gui=noaddons,nobookmarks,nomenu,nonavigation,notabs
+set defsearch=duckduckgo
+set runtimepath=~/.vimperator
+set scrollbars=false
+set showstatuslinks=2
+set suggestengines=duckduckgo,wikipedia
+set tabnumbers=true
+set visualbell=true
+
+loadplugins
+sidebar Bookmarks
