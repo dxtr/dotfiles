@@ -60,11 +60,6 @@ set -o markdirs
 
 [ -d ~/.opam/opam-init ] && . ~/.opam/opam-init/init.sh
 
-if [ ! -d $TMPDIR ]; then
-    mkdir $TMPDIR
-    chmod 700 $TMPDIR
-fi
-
 if [ -n $SSH_AUTH_SOCK ]; then
     if [ ! -S $SSH_AUTH_SOCK ]; then
         [ -n ssh_agent_pid ] && pkill ssh-agent

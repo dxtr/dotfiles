@@ -3,7 +3,7 @@ ENV=$HOME/.kshrc
 PS1='\u@\H:\w \$'
 TMPDIR="/tmp/$LOGNAME"
 
-test -d "$TMPDIR" || mkdir -p -m 700 "$TMPDIR"
+[ -d "$TMPDIR" ] || mkdir -p -m 700 "$TMPDIR"
 
 export PATH HOME TERM ENV PS1 TMPDIR
 
