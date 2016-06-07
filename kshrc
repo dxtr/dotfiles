@@ -1,4 +1,14 @@
-. /etc/ksh.kshrc
+# Stolen from openbsd /etc/ksh.kshrc
+function add_path {
+  [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="\$${2:-PATH}:$1"
+}
+function pre_path {
+  [ -d ${1:-.} ] && no_path $* && eval ${2:-PATH}="$1:\$${2:-PATH}"
+}
+function del_path {
+  no_path $* || eval ${2:-PATH}=`eval echo :'$'${2:-PATH}: |
+    sed -e "s;:$1:;:;g" -e "s;^:;;" -e "s;:\$;;"`
+}
 
 PS1='\u@\h:\w \$ '
 EDITOR='emacs'
