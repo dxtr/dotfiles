@@ -5,7 +5,7 @@ mpv/ipc
 mpv/cookies
 *.o
 xmonad/*.errors
-xmonad/xmonad-x86_64-openbsd
+xmonad/xmonad-x86_64-*
 xmonad/history
 xmonad/*.hi
 *.gpg
