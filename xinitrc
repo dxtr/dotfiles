@@ -3,9 +3,15 @@
 xresources=$HOME/.Xdefaults
 xmodmap=$HOME/.Xmodmap
 
-for x in /usr/local/share/fonts/*; do
-    xset +fp $x
-done
+if [ -d /usr/local/share/fonts ]; then
+    for x in /usr/local/share/fonts/*; do
+        xset +fp $x
+    done
+elif [ -d /usr/share/fonts ]; then
+    for x in /usr/share/fonts/*; do
+        xset +fp $x
+    done
+fi
 
 if [ -f $xresources ]; then
     xrdb -merge $xresources
@@ -32,8 +38,17 @@ fi
 xset fp rehash
 xset s blank
 xset -b
-setxkbmap -layout us,se \
-	  -variant altgr-intl,nodeadkeys \
+
+if [ "$(hostname -s)" = "torsten" ]; then
+    kbd_layout="us,se"
+    kbd_variant="altgr-intl,nodeadkeys"
+else
+    kbd_layout="se"
+    kbd_variant="nodeadkeys"
+fi
+
+setxkbmap -layout $kbd_layout \
+	  -variant $kbd_variant \
 	  -option \
 	  -option "compose:rctl" \
 	  -option "eurosign:e" \

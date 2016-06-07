@@ -42,8 +42,13 @@ set -o markdirs
 
 test -d ~/.opam/opam-init && . ~/.opam/opam-init/init.sh
 
+if [ ! -d $TMPDIR ]; then
+    mkdir $TMPDIR
+fi
+
 if [[ -z $SSH_AUTH_SOCK ]]; then
-    if ! pgrep -qxu $(id -u) ssh-agent; then
+    agent_pid=$(pgrep -xu $(id -u) ssh-agent)
+    if [ -z $agent_pid ]; then
 	ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
     fi
 
