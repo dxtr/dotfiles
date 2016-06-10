@@ -32,7 +32,13 @@ function add_ssh_key {
     fi
 }
 function ssh_agent_pid {
-    pgrep -xu $(id -u) ssh-agent
+    uname=$(uname)
+    myuid=$(id -u)
+    if [ $uname = "Linux" ]; then
+        pgrep -xu $myuid ssh-agent > /dev/null
+    else
+        pgrep -qxu $myuid
+    fi
 }
 function ssh_auth_sock_exists {
     [ -e $SSH_AUTH_SOCK -a -S $SSH_AUTH_SOCK ]
@@ -73,7 +79,8 @@ if [ ! -z $SSH_AUTH_SOCK ]; then
 fi
 
 if [ -z $SSH_AUTH_SOCK ]; then
-    [ -z $(pgrep -xu $(id -u) ssh-agent) ] && ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
+    ssh_agent_pid && ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
+    # [ -z $(pgrep -xu $(id -u) ssh-agent) ] && ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
 
     . $TMPDIR/ssh-agent.sh
 
