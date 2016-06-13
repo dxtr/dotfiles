@@ -79,7 +79,7 @@ if [ ! -z $SSH_AUTH_SOCK ]; then
 fi
 
 if [ -z $SSH_AUTH_SOCK ]; then
-    ssh_agent_pid && ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
+    ssh_agent_pid || ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
     # [ -z $(pgrep -xu $(id -u) ssh-agent) ] && ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
 
     . $TMPDIR/ssh-agent.sh
