@@ -37,7 +37,7 @@ function ssh_agent_pid {
     if [ $uname = "Linux" ]; then
         pgrep -xu $myuid ssh-agent > /dev/null
     else
-        pgrep -qxu $myuid
+        pgrep -qxu $myuid ssh-agent
     fi
 }
 function ssh_auth_sock_exists {
@@ -57,10 +57,7 @@ LESS='-F -g -i -M -R -S -w -X -x-4'
 
 add_path $HOME/.local/phpstorm/bin
 add_path /usr/local/jdk-1.8.0/bin
-<<<<<<< HEAD
-=======
 add_path /usr/bin/vendor_perl
->>>>>>> 5e44a26f5785e5b494c9e0a9d43979cb50d5541a
 pre_path ~/perl5/bin
 pre_path ~/.racket/6.2.1/bin
 pre_path $GOPATH/bin
@@ -92,10 +89,12 @@ if [ -z $SSH_AUTH_SOCK ]; then
     ssh_agent_pid || ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
     # [ -z $(pgrep -xu $(id -u) ssh-agent) ] && ssh-agent | grep -v ^echo > $TMPDIR/ssh-agent.sh
 
-    . $TMPDIR/ssh-agent.sh
+    if [ -f $TMPDIR/ssh-agent.sh ]; then
+        . $TMPDIR/ssh-agent.sh
 
-    add_ssh_key $HOME/.ssh/id_ed25519
-    add_ssh_key $HOME/.ssh/id_rsa
+        add_ssh_key $HOME/.ssh/id_ed25519
+        add_ssh_key $HOME/.ssh/id_rsa
+    fi
 fi
 
 export STEAM_RUNTIME=0
