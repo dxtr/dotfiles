@@ -57,19 +57,28 @@ LESS='-F -g -i -M -R -S -w -X -x-4'
 
 add_path $HOME/.local/phpstorm/bin
 add_path /usr/local/jdk-1.8.0/bin
+<<<<<<< HEAD
+=======
+add_path /usr/bin/vendor_perl
+>>>>>>> 5e44a26f5785e5b494c9e0a9d43979cb50d5541a
 pre_path ~/perl5/bin
 pre_path ~/.racket/6.2.1/bin
 pre_path $GOPATH/bin
 
+[ -d ~/.opam/opam-init ] && . ~/.opam/opam-init/init.sh
+
 export PATH PS1 EDITOR VISUAL PAGER HISTFILE HISTSIZE MAIL \
        GOPATH LESS
-export PERL5LIB="~/perl5/lib/perl5"
+export MAILDIR="$HOME/mail"
+export PERL5LIB="$HOME/perl5/lib/perl5"
+export PERL_LOCAL_LIB_ROOT="$HOME/dxtr/perl5"
+export PERL_MB_OPT="--install_base \"$HOME/perl5\""
+export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 
 set -o noclobber
 #set -o nounset
 set -o markdirs
 
-[ -d ~/.opam/opam-init ] && . ~/.opam/opam-init/init.sh
 
 if [ ! -z $SSH_AUTH_SOCK ]; then
     if [ ! -e $SSH_AUTH_SOCK -o ! -S $SSH_AUTH_SOCK ]; then
