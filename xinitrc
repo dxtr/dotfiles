@@ -39,12 +39,12 @@ xset fp rehash
 xset s blank
 xset -b
 
-if [ "$(hostname -s)" = "torsten" ]; then
+kbd_layout="us"
+kbd_variant="altgr-intl"
+
+if [ "$(hostname -s)" = "greger" ]; then
     kbd_layout="us,se"
     kbd_variant="altgr-intl,nodeadkeys"
-else
-    kbd_layout="se"
-    kbd_variant="nodeadkeys"
 fi
 
 setxkbmap -layout $kbd_layout \
@@ -57,11 +57,14 @@ setxkbmap -layout $kbd_layout \
 	  -option "terminate:ctrl_alt_bksp"
 xsetroot -solid "#1b1e1c"
 urxvtd -q -f -o
-#export TERM=uxterm
 export TERM=urxvtc
 #pgrep -q xstatbar || xstatbar -t '%a %d %b %Y %H:%M' -f 6x12 &
 
+if [ "$(hostname -s)" = "greger" ]; then
+    nitrogen --restore
+fi
 xcompmgr &
+
 exec xmonad
 #exec ~/.cabal/bin/xmonad
 #exec stumpwm
