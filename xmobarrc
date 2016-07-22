@@ -8,14 +8,41 @@ Config { font = "fixed"
        , allDesktops = True
        , persistent = True
        , overrideRedirect = False
-       , commands =
-           [ Run Weather "ESSP" ["-t","<station>: <tempC>C", "-L","10", "-H","25", "--normal","#f8f8f2", "--high","#ff5555", "--low","#50fa7b"] 36000,
-             Run Battery ["-t", "AC: <status> Batt: <left> <minleft>", "-L", "20", "--normal", "#f8f8f2", "--low", "#ff5555"] 600,
-             Run Com "uname" ["-s","-r"] "" 36000,
-             Run Date "%FT%R" "date" 300,
-             Run StdinReader
-           ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %ESSP% | %battery% | <fc=#b6b6b2>%date%</fc>"
+       , template = "%StdinReader% }{ %dynnetwork%%wlan0wi% | %battery% | %ESSP% | <fc=#b6b6b2>%date%</fc>"
+       , commands =
+           [ Run DynNetwork [ "-S", "True"
+                            , "-t", "net: <rx>/<tx>"
+                            ] 5
+           , Run Wireless "wlan0" [ "-L", "25"
+                                  , "-H", "75"
+                                  , "-h", "green"
+                                  , "-l", "red"
+                                  , "-t", " <essid>: <quality>%"
+                                  ] 5
+           , Run Battery [ "-L", "20" 
+                         , "-H", "80"
+                         , "-t", "<acstatus> <leftbar> <left>% <timeleft>"
+                         , "--"
+                         , "-L", "-12"
+                         , "-H", "-5"
+                         , "-l", "red"
+                         , "-m", "blue"
+                         , "-h", "green"
+                         , "-O", "<fc=green>AC</fc>"
+                         , "-o", "<fc=red>Battery</fc>"
+                         , "-i", "Idle"
+                         , "-p", "green"
+                         ] 60
+           , Run Weather "ESSP" [ "-L", "10"
+                                , "-H", "25"
+                                , "--normal", "#f8f8f2"
+                                , "--high", "#ff5555"
+                                , "--low", "#50fa7b"
+                                , "-t", "<station>: <tempC>C"
+                                ] 3600
+           , Run Date "%FT%R" "date" 300
+           , Run StdinReader
+           ]
        }
