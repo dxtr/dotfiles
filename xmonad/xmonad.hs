@@ -133,7 +133,12 @@ myKeys (XConfig {XMonad.modMask = modMask, XMonad.terminal = term}) = M.fromList
   ((modMask .|. controlMask, xK_h     ), sendMessage Shrink),
   ((modMask .|. controlMask, xK_l     ), sendMessage Expand),
   ((modMask                , xK_z     ), withFocused $ windows . W.sink), -- unfloat
---  ((modMask                , xK_F1    ), manPrompt myXPConfig),
+  ((modMask                , xK_g     ), gotoMenuArgs' "rofi" ["-dmenu", "-p", "goto>"]),
+  ((modMask                , xK_b     ), bringMenuArgs' "rofi" ["-dmenu", "-p", "bring>"]),
+
+--  ((modMask .|. shiftMask  , xK_g     ), unsafeSpawn "rofi -show window"),
+--  ((modMask                , xK_g     ), unsafeSpawn "rofi -show windowcd"),
+  ((modMask                , xK_F1    ), manPrompt myXPConfig),
 --  ((modMask                , xK_F2    ), sshPrompt myXPConfig),
 --  ((modMask                , xK_g     ), gotoMenuArgs myDmenuGotoArgs),
 --  ((modMask                , xK_b     ), bringMenuArgs myDmenuBringArgs),
@@ -179,7 +184,6 @@ myStartupHook = do
   startupHook desktopConfig
   setWMName "LG3D"
 
---myLayout = avoidStruts $ smartBorders $ smartSpacing windowSpacing $ perWS
 myLayout = avoidStruts $ toggleLayouts Full $ perWS
   where
     windowSpacing = 2
@@ -234,21 +238,10 @@ settings = desktopConfig {
   handleEventHook    = fullscreenEventHook
   }
 
-    --spir = smartSpacing 2 $ spiralWithDir direction rotation sratio
-        --direction = East -- East, South, West, North
-        --rotation = CCW -- CW, CCW
-        --sratio = 1920/1080
-        --nmaster = 1
-        --delta = 3/100
-        --ratio = 1/2
-        --tallLayout = smartSpacing 2 $ Tall nmaster delta ratio
-        --tallLayout = smartSpacing 2 $ ResizableTall nmaster delta ratio []
-        --spiralLayout = spiral 0
-
 main :: IO ()
 main = do
   xmproc <- spawnPipe "xmobar -f6x12"
-  xmonad $ settings {
+  xmonad $ ewmh settings {
     logHook = dynamicLogWithPP xmobarPP {
         ppOutput = hPutStrLn xmproc,
         ppCurrent = xmobarColor "#f8f8f2" "#44475a" . shorten 8,
