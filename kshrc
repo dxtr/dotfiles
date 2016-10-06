@@ -78,7 +78,7 @@ function opam-switch-eval {
     eval $(opam config env)
 }
 function current_ocaml_version {
-   grep -Po '\d+\.\d+\.\d+' ~/.opam/config
+   grep -Eo '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+' $HOME/.opam/config
 }
 
 
@@ -121,6 +121,7 @@ fi
 # Add stuff to MANPATH
 add_path "$HOME/.local/man" MANPATH
 add_path "$HOME/.opam/$OCAML_VERSION/man" MANPATH
+add_path "/usr/share/man" MANPATH
 
 # Add stuff to PERL5LIB
 add_path "$HOME/.opam/$OCAML_VERSION/lib/perl5" PERL5LIB
