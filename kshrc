@@ -78,7 +78,7 @@ function opam-switch-eval {
     eval $(opam config env)
 }
 function current_ocaml_version {
-   grep -Eo '[[:digit:]]{1,2}\.[[:digit:]]{1,2}\.[[:digit:]]{1,2}' $HOME/.opam/config
+   perl -ne 'chomp; /^switch:\s+"((?:\d{1,2}\.){2}\d{1,2})"$/ && print $1' $HOME/.opam/config
 }
 
 
