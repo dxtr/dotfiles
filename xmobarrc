@@ -10,20 +10,20 @@ Config { font = "fixed"
        , overrideRedirect = False
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %dynnetwork%%wlan0wi% | %battery% | %ESSP% | <fc=#b6b6b2>%date%</fc>"
+       , template = "%StdinReader% }{ %dynnetwork% | %wlp4s0wi% | %battery% | %default:Master% | %bright% | %kbd% | %ESSP% | <fc=#b6b6b2>%date%</fc>"
        , commands =
            [ Run DynNetwork [ "-S", "True"
                             , "-t", "net: <rx>/<tx>"
                             ] 5
-           , Run Wireless "wlan0" [ "-L", "25"
+           , Run Wireless "wlp4s0" [ "-L", "25"
                                   , "-H", "75"
                                   , "-h", "green"
                                   , "-l", "red"
-                                  , "-t", " <essid>: <quality>%"
+                                  , "-t", "<essid>: <quality>%"
                                   ] 5
            , Run Battery [ "-L", "20" 
                          , "-H", "80"
-                         , "-t", "<acstatus> <leftbar> <left>% <timeleft>"
+                         , "-t", "<acstatus> <left>% <timeleft>"
                          , "--"
                          , "-L", "-12"
                          , "-H", "-5"
@@ -43,6 +43,17 @@ Config { font = "fixed"
                                 , "-t", "<station>: <tempC>C"
                                 ] 3600
            , Run Date "%FT%R" "date" 300
+           , Run Kbd [("us(altgr-intl)", "US"), ("se(nodeadkeys)", "SE")]
+           , Run Brightness [ "-t", "<bar>"
+                            , "--"
+                            , "-D", "intel_backlight"
+                            ] 15
+           , Run Volume "default" "Master" [ "-t", "<volumebar> <status>"
+                                           , "--"
+                                           , "-O", "[on]"
+                                           , "-o", "[off]"
+                                           ] 15
+           , Run Locks
            , Run StdinReader
            ]
        }

@@ -16,6 +16,7 @@ import qualified XMonad.Hooks.ManageHelpers as MH
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
+import XMonad.Layout.Fullscreen (fullscreenManageHook, fullscreenFloat, fullscreenFocus, fullscreenFull)
 import XMonad.Layout.DwmStyle
 import XMonad.Layout.IM
 import XMonad.Layout.NoBorders
@@ -28,9 +29,10 @@ import XMonad.Layout.Accordion
 import XMonad.Layout.Reflect
 import XMonad.Layout.Grid
 import XMonad.Layout.ToggleLayouts
-import XMonad.Layout.SimpleFloat
+import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Renamed
 import XMonad.Layout.NoBorders
+import XMonad.Layout.Minimize
 import qualified XMonad.StackSet as W
 import XMonad.Util.Paste
 import XMonad.Util.Run
@@ -44,6 +46,7 @@ import XMonad.Prompt.Ssh
 import XMonad.Prompt.Window
 
 myMod = mod4Mask
+myTerm = "st"
 
 myFocusedBorderColor :: [Char]
 myFocusedBorderColor = "#ff0000"
@@ -58,7 +61,9 @@ myManageHook = composeAll [ className =? "Firefox"      --> doShift "web",
                             className =? "chromium"     --> doShift "web",
                             className =? "Emacs"        --> doShift "code",
                             className =? "mpv"          --> doShift "media",
-                            className =? "franz"        --> doShift "im",
+                            className =? "Franz"        --> doShift "im",
+                            className =? "telegram"     --> doShift "im",
+                            className =? "Mattermost"   --> doShift "im",
                             className =? "vlc"          --> doShift "media",
                             className =? "jetbrains-phpstorm" --> doShift "code",
                             className =? "jetbrains-idea" --> doShift "code",
@@ -70,10 +75,14 @@ myManageHook = composeAll [ className =? "Firefox"      --> doShift "web",
                             className =? "Steam"          --> doFloat <+> doShift "games",
                             className =? "Civ5XP"         --> doFloat <+> doShift "games",
                             className =? "openttd"        --> doFloat <+> doShift "games",
+                            className =? "qemu-system-x86_64" --> doShift "VM",
                             className =? "Terraria.bin.x86" --> doFloat <+> doShift "games",
                             className =? "Gvbam"          --> doFloat <+> doShift "games",
                             className =? "desmume"        --> doFloat <+> doShift "games",
                             className =? "dosbox"         --> doFloat <+> doShift "games",
+                            appName   ~? "Minecraft 1."     --> doFloat <+> doShift "games",
+                            appName   ~? "Minecraft Launcher 1." --> doFloat <+> doShift "games",
+                            appName   ~? "Red Alert 2"    --> doFloat <+> doShift "games",
                             title =? "Kerbal Space Program" --> doFloat <+> doShift "games",
                             resource  =? "desktop_window" --> doIgnore,
                             resource  =? "kdesktop"       --> doIgnore,
@@ -121,7 +130,8 @@ myKeys (XConfig {XMonad.modMask = modMask, XMonad.terminal = term}) = M.fromList
   ((modMask                , xK_comma ), sendMessage (IncMasterN 1)),
   ((modMask                , xK_period), sendMessage (IncMasterN (-1))),
   ((modMask                , xK_n     ), refresh),
-  ((modMask                , xK_m     ), windows W.focusMaster  ),
+  ((modMask                , xK_m     ), withFocused minimizeWindow),
+  ((modMask .|. shiftMask  , xK_m     ), sendMessage RestoreNextMinimizedWin),
   ((modMask                , xK_p     ), unsafeSpawn "rofi -show run"),
   ((modMask .|. shiftMask  , xK_d     ), kill),
   ((modMask                , xK_j     ), windows W.focusDown),
@@ -133,26 +143,14 @@ myKeys (XConfig {XMonad.modMask = modMask, XMonad.terminal = term}) = M.fromList
   ((modMask .|. controlMask, xK_h     ), sendMessage Shrink),
   ((modMask .|. controlMask, xK_l     ), sendMessage Expand),
   ((modMask                , xK_z     ), withFocused $ windows . W.sink), -- unfloat
-  ((modMask                , xK_g     ), gotoMenuArgs' "rofi" ["-dmenu", "-p", "goto>"]),
-  ((modMask                , xK_b     ), bringMenuArgs' "rofi" ["-dmenu", "-p", "bring>"]),
-
---  ((modMask .|. shiftMask  , xK_g     ), unsafeSpawn "rofi -show window"),
---  ((modMask                , xK_g     ), unsafeSpawn "rofi -show windowcd"),
-  ((modMask                , xK_F1    ), manPrompt myXPConfig),
+  ((modMask                , xK_g     ), gotoMenuArgs' "rofi" ["-dmenu", "-p", "goto> "]),
+  ((modMask                , xK_b     ), bringMenuArgs' "rofi" ["-dmenu", "-p", "bring> "]),
+  ((modMask                , xK_F1    ), manPrompt myXPConfig)
 --  ((modMask                , xK_F2    ), sshPrompt myXPConfig),
 --  ((modMask                , xK_g     ), gotoMenuArgs myDmenuGotoArgs),
 --  ((modMask                , xK_b     ), bringMenuArgs myDmenuBringArgs),
 --  ((m              , xK_b     ), windowPromptBring myXPConfig),
-  -- XF86AudioMute
-  ((0, 0x1008ff12), spawn "/usr/bin/amixer set Master toggle"),
-  -- XF86AudioLowerVolume
-  ((0, 0x1008ff11), spawn "/usr/bin/amixer set Master 5%-"),
-  -- XF86AudioRaiseVolume
-  ((0, 0x1008ff13), spawn "/usr/bin/amixer set Master 5%+"),
-  -- XF86MonBrightnessDown
-  ((0, 0x1008ff03), spawn "/usr/bin/xbacklight -dec 5"),
-  -- XF86MonBrightnessUp
-  ((0, 0x1008ff02), spawn "/usr/bin/xbacklight -inc 5")]
+  ]
   where
     myDmenuArgs = ["-b", "-i", "-fn", "Terminus-9"] :: [String]
     myDmenuGotoArgs = myDmenuArgs ++ ["-p", "goto>"] :: [String]
@@ -177,18 +175,19 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "rotate-wallpaper"
   -- spawnOnce "/usr/local/bin/xmobar -f6x12"
-  spawnOnce "urxvtc"
+  spawnOnce myTerm
   spawnOnce "firefox"
   spawnOnce "emacs"
-  spawnOnce "franz"
+  -- spawnOnce "franz"
   startupHook desktopConfig
   setWMName "LG3D"
 
 myLayout = avoidStruts $ toggleLayouts Full $ perWS
   where
-    windowSpacing = 2
+    windowSpacing = 0
     layout l = smartSpacing windowSpacing $ l
     renamedLayout name l = renamed [Replace name] $ layout l
+    magnifyRatio = 1.3
     tallLayout = renamedLayout "Tall" $ ResizableTall nmaster delta ratio slaves
       where nmaster = 1
             delta = 3/100
@@ -196,12 +195,8 @@ myLayout = avoidStruts $ toggleLayouts Full $ perWS
             slaves = []
 
     magnifiedTallLayout = renamedLayout "Magnified Tall" $ magnifiercz' magnifyRatio $ tallLayout
-      where magnifyRatio = 1.5
-        
     wideLayout = renamedLayout "Wide" $ Mirror $ tallLayout
-        
     magnifiedWideLayout = renamedLayout "Magnified Wide" $ magnifiercz' magnifyRatio $ wideLayout
-      where magnifyRatio = 1.5
         
     dishLayout = renamedLayout "Dishes" $ Dishes nmaster ratio
       where nmaster = 1
@@ -211,29 +206,30 @@ myLayout = avoidStruts $ toggleLayouts Full $ perWS
     gridLayout = renamedLayout "Grid" $ Grid
     magnifiedGridLayout = renamedLayout "Magnified Grid" $ gridLayout
     accordionLayout = renamedLayout "Accordion" $ Accordion
+    floatLayout = renamedLayout "Float" $ simplestFloat
     
     mainWS = onWorkspace "main" (magnifiedTallLayout ||| magnifiedWideLayout ||| tallLayout ||| wideLayout ||| accordionLayout)
     codeWS = onWorkspace "code" (magnifiedWideLayout ||| magnifiedTallLayout ||| wideLayout ||| tallLayout)
     webWS = onWorkspace "web" (fullLayout ||| tallLayout ||| wideLayout)
     imWS = onWorkspace "im" (fullLayout ||| gridLayout ||| accordionLayout)
-    mediaWS = onWorkspace "media" (fullLayout ||| wideLayout ||| magnifiedWideLayout ||| tallLayout ||| magnifiedTallLayout)
-    gamesWS = onWorkspace "games" (simpleFloat ||| tallLayout ||| wideLayout)
+    vmWS = onWorkspace "VM" (fullLayout ||| gridLayout)
+    mediaWS = onWorkspace "media" $ minimize (fullLayout ||| gridLayout ||| wideLayout ||| tallLayout ||| magnifiedWideLayout ||| magnifiedTallLayout)
+    gamesWS = onWorkspace "games" $ fullscreenFloat (floatLayout ||| fullLayout ||| tallLayout ||| wideLayout)
     restWS = magnifiedTallLayout ||| magnifiedWideLayout ||| tallLayout ||| wideLayout ||| accordionLayout ||| gridLayout
-    perWS = mainWS $ codeWS $ webWS $ imWS $ mediaWS $ gamesWS $ restWS
+    perWS = mainWS $ codeWS $ webWS $ imWS $ vmWS $ mediaWS $ gamesWS $ restWS
 
 settings = desktopConfig {
-  terminal           = "urxvtc",
+  terminal           = myTerm,
   focusFollowsMouse  = False,
   borderWidth        = 1,
   modMask            = mod4Mask,
-  workspaces         = ["main", "code", "web", "im", "media", "games"],
+  workspaces         = ["main", "code", "web", "im", "vm", "media", "games"],
   normalBorderColor  = "#373844",
   focusedBorderColor = myFocusedBorderColor,
   keys               = \c -> myKeys c `M.union` XMonad.keys desktopConfig c,
   --   mouseBindings      = mouseBindings settings,
-  --layoutHook         = avoidStruts $ smartBorders $ smartSpacing 2 $ Full ||| tallLayout,
   layoutHook         = myLayout,
-  manageHook         = manageDocks <+> myManageHook <+> manageHook desktopConfig,
+  manageHook         = manageDocks <+> fullscreenManageHook <+> myManageHook <+> manageHook desktopConfig,
   startupHook        = myStartupHook,
   handleEventHook    = fullscreenEventHook
   }

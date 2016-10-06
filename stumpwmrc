@@ -103,7 +103,8 @@
 		(message "~A" (print-key-seq (reverse key-seq))))))
 (add-hook *key-press-hook* 'key-seq-msg)
 
-(toggle-mode-line (current-screen) (current-head))
+;(toggle-mode-line (current-screen) (current-head))
+(mode-line)
 ;; Commands
 (defcommand lock-screen () ()
 	    "Lock screen"
@@ -191,7 +192,15 @@
  (lambda (kb) (redefine-key (first kb) (second kb) (third kb)))
  `((,*top-map* "Print" "exec maim -s --hidecursor $(date \"+%FT%T\").png")
    (,*top-map* "C-Print" "exec maim --hidecursor $(date \"+%FT%T\").png")
+   (,*top-map* "XF86AudioLowerVolume" "exec pamixer --decrease 5")
+   (,*top-map* "XF86AudioRaiseVolume" "exec pamixer --increase 5")
+   (,*top-map* "XF86AudioMute" "exec pamixer --toggle-mute")
+   (,*top-map* "XF86MonBrightnessUp" "exec xbacklight + 5")
+   (,*top-map* "XF86MonBrightnessDown" "exec xbacklight - 5")
 
+   (,*root-map* "|" "hsplit")
+   (,*root-map* "-" "vsplit")
+   (,*root-map* "q" )
    (,*root-map* "ESC" "abort")
    (,*root-map* "c" "exec urxvtc")
    ;;(*root-map* "=" "balance-frames")
@@ -200,7 +209,15 @@
    (,*root-map* "RET" "exec rofi -show run")
    (,*root-map* "C-s" "windowlist")
    (,*root-map* "O" "snext")
-   (,*root-map* "Print" "exec maim -s --hidecursor $(date \"+%FT%T\").png")
+   (,*root-map* "h" "move-focus left")
+   (,*root-map* "j" "move-focus down")
+   (,*root-map* "k" "move-focus up")
+   (,*root-map* "l" "move-focus right")
+   (,*root-map* "C-h" "move-window left")
+   (,*root-map* "C-j" "move-window down")
+   (,*root-map* "C-k" "move-window up")
+   (,*root-map* "C-l" "move-window right")
+
    
    ;; (*groups-map* "h" "gprev")
    ;; (*groups-map* "l" "gnext")
@@ -209,14 +226,6 @@
    ;; (*groups-map* "o" "gother")
    (,*groups-map* "C-s" "grouplist")
    
-   ;;("h" "move-focus left")
-   ;;("j" "move-focus down")
-   ;;("k" "move-focus up")
-   ;;("l" "move-focus right")
-   ;;("C-h" "move-window left")
-   ;; ("C-j" "move-window down")
-   ;;("C-k" "move-window up")
-   ;;("C-l" "move-window right")
 ))
 
 ;; (loop for kb in keybindings

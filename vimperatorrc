@@ -6,7 +6,7 @@ set errorbells=false
 set focuscontent=false
 set followhints=0
 set hintchars=hjklasdf
-set gui=noaddons,nobookmarks,nomenu,nonavigation,notabs
+set gui=noaddons,nobookmarks,nomenu,nonavigation,tabs
 set defsearch=duckduckgo
 set runtimepath=~/.vimperator
 set scrollbars=false
@@ -16,4 +16,8 @@ set tabnumbers=true
 set visualbell=true
 
 loadplugins
-sidebar Bookmarks
+
+autocmd LocationChange .*                       js modes.passAllKeys = false
+autocmd LocationChange fastmail\\.com           js modes.passAllKeys = true
+autocmd LocationChange slack\\.com              js modes.passAllKeys = true
+autocmd LocationChange web\\.telegram\\.org     js modes.passAllKeys = true
