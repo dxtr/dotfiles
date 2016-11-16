@@ -109,10 +109,12 @@ MANPATH="$HOME/.local/man"
 add_path $HOME/.local/phpstorm/bin PATH
 add_path /usr/local/jdk-1.8.0/bin PATH
 add_path /usr/bin/vendor_perl PATH
+add_path /usr/lib/surfraw PATH
 #pre_path $(ruby -rubygems -e "puts Gem.user_dir")/bin PATH
 pre_path ~/perl5/bin PATH
 pre_path ~/.racket/6.2.1/bin PATH
-pre_path "$HOME/.opam/$OCAML_VERSION/bin"
+pre_path "$HOME/.opam/$OCAML_VERSION/bin" PATH
+
 
 if [ -d $GOPATH ]; then
     pre_path "$GOPATH/bin" PATH
@@ -120,8 +122,10 @@ fi
 
 # Add stuff to MANPATH
 add_path "$HOME/.local/man" MANPATH
+add_path "$HOME/.local/share/man" MANPATH
 add_path "$HOME/.opam/$OCAML_VERSION/man" MANPATH
 add_path "/usr/share/man" MANPATH
+add_path "/usr/local/share/man" MANPATH
 
 # Add stuff to PERL5LIB
 add_path "$HOME/.opam/$OCAML_VERSION/lib/perl5" PERL5LIB
